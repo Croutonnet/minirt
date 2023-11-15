@@ -1,16 +1,20 @@
 #include "../include/vector.h"
-#include <math.h>
+#include <malloc/_malloc.h>
+#include <stdio.h>
 
-void	create_vector(t_vector *vec, int x, int y, int z)
+t_vector	create_vector(int x, int y, int z)
 {
-	vec->x = x;
-	vec->y = y;
-	vec->z = z;
+	t_vector	vec;
+
+	vec.x = x;
+	vec.y = y;
+	vec.z = z;
+	return (vec);
 }
 
-double	length_vec(t_vector *vec)
+double	length_vec(t_vector vec)
 {
-	return (sqrtf((vec->x * vec->x) + (vec->y * vec->y) + (vec->z * vec->z)));
+	return (sqrtf((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z)));
 }
 
 // float	dot_vec(t_vector *vec1, t_vector *vec2)
@@ -18,20 +22,18 @@ double	length_vec(t_vector *vec)
 // 	// return ();
 // }
 
-t_vector	*mul_2vec(t_vector *vec1, t_vector *vec2)
+t_vector	mul_2vec(t_vector vec1, t_vector vec2)
 {
-	t_vector	*res;
+	t_vector	res;
 
-	res = 0;
-	create_vector(res, vec1->x * vec2->x, vec1->y * vec2->y, vec1->z * vec2->z);
+	res = create_vector(vec1.x * vec2.x, vec1.y * vec2.y, vec1.z * vec2.z);
 	return (res);
 }
 
-t_vector	*div_2vec(t_vector *vec1, t_vector *vec2)
+t_vector	div_2vec(t_vector vec1, t_vector vec2)
 {
-	t_vector	*res;
+	t_vector	res;
 
-	res = 0;
-	create_vector(res, vec1->x / vec2->x, vec1->y / vec2->y, vec1->z / vec2->z);
+	res = create_vector(vec1.x / vec2.x, vec1.y / vec2.y, vec1.z / vec2.z);
 	return (res);
 }
