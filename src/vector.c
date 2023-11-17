@@ -2,7 +2,7 @@
 #include <malloc/_malloc.h>
 #include <stdio.h>
 
-t_vector	create_vector(int x, int y, int z)
+t_vector	create_vector(double x, double y, double z)
 {
 	t_vector	vec;
 

@@ -11,7 +11,7 @@ typedef struct s_vector
 }				t_vector;
 
 //vector.c
-t_vector	create_vector(int x, int y, int z);
+t_vector	create_vector(double x, double y, double z);
 t_vector	mul_2vec(t_vector vec1, t_vector vec2);
 t_vector	div_2vec(t_vector vec1, t_vector vec2);
 double		length_vec(t_vector vec);

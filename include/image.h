@@ -3,8 +3,8 @@
 
 #include "vector.h"
 
-#define IMAGE_WIDTH 1920
-#define IMAGE_HEIGHT 1080
+#define IMAGE_WIDTH 1920.00
+#define IMAGE_HEIGHT 1080.00
 
 typedef struct s_viewport
 {
@@ -16,6 +16,8 @@ typedef struct s_viewport
 	t_vector	u;
 	t_vector	pixel_delta_u;
 	t_vector	pixel_delta_v;
+	t_vector	upper_left;
+	t_vector	pixel00_loc;
 }			t_viewport;
 
 
