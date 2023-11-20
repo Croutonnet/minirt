@@ -3,6 +3,7 @@
 #------------------------------------------------------------------------------#
 
 NAME		=	minirt
+OS := $(shell uname -s)
 
 # Style
 BOLD		=	\033[1m
@@ -38,11 +39,15 @@ OBJS		=	$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 $(OBJS_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
+ifeq ($(OS),Linux) # règles en + pour Linux
+    LIBS = -ldl -lglfw -pthread -lm
+endif
+
 all: mlx $(OBJS_DIR) $(NAME)
 
 # Generates output file
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(MLXLIBA) -I include -lglfw -L "/USERS/$(USER)/.brew/opt/glfw/lib/" $(OBJS) -o $(NAME)
+	@$(CC) $(CFLAGS) -I include -lglfw -L "/USERS/$(USER)/.brew/opt/glfw/lib/" $(OBJS) -o $(NAME) $(MLXLIBA) $(LIBS)
 	@echo "$(ERASE_LINE)$(GREEN)✔️ $(ITALIC)$(NAME) successfully compile.$(RESET)\
 	$(GREEN) ✔️$(RESET)"
 
@@ -72,3 +77,7 @@ mlx:
         git clone -b v2.3.2 -q https://github.com/codam-coding-college/MLX42.git include/MLX42/; \
 	fi
 	@cmake include/MLX42/ -B include/MLX42/build/ && make -C include/MLX42/build/ -j4
+
+# Permet de rediriger l'affichage graphique vers Xserver sous wsl
+#export DISPLAY=$(ip route list default | awk '{print $3}'):0
+#export LIBGL_ALWAYS_INDIRECT=0
