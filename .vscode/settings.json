@@ -3,6 +3,7 @@
         "*.c": "c",
         "*.lua": "lua",
         "mlx42.h": "c",
-        "vector.h": "c"
+        "vector.h": "c",
+        "ray.h": "c"
     }
 }
