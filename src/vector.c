@@ -1,5 +1,5 @@
 #include "../include/vector.h"
-#include <malloc/_malloc.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 t_vector	create_vector(double x, double y, double z)
