@@ -29,14 +29,31 @@ void	calculate_p00_loc(t_viewport *view)
 	print_vec(view->pixel00_loc);
 }
 
+// ajoute une Shape au tableau
+void add_shape(t_shapes_arr *arr, e_shape_type type, u_geom geo)
+{
+	if (type == SPHERE)
+		arr->shapes[arr->count].type = SPHERE;
+	else if (type == CONE)
+	{
+		// create cone here
+	}
+	arr->shapes[arr->count].geom = geo;
+	arr->count++;
+
+}
+
 int	main(void)
 {
 	mlx_t		*mlx;
 	mlx_image_t	*image;
 	t_viewport	viewport;
-	t_sphere	sphere;
+	t_shapes_arr shapes;
+	shapes.count = 0;
 
-	sphere = create_sphere(0, 0, -10, 0.5);
+	add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, 0, -10, 0.5));
+	add_shape(&shapes, SPHERE, (u_geom)create_sphere(10, 0, -10, 0.5));
+
 	viewport.ratio = IMAGE_WIDTH / IMAGE_HEIGHT;
 	viewport.height = 2.0;
 	viewport.width = viewport.height * viewport.ratio;
@@ -49,7 +66,7 @@ int	main(void)
 	calculate_p00_loc(&viewport);
 	mlx = mlx_init(IMAGE_WIDTH, IMAGE_HEIGHT, "coucou", true);
 	image = mlx_new_image(mlx, IMAGE_WIDTH, IMAGE_HEIGHT);
-	create_rays(&viewport, sphere, image);
+	create_rays(&viewport, &shapes, image);
 	mlx_image_to_window(mlx, image, 0, 0);
 	mlx_loop(mlx);
 }
