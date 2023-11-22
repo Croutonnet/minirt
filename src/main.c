@@ -36,7 +36,7 @@ int	main(void)
 	t_viewport	viewport;
 	t_sphere	sphere;
 
-	sphere = create_sphere(0, 0, -10, 0.5);
+	sphere = create_sphere(0, 0, 10, 2);
 	viewport.ratio = IMAGE_WIDTH / IMAGE_HEIGHT;
 	viewport.height = 2.0;
 	viewport.width = viewport.height * viewport.ratio;
@@ -47,7 +47,7 @@ int	main(void)
 	viewport.pixel_delta_v = div_vec(viewport.v, IMAGE_WIDTH);
 	calculate_upper_left(&viewport, 1.0);
 	calculate_p00_loc(&viewport);
-	mlx = mlx_init(IMAGE_WIDTH, IMAGE_HEIGHT, "coucou", true);
+	mlx = mlx_init(IMAGE_WIDTH, IMAGE_HEIGHT, "miniRT", true);
 	image = mlx_new_image(mlx, IMAGE_WIDTH, IMAGE_HEIGHT);
 	create_rays(&viewport, sphere, image);
 	mlx_image_to_window(mlx, image, 0, 0);

@@ -41,6 +41,7 @@ void sphere_intersect_ray(t_sphere s, t_ray *r)
     // float a = find_a(r);
     // float b = find_b(s, r);
     // float c = find_c(s, r);
+    // je fais les calculs de la fonction quadratique pour aller chercher le discriminant et ensuite le point le plus proche touché (si touché)
     t_vector    oc = minus_vec(r->origin_point, s.origin); //Direction vers le centre de la sphere
     float       b = dot_vec(oc, minus_vec(r->origin_point, r->plane_point)); //
     float       c = pow(length_vec(oc), 2) - pow(s.radius, 2); //

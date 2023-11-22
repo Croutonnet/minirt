@@ -25,15 +25,15 @@ void create_rays(t_viewport *view, t_sphere sphere, mlx_image_t *image)
         x = 0;
         while (x < IMAGE_WIDTH)
         {
-            r = create_ray(r, view->camera_center, dest);
-            sphere_intersect_ray(sphere, &r);
+            r = create_ray(r, view->camera_center, dest); //creer le ray du centre de la camera vers le point choisi
+            sphere_intersect_ray(sphere, &r); //envoie le Ray dans la direction, si r.hit est true, c'est qu'il a toucher quelque chose
             if (r.hit == true)
                 mlx_put_pixel(image, x, y, ft_pixel(255, 0, 0, 255));
             else
                 mlx_put_pixel(image, x, y, ft_pixel(0, 0, 0, 255));
-            temp = add_vec(mul_vec(view->pixel_delta_v, x), mul_vec(view->pixel_delta_u, y));
-            center = add_vec(view->pixel00_loc, temp);
-            dest = normalize(minus_vec(center, view->camera_center));
+            temp = add_vec(mul_vec(view->pixel_delta_v, x), mul_vec(view->pixel_delta_u, y)); //calcul la direction vers le prochain pixel
+            center = add_vec(view->pixel00_loc, temp); // recentre le centre au centre du prochain pixel a droite
+            dest = normalize(minus_vec(center, view->camera_center)); // normalise la direction de la camera vers le pixel
             x++;
         }
         y++;
