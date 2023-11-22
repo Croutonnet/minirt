@@ -14,8 +14,9 @@ typedef struct s_vector
 t_vector	create_vector(double x, double y, double z);
 t_vector	mul_2vec(t_vector vec1, t_vector vec2);
 t_vector	div_2vec(t_vector vec1, t_vector vec2);
-double		length_vec(t_vector vec);
-double		dot_vec(t_vector vec1, t_vector vec2);
+float		length_vec(t_vector vec);
+float		dot_vec(t_vector vec1, t_vector vec2);
+t_vector	normalize(t_vector vec);
 
 //vector_math.c
 t_vector	add_vec(t_vector vec1, t_vector vec2);

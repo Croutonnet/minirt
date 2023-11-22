@@ -12,15 +12,15 @@ t_vector	create_vector(double x, double y, double z)
 	return (vec);
 }
 
-double	length_vec(t_vector vec)
+float	length_vec(t_vector vec)
 {
 	return (sqrtf((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z)));
 }
 
-// float	dot_vec(t_vector *vec1, t_vector *vec2)
-// {
-// 	// return ();
-// }
+float	dot_vec(t_vector vec1, t_vector vec2)
+{
+	return ((vec1.x * vec2.x) + (vec1.y * vec2.y) + (vec1.z * vec2.z));
+}
 
 t_vector	mul_2vec(t_vector vec1, t_vector vec2)
 {
@@ -28,6 +28,14 @@ t_vector	mul_2vec(t_vector vec1, t_vector vec2)
 
 	res = create_vector(vec1.x * vec2.x, vec1.y * vec2.y, vec1.z * vec2.z);
 	return (res);
+}
+
+t_vector	normalize(t_vector vec)
+{
+	float vec_length;
+
+	vec_length = length_vec(vec);
+	return (div_vec(vec, vec_length));
 }
 
 t_vector	div_2vec(t_vector vec1, t_vector vec2)

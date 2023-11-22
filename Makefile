@@ -31,7 +31,7 @@ MLXLIBA		=	include/MLX42/build/libmlx42.a
 
 # Sources are all .c files
 SRC_DIR		=	src/
-SRCS		=	main.c vector.c vector_math.c
+SRCS		=	main.c ray.c sphere.c vector_math.c vector.c
 
 OBJS_DIR	=	obj/
 OBJS		=	$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))

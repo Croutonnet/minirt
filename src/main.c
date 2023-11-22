@@ -2,6 +2,7 @@
 #include "../include/color.h"
 #include "../include/MLX42/include/MLX42/MLX42.h"
 #include "../include/image.h"
+#include "../include/ray.h"
 #include <stdio.h>
 #include <stdbool.h>
 
@@ -33,7 +34,9 @@ int	main(void)
 	mlx_t		*mlx;
 	mlx_image_t	*image;
 	t_viewport	viewport;
+	t_sphere	sphere;
 
+	sphere = create_sphere(0, 0, -10, 0.5);
 	viewport.ratio = IMAGE_WIDTH / IMAGE_HEIGHT;
 	viewport.height = 2.0;
 	viewport.width = viewport.height * viewport.ratio;
@@ -45,6 +48,8 @@ int	main(void)
 	calculate_upper_left(&viewport, 1.0);
 	calculate_p00_loc(&viewport);
 	mlx = mlx_init(IMAGE_WIDTH, IMAGE_HEIGHT, "coucou", true);
-	image = mlx_new_image(mlx, viewport.width, viewport.height);
+	image = mlx_new_image(mlx, IMAGE_WIDTH, IMAGE_HEIGHT);
+	create_rays(&viewport, sphere, image);
+	mlx_image_to_window(mlx, image, 0, 0);
 	mlx_loop(mlx);
 }
