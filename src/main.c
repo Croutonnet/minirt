@@ -51,8 +51,10 @@ int	main(void)
 	t_shapes_arr shapes;
 	shapes.count = 0;
 
-	add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, 0, -10, 0.5));
-	add_shape(&shapes, SPHERE, (u_geom)create_sphere(10, 0, -10, 0.5));
+	add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, 0, -10, 3));
+	add_shape(&shapes, SPHERE, (u_geom)create_sphere(10, 0, -10, 0.2));
+	add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, 10, -10, 1));
+	add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, -10, -10, 0.5));
 
 	viewport.ratio = IMAGE_WIDTH / IMAGE_HEIGHT;
 	viewport.height = 2.0;
