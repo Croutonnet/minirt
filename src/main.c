@@ -17,7 +17,6 @@ void	calculate_upper_left(t_viewport *view, float focal_length)
 	res3 = div_vec(view->v, 2);
 	view->upper_left = minus_vec(res1, res2);
 	view->upper_left = minus_vec(view->upper_left, res3);
-	print_vec(view->upper_left);
 }
 
 void	calculate_p00_loc(t_viewport *view)
@@ -26,7 +25,6 @@ void	calculate_p00_loc(t_viewport *view)
 
 	res1 = mul_vec(add_vec(view->pixel_delta_u, view->pixel_delta_v), 0.5);
 	view->pixel00_loc = add_vec(view->upper_left, res1);
-	print_vec(view->pixel00_loc);
 }
 
 // ajoute une Shape au tableau

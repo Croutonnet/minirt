@@ -41,14 +41,14 @@ void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image)
     y = 0;
     clear_img(image);
     center = view->pixel00_loc;
-    dest = minus_vec(view->camera_center, center);
+    dest = normalize(minus_vec(view->camera_center, center));
 
     while (y < IMAGE_HEIGHT)
     {
         x = 0;
         while (x < IMAGE_WIDTH)
         {
-            r = create_ray(r, view->camera_center, dest);
+            r = create_ray(view->camera_center, dest);
             
             id = 0;
             while (id < arr->count)
@@ -62,7 +62,7 @@ void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image)
                     // check ray - cone intersection here
                 }
         
-                if (r.hit == true)
+                if (r.hit_front == true)
                     mlx_put_pixel(image, x, y, ft_pixel(255, 0, 0, 255));
                 temp = add_vec(mul_vec(view->pixel_delta_v, x), mul_vec(view->pixel_delta_u, y));
                 center = add_vec(view->pixel00_loc, temp);
@@ -75,24 +75,26 @@ void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image)
     }
 }
 
-t_ray create_ray(t_ray r, t_vector origin, t_vector plane_point)
+t_ray create_ray(t_vector origin, t_vector ray_dir)
 {
-    r.hit = false;
+    t_ray   r;
+
+    r.hit_front = false;
     r.t = 0;
     r.origin_point = origin;
-    r.plane_point = plane_point;
+    r.ray_dir = ray_dir;
 
     return (r);
 }
 
 // renvoi le point p (x,y,z) dintersection du rayon a la distance t
-t_vector get_ray_point(t_ray r)
+t_vector get_ray_point(t_ray r, float t)
 {
     t_vector intersec;
 
-    intersec.x = r.origin_point.x + (r.plane_point.x * r.t);
-    intersec.y = r.origin_point.y + (r.plane_point.y * r.t);
-    intersec.z = r.origin_point.z + (r.plane_point.z * r.t);
+    intersec.x = r.origin_point.x + (r.ray_dir.x * t);
+    intersec.y = r.origin_point.y + (r.ray_dir.y * t);
+    intersec.z = r.origin_point.z + (r.ray_dir.z * t);
 
     return (intersec);
 }
