@@ -30,6 +30,7 @@ t_vector	mul_2vec(t_vector vec1, t_vector vec2)
 	return (res);
 }
 
+//Prend le vector, garde la meme direction, mais reduis ca length a 1, comme ca c'est plus facile de comparer et faire des opération avec des vectors
 t_vector	normalize(t_vector vec)
 {
 	float vec_length;
