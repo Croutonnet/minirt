@@ -10,13 +10,16 @@ void	calculate_upper_left(t_viewport *view, float focal_length)
 {
 	t_vector	res1;
 	t_vector	res2;
-	t_vector	res3;
+	// t_vector	res3;
 
-	res1 = minus_vec(view->camera_center, create_vector(0, 0, focal_length));
-	res2 = div_vec(view->u, 2);
-	res3 = div_vec(view->v, 2);
-	view->upper_left = minus_vec(res1, res2);
-	view->upper_left = minus_vec(view->upper_left, res3);
+	// res1 = minus_vec(view->camera_center, create_vector(0, 0, focal_length));
+	// res2 = div_vec(view->u, 2);
+	// res3 = div_vec(view->v, 2);
+	// view->upper_left = minus_vec(res1, res2);
+	// view->upper_left = minus_vec(view->upper_left, res3);
+	res1 = minus_vec(create_vector(0,0,0), create_vector(0,0,focal_length));
+	res2 = minus_vec(res1, div_vec(view->u, 2));
+	view->upper_left = minus_vec(res2, div_vec(view->v, 2));
 }
 
 void	calculate_p00_loc(t_viewport *view)
@@ -49,10 +52,10 @@ int	main(void)
 	t_shapes_arr shapes;
 	shapes.count = 0;
 
-	add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, 0, -10, 3));
-	add_shape(&shapes, SPHERE, (u_geom)create_sphere(10, 0, -10, 0.2));
-	add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, 10, -10, 1));
-	add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, -10, -10, 0.5));
+	add_shape(&shapes, SPHERE, (u_geom)create_sphere(-1.7, 0, -10, 2));
+	add_shape(&shapes, SPHERE, (u_geom)create_sphere(1.7, 0, -15, 2));
+	// add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, 10, -10, 1));
+	// add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, -10, -10, 0.5));
 
 	viewport.ratio = IMAGE_WIDTH / IMAGE_HEIGHT;
 	viewport.height = 2.0;
@@ -62,7 +65,7 @@ int	main(void)
 	viewport.u = create_vector(0, -viewport.height, 0);
 	viewport.pixel_delta_u = div_vec(viewport.u, IMAGE_HEIGHT);
 	viewport.pixel_delta_v = div_vec(viewport.v, IMAGE_WIDTH);
-	calculate_upper_left(&viewport, 1.0);
+	calculate_upper_left(&viewport, (viewport.width / 2) / tan(70 / 2));
 	calculate_p00_loc(&viewport);
 	mlx = mlx_init(IMAGE_WIDTH, IMAGE_HEIGHT, "coucou", true);
 	image = mlx_new_image(mlx, IMAGE_WIDTH, IMAGE_HEIGHT);
