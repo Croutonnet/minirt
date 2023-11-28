@@ -8,9 +8,10 @@
 typedef struct s_ray
 {
     bool hit;
-    float t;
     t_vector plane_point;
     t_vector origin_point;
+    t_vector direction;
+    int32_t color;
 }t_ray;
 
 typedef enum enum_shape_type
@@ -60,7 +61,7 @@ t_cone create_cone(float x, float y, float z);
 
 void sphere_intersect_ray(t_sphere s, t_ray *r);
 void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image);
-t_vector get_ray_point(t_ray r);
-t_ray create_ray(t_ray r, t_vector origin, t_vector plane_point);
+t_vector get_ray_point(t_ray r, float t);
+t_ray create_ray(t_ray r, t_vector origin, t_vector plane_point, t_vector dir);
 
 #endif

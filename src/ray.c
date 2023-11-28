@@ -19,7 +19,8 @@ static void clear_img(mlx_image_t *image)
         x = 0;
         while (x < IMAGE_WIDTH)
         {
-			mlx_put_pixel(image, x, y, ft_pixel(0, 0, 0, 255));
+            int py = (y/IMAGE_HEIGHT)*160;
+			mlx_put_pixel(image, x, y, ft_pixel(75 + py, 75 + py, 255, 255));
 			x++;
 		}
 		y++;
@@ -48,7 +49,7 @@ void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image)
         x = 0;
         while (x < IMAGE_WIDTH)
         {
-            r = create_ray(r, view->camera_center, dest);
+            r = create_ray(r, view->camera_center, center,dest);
             
             id = 0;
             while (id < arr->count)
@@ -63,7 +64,13 @@ void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image)
                 }
         
                 if (r.hit == true)
-                    mlx_put_pixel(image, x, y, ft_pixel(255, 0, 0, 255));
+                {
+                    
+
+
+
+                    mlx_put_pixel(image, x, y, r.color);
+                }
                 temp = add_vec(mul_vec(view->pixel_delta_v, x), mul_vec(view->pixel_delta_u, y));
                 center = add_vec(view->pixel00_loc, temp);
                 dest = normalize(minus_vec(center, view->camera_center));
@@ -75,24 +82,23 @@ void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image)
     }
 }
 
-t_ray create_ray(t_ray r, t_vector origin, t_vector plane_point)
+t_ray create_ray(t_ray r, t_vector origin, t_vector plane_point, t_vector dir)
 {
     r.hit = false;
-    r.t = 0;
     r.origin_point = origin;
     r.plane_point = plane_point;
-
+    r.direction = dir;
     return (r);
 }
 
 // renvoi le point p (x,y,z) dintersection du rayon a la distance t
-t_vector get_ray_point(t_ray r)
+t_vector get_ray_point(t_ray r, float t)
 {
     t_vector intersec;
 
-    intersec.x = r.origin_point.x + (r.plane_point.x * r.t);
-    intersec.y = r.origin_point.y + (r.plane_point.y * r.t);
-    intersec.z = r.origin_point.z + (r.plane_point.z * r.t);
+    intersec.x = r.origin_point.x + (r.direction.x * t);
+    intersec.y = r.origin_point.y + (r.direction.y * t);
+    intersec.z = r.origin_point.z + (r.direction.z * t);
 
     return (intersec);
 }
