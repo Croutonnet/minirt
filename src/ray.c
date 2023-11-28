@@ -20,7 +20,9 @@ static void clear_img(mlx_image_t *image)
         while (x < IMAGE_WIDTH)
         {
             int py = (y/IMAGE_HEIGHT)*160;
-			mlx_put_pixel(image, x, y, ft_pixel(75 + py, 75 + py, 255, 255));
+			//mlx_put_pixel(image, x, y, ft_pixel(75 + py, 75 + py, 255, 255));
+            // debug
+            mlx_put_pixel(image, x, y, ft_pixel(0, 0, 0, 255));
 			x++;
 		}
 		y++;
@@ -33,23 +35,42 @@ void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image)
     int         y;
     t_ray       r;
     t_vector    dest;
-    t_vector    center;
+    t_vector    left_corner;
     t_vector    temp;
+    t_vector center;
     int         id;
 
     id = 0;
     x = 0;
     y = 0;
     clear_img(image);
-    center = view->pixel00_loc;
-    dest = minus_vec(view->camera_center, center);
+    left_corner = view->pixel00_loc;
+
+
+    ////////// Temporary
+
+    // t_vector center;
+    // t_vector point = create_vector(400,0,0);
+    // temp = add_vec(mul_vec(view->pixel_delta_v, (IMAGE_WIDTH/2) + point.x   ), mul_vec(view->pixel_delta_u, (IMAGE_HEIGHT/2) + point.y) );
+    // center = add_vec(view->pixel00_loc, temp);
+    // dest = normalize(minus_vec(center, view->camera_center));
+    // r = create_ray(r, view->camera_center, dest);
+    // sphere_intersect_ray(arr->shapes[0].geom.sphere, &r);
+    // if (r.hit == true)
+    // {
+    //     mlx_put_pixel(image, (IMAGE_WIDTH/2) + point.x, (IMAGE_HEIGHT/2) + point.y, r.color);
+    //     mlx_put_pixel(image, (IMAGE_WIDTH/2) + 1+ point.x, (IMAGE_HEIGHT/2)+ point.y, r.color);
+    //     mlx_put_pixel(image, (IMAGE_WIDTH/2) - 1+ point.x, (IMAGE_HEIGHT/2) + 1+ point.y, r.color);
+    //     mlx_put_pixel(image, (IMAGE_WIDTH/2)+ point.x, (IMAGE_HEIGHT/2) - 1+ point.y, r.color);
+    // }
+    //////////////////////////
 
     while (y < IMAGE_HEIGHT)
     {
         x = 0;
         while (x < IMAGE_WIDTH)
         {
-            r = create_ray(r, view->camera_center, center,dest);
+            r = create_ray(r, view->camera_center, dest);
             
             id = 0;
             while (id < arr->count)
@@ -65,10 +86,6 @@ void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image)
         
                 if (r.hit == true)
                 {
-                    
-
-
-
                     mlx_put_pixel(image, x, y, r.color);
                 }
                 temp = add_vec(mul_vec(view->pixel_delta_v, x), mul_vec(view->pixel_delta_u, y));
@@ -82,11 +99,10 @@ void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image)
     }
 }
 
-t_ray create_ray(t_ray r, t_vector origin, t_vector plane_point, t_vector dir)
+t_ray create_ray(t_ray r, t_vector origin, t_vector dir)
 {
     r.hit = false;
     r.origin_point = origin;
-    r.plane_point = plane_point;
     r.direction = dir;
     return (r);
 }

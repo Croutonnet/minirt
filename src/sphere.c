@@ -21,7 +21,7 @@ t_sphere create_sphere(float x, float y, float z, float radius)
 void sphere_intersect_ray(t_sphere s, t_ray *r)
 {
     t_vector    oc = minus_vec(r->origin_point, s.origin); //Direction vers le centre de la sphere
-    float       b = 2.0 * dot_vec(minus_vec(r->origin_point, r->direction), oc);
+    float       b = 2.0 * dot_vec(minus_vec(r->direction,r->origin_point), oc);
     float       c = pow(length_vec(oc), 2) - pow(s.radius, 2); //
     float       dis = pow(b, 2) - (4 * c); //Discriminant < 0 si rien toucher, 0 toucher une fois, 1 toucher deux fois
 
@@ -34,21 +34,17 @@ void sphere_intersect_ray(t_sphere s, t_ray *r)
         t_vector h2 = get_ray_point(*r, t2);
 
         // calcul normal
-        t_vector normal = normalize(minus_vec(h2, s.origin));
+        t_vector normal = normalize(minus_vec(h2, s.origin)); // x,y,z entre -1 et 1
 
 
         // // calcul lumiere
-        // t_vector lightTest = normalize(create_vector(10,10,-10));
-        // t_vector lightDir = minus_vec(s.origin,lightTest);
-        // float intensity =  dot_vec(normal, lightDir) * 60;
+        t_vector lightpos = create_vector(10,10,-2);
+        t_vector lightDir = normalize(minus_vec(lightpos, s.origin));
+        float intensity =  dot_vec(normal, lightDir) / 2;
 
-
-
-        // if (intensity < 0)
-        //     intensity = 0;
-        // if (intensity > 255)
-        //     intensity = 255;
-        r->color = ft_pixel((normal.x * 0.5 + 0.5f) * 255,(normal.y * 0.5f + 0.5f) * 255,(normal.z * 0.5f + 0.5f) * 255,255);
+        if (intensity < 0)
+            intensity = 0;
+        r->color = ft_pixel(intensity * 255, intensity * 255, intensity * 255, 255);
         r->hit = true;
     }
     else
