@@ -4,6 +4,8 @@
 # include "vector.h"
 # include "image.h"
 # include "MLX42/include/MLX42/MLX42.h"
+# include "color.h"
+# include "light.h"
 
 typedef struct s_ray
 {
@@ -11,7 +13,6 @@ typedef struct s_ray
     t_vector plane_point;
     t_vector origin_point;
     t_vector direction;
-    int32_t color;
 }t_ray;
 
 typedef enum enum_shape_type
@@ -24,6 +25,7 @@ typedef struct s_sphere
 {
     t_vector origin;
     float radius;
+    t_color base_color;
 } t_sphere;
 
 // TODO implement cone
@@ -55,11 +57,11 @@ typedef struct s_shapes_arr
 } t_shapes_arr;
 
 
-t_sphere create_sphere(float x, float y, float z, float radius);
+t_sphere create_sphere(float x, float y, float z, float radius, t_color pColor);
 t_cone create_cone(float x, float y, float z);
 
 
-void sphere_intersect_ray(t_sphere s, t_ray *r);
+t_vector sphere_intersect_ray(t_sphere s, t_ray *r, t_light light);
 void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image);
 t_vector get_ray_point(t_ray r, float t);
 t_ray create_ray(t_ray r, t_vector origin, t_vector dir);

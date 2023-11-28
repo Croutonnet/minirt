@@ -4,7 +4,8 @@
     "*.lua": "lua",
     "mlx42.h": "c",
     "vector.h": "c",
-    "ray.h": "c"
+    "ray.h": "c",
+    "color.h": "c"
   },
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "clang",

@@ -20,9 +20,7 @@ static void clear_img(mlx_image_t *image)
         while (x < IMAGE_WIDTH)
         {
             int py = (y/IMAGE_HEIGHT)*160;
-			//mlx_put_pixel(image, x, y, ft_pixel(75 + py, 75 + py, 255, 255));
-            // debug
-            mlx_put_pixel(image, x, y, ft_pixel(0, 0, 0, 255));
+			mlx_put_pixel(image, x, y, ft_pixel(75 + py, 75 + py, 255, 255));
 			x++;
 		}
 		y++;
@@ -37,8 +35,14 @@ void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image)
     t_vector    dest;
     t_vector    left_corner;
     t_vector    temp;
-    t_vector center;
+    t_vector point;
+    t_color pixel;
     int         id;
+    t_light light;
+
+    light.origin = create_vector(10,10, - 6);
+    light.intensity = 1;
+    light.color = create_vector(1,1,1);
 
     id = 0;
     x = 0;
@@ -46,30 +50,14 @@ void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image)
     clear_img(image);
     left_corner = view->pixel00_loc;
 
-
-    ////////// Temporary
-
-    // t_vector center;
-    // t_vector point = create_vector(400,0,0);
-    // temp = add_vec(mul_vec(view->pixel_delta_v, (IMAGE_WIDTH/2) + point.x   ), mul_vec(view->pixel_delta_u, (IMAGE_HEIGHT/2) + point.y) );
-    // center = add_vec(view->pixel00_loc, temp);
-    // dest = normalize(minus_vec(center, view->camera_center));
-    // r = create_ray(r, view->camera_center, dest);
-    // sphere_intersect_ray(arr->shapes[0].geom.sphere, &r);
-    // if (r.hit == true)
-    // {
-    //     mlx_put_pixel(image, (IMAGE_WIDTH/2) + point.x, (IMAGE_HEIGHT/2) + point.y, r.color);
-    //     mlx_put_pixel(image, (IMAGE_WIDTH/2) + 1+ point.x, (IMAGE_HEIGHT/2)+ point.y, r.color);
-    //     mlx_put_pixel(image, (IMAGE_WIDTH/2) - 1+ point.x, (IMAGE_HEIGHT/2) + 1+ point.y, r.color);
-    //     mlx_put_pixel(image, (IMAGE_WIDTH/2)+ point.x, (IMAGE_HEIGHT/2) - 1+ point.y, r.color);
-    // }
-    //////////////////////////
-
     while (y < IMAGE_HEIGHT)
     {
         x = 0;
         while (x < IMAGE_WIDTH)
         {
+            temp = add_vec(mul_vec(view->pixel_delta_v, x), mul_vec(view->pixel_delta_u, y));
+            point = add_vec(view->pixel00_loc, temp);
+            dest = normalize(minus_vec(point, view->camera_center));
             r = create_ray(r, view->camera_center, dest);
             
             id = 0;
@@ -78,19 +66,14 @@ void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image)
                 t_shape *shape;
                 shape = &arr->shapes[id];
                 if (shape->type == SPHERE)
-                    sphere_intersect_ray(shape->geom.sphere, &r);
+                    pixel = sphere_intersect_ray(shape->geom.sphere, &r, light);
                 else if (shape->type == CONE)
                 {
                     // check ray - cone intersection here
                 }
         
                 if (r.hit == true)
-                {
-                    mlx_put_pixel(image, x, y, r.color);
-                }
-                temp = add_vec(mul_vec(view->pixel_delta_v, x), mul_vec(view->pixel_delta_u, y));
-                center = add_vec(view->pixel00_loc, temp);
-                dest = normalize(minus_vec(center, view->camera_center));
+                    mlx_put_pixel(image, x, y, ft_pixel(pixel.x * 255, pixel.y * 255, pixel.z * 255, 255));
                 id++;
             }
             x++;
