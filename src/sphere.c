@@ -27,10 +27,12 @@ t_hitdata sphere_intersect_ray(t_sphere s, t_ray *r)
 		hitdata.t = -b + sqrtd; // c'est la distance entre le camera et le point toucher par le ray
 		if (hitdata.t <= 0 || hitdata.t >= INT_MAX){
 			hitdata.hit = false;
+			return (hitdata);
 		}
 	}
 	else if (dis < 0){
 		hitdata.hit = false;
+		return (hitdata);
 	}
 	t_vector touch = get_ray_point(*r, hitdata.t); //Le point qu'on a toucher dans la sphere
 	r->normale_dir = normalize(minus_vec(touch, s.origin)); //La direction entre le centre de la sphere et le point touché
@@ -41,9 +43,11 @@ t_hitdata sphere_intersect_ray(t_sphere s, t_ray *r)
 	t_vector lumi_dir = minus_vec(touch, create_vector(20,0,0));
 	lumi_dir = normalize(lumi_dir);
 	float	m = dot_vec(r->normale_dir, lumi_dir);
-	if (m > 0){
+	if (m >= 0){
 		r->color = ft_pixel(255 * m, 16 * m, 240 * m, 255);
-		hitdata.hit = true;
 	}
+	else
+		r->color = ft_pixel(0,0,0,255);
+	hitdata.hit = true;
 	return (hitdata);
 }

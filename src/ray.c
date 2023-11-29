@@ -58,17 +58,15 @@ void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image)
 				shape = &arr->shapes[id];
 				if (shape->type == SPHERE)
 					hitdata = sphere_intersect_ray(shape->geom.sphere, &r);
-				else if (shape->type == CONE)
-				{
-					// check ray - cone intersection here
-				}
-				if (hitdata.hit == false)
-					mlx_put_pixel(image, x, y, ft_pixel(255,255,255,255));
-				else if (hitdata.hit == true)
+				if (hitdata.hit == true)
 					mlx_put_pixel(image, x, y, r.color);
+				else
+					mlx_put_pixel(image, x, y, ft_pixel(0,100,0,255));
 				temp = add_vec(mul_vec(view->pixel_delta_v, x), mul_vec(view->pixel_delta_u, y));
 				center = add_vec(view->pixel00_loc, temp);
 				dest = normalize(minus_vec(center, view->camera_center));
+				if (hitdata.hit == true)
+					break;
 				id++;
 			}
 			x++;
