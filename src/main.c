@@ -34,10 +34,8 @@ void add_shape(t_shapes_arr *arr, e_shape_type type, u_geom geo)
 {
 	if (type == SPHERE)
 		arr->shapes[arr->count].type = SPHERE;
-	else if (type == CONE)
-	{
-		// create cone here
-	}
+	else if (type == CYLINDER)
+		arr->shapes[arr->count].type = CYLINDER;
 	arr->shapes[arr->count].geom = geo;
 	arr->count++;
 
@@ -51,10 +49,11 @@ int	main(void)
 	t_shapes_arr shapes;
 	shapes.count = 0;
 
-	add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, 0, -10, 3, (t_vector){1,0,0}));
-	add_shape(&shapes, SPHERE, (u_geom)create_sphere(10, 0, -10, 3,(t_vector){0,1,0}));
-	add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, 10, -10, 2,(t_vector){0,0,1}));
-	add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, -10, -10,5,(t_vector){1,1,0}));
+	//add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, 0, -10, 3, (t_vector){1,0,0}));
+	//add_shape(&shapes, SPHERE, (u_geom)create_sphere(10, 0, -10, 3,(t_vector){0,1,0}));
+	//add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, 10, -10, 2,(t_vector){0,0,1}));
+	//add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, -10, -10,5,(t_vector){1,1,0}));
+	add_shape(&shapes, CYLINDER, (u_geom)create_cylinder((t_vector){-4,0,-18},(t_vector){0,0,0}, 3, 8, (t_vector){1,0,0}));
 
 	viewport.ratio = IMAGE_WIDTH / IMAGE_HEIGHT;
 	viewport.height = 2.0;

@@ -1,7 +1,7 @@
 {
   "configurations": [
     {
-      "name": "(gdb) Launch",
+      "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
       "program": "${workspaceFolder}/minirt",
@@ -24,14 +24,6 @@
           "ignoreFailures": true
         }
       ]
-    },
-    {
-      "name": "C/C++ Runner: Debug Session",
-      "type": "lldb",
-      "request": "launch",
-      "args": [],
-      "cwd": "/Users/bbouchar/Desktop/minirt/src",
-      "program": "/Users/bbouchar/Desktop/minirt/src/build/Debug/outDebug"
     }
   ]
 }

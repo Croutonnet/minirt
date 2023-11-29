@@ -15,10 +15,12 @@ typedef struct s_ray
     t_vector direction;
 }t_ray;
 
+// types de geometries possibles
 typedef enum enum_shape_type
 {
     SPHERE,
-    CONE
+    CONE,
+    CYLINDER
 } e_shape_type;
 
 typedef struct s_sphere 
@@ -28,6 +30,15 @@ typedef struct s_sphere
     t_color base_color;
 } t_sphere;
 
+typedef struct s_cylinder
+{
+    t_vector origin;
+    t_vector rotation;
+    t_vector base_color;
+    float radius;
+    float height;
+} t_cylinder;
+
 // TODO implement cone
 typedef struct s_cone 
 {
@@ -35,13 +46,15 @@ typedef struct s_cone
 } t_cone;
 
 // type Shape Generique
-// pouvant contenir nimporte quel type
-// de forme 3D
+// pouvant etre nimporte quel type de forme 3D
 typedef union u_geometry
 {
     t_sphere sphere;
     t_cone cone;
+    t_cylinder cylinder;
+
 } u_geom;
+// represente une forme 3D quelquonque
 typedef struct s_shape
 {
     e_shape_type type;
@@ -56,12 +69,16 @@ typedef struct s_shapes_arr
     int count;
 } t_shapes_arr;
 
-
+// shapes creation functions
 t_sphere create_sphere(float x, float y, float z, float radius, t_color pColor);
+t_cylinder create_cylinder(t_vector p, t_vector r, float d, float h, t_vector c);
 t_cone create_cone(float x, float y, float z);
 
-
+// collision functions
 t_vector sphere_intersect_ray(t_sphere s, t_ray *r, t_light light);
+t_vector cylinder_intersect_ray(t_cylinder c, t_ray *r, t_light light);
+
+
 void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image);
 t_vector get_ray_point(t_ray r, float t);
 t_ray create_ray(t_ray r, t_vector origin, t_vector dir);
