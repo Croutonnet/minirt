@@ -89,7 +89,7 @@ t_vector cylinder_intersect_ray(t_cylinder cy, t_ray *r, t_light light)
     color.z = 0;
 	
 	double matrix[3][3];
-	rotation_matrix_z(matrix, 20);
+	rotation_matrix_z(matrix, 45);
 	t_ray rayonmodif;
 	
 	rayonmodif.direction = minus_vec(r->direction, r->origin_point);
@@ -101,8 +101,9 @@ t_vector cylinder_intersect_ray(t_cylinder cy, t_ray *r, t_light light)
 	r->origin_point.x += cy.origin.x;
 	r->origin_point.y += cy.origin.y;
 
-	t_vector av =  create_vector(((r->origin_point.x + 0.2) - cy.origin.x),0,(r->origin_point.z - cy.origin.z));
-    t_vector bv = create_vector((rayonmodif.direction.x + 0.2) - r->origin_point.x,0,rayonmodif.direction.z - r->origin_point.z);
+	
+	t_vector av =  create_vector((r->origin_point.x - cy.origin.x),0,(r->origin_point.z - cy.origin.z));
+    t_vector bv = create_vector(rayonmodif.direction.x - r->origin_point.x,0,rayonmodif.direction.z - r->origin_point.z);
     
 	
     float a = pow(bv.x,2) + pow(bv.z,2);
