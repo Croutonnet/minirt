@@ -89,18 +89,21 @@ t_vector cylinder_intersect_ray(t_cylinder cy, t_ray *r, t_light light)
     color.z = 0;
 	
 	double matrix[3][3];
-	rotation_matrix_z(matrix, 45);
+	rotation_matrix_z(matrix, 20);
 	t_ray rayonmodif;
-
-	rayonmodif.direction = minus_vec(r->direction, r->origin_point);
 	
+	rayonmodif.direction = minus_vec(r->direction, r->origin_point);
+
 	multiply(matrix, &rayonmodif.direction);
+	// deplace le point dorigine du rayon
+	rayonmodif.direction.x += cy.origin.x;
+	rayonmodif.direction.y += cy.origin.y;
+	r->origin_point.x += cy.origin.x;
+	r->origin_point.y += cy.origin.y;
 
-
-	t_vector av =  create_vector((r->origin_point.x - 0),0,(r->origin_point.z - cy.origin.z));
-    t_vector bv = create_vector(rayonmodif.direction.x - r->origin_point.x,0,rayonmodif.direction.z - r->origin_point.z);
+	t_vector av =  create_vector(((r->origin_point.x + 0.2) - cy.origin.x),0,(r->origin_point.z - cy.origin.z));
+    t_vector bv = create_vector((rayonmodif.direction.x + 0.2) - r->origin_point.x,0,rayonmodif.direction.z - r->origin_point.z);
     
-
 	
     float a = pow(bv.x,2) + pow(bv.z,2);
 	float b = (2.0 * av.x * bv.x) +  (2.0 * av.z * bv.z);
@@ -121,18 +124,18 @@ t_vector cylinder_intersect_ray(t_cylinder cy, t_ray *r, t_light light)
             return color;
         }
 
-
-        // // calcul normal
-        // t_vector normal = normalize(minus_vec(h2, cy.origin)); // x,y,z entre -1 et 1
-        // // // calcul lumiere
-        // t_vector lightDir = normalize(minus_vec(light.origin, cy.origin));
-        // float intensity =  dot_vec(normal, lightDir) / 2;
-        // if (intensity < 0)
-        //     intensity = 0;
-        // color.x = intensity * cy.base_color.x * light.color.x;
-        // color.y = intensity * cy.base_color.y * light.color.y;
-        // color.z = intensity * cy.base_color.z * light.color.z;
-		color = (t_vector){1,1,0};
+        // calcul normal
+        t_vector normal = normalize(minus_vec(h2, cy.origin)); // x,y,z entre -1 et 1
+		
+        // // calcul lumiere
+        t_vector lightDir = normalize(minus_vec(light.origin, cy.origin));
+        float intensity =  dot_vec(normal, lightDir) / 2;
+        if (intensity < 0)
+            intensity = 0;
+        color.x = intensity * cy.base_color.x * light.color.x;
+        color.y = intensity * cy.base_color.y * light.color.y;
+        color.z = intensity * cy.base_color.z * light.color.z;
+		//color = (t_vector){1,1,0};
         r->hit = true;
         return color;
     }

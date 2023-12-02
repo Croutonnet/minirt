@@ -40,7 +40,7 @@ void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image)
     int         id;
     t_light light;
 
-    light.origin = create_vector(10,10, - 6);
+    light.origin = create_vector(10,20, - 10);
     light.intensity = 1;
     light.color = create_vector(1,1,1);
 
