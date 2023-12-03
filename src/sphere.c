@@ -43,10 +43,9 @@ t_hitdata sphere_intersect_ray(t_sphere s, t_ray *r)
 	t_vector lumi_dir = minus_vec(touch, create_vector(20,0,0));
 	lumi_dir = normalize(lumi_dir);
 	float	m = dot_vec(r->normale_dir, lumi_dir);
-	if (m >= 0){
+	if (m >= 0)
 		r->color = ft_pixel(255 * m, 16 * m, 240 * m, 255);
-	}
-	else
+	else if (m < 0)
 		r->color = ft_pixel(0,0,0,255);
 	hitdata.hit = true;
 	return (hitdata);
