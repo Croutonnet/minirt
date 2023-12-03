@@ -24,14 +24,18 @@ DEFAULT		=	\033[39m
 ERASE_LINE	=	\033[2K\r
 
 # Compiler and flags
-CC			=	gcc
-CFLAGS		=	-g #-Wall -Werror -Wextra
-RM			=	rm -rf
-MLXLIBA		=	include/MLX42/build/libmlx42.a
+CC				=	gcc
+CFLAGS			=	-g #-Wall -Werror -Wextra
+RM				=	rm -rf
+MLXLIBA			=	include/MLX42/build/libmlx42.a
+LIBFTA			=	include/Libft/libft.a
+LIBFT_DIR		=	include/Libft/
+LIBFT_GIT_URL	=	https://github.com/Croutonnet/Libft.git
+LIBFT_VERSION	=	v2.0.0
 
 # Sources are all .c files
 SRC_DIR		=	src/
-SRCS		=	main.c ray.c sphere.c vector_math.c vector.c cylinder.c
+SRCS		=	main.c ray.c sphere.c vector_math.c vector.c cylinder.c parsing.c line_read.c
 
 OBJS_DIR	=	obj/
 OBJS		=	$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
@@ -43,11 +47,11 @@ ifeq ($(OS),Linux) # règles en + pour Linux
     LIBS = -ldl -lglfw -pthread -lm
 endif
 
-all: mlx $(OBJS_DIR) $(NAME)
+all: libft mlx $(OBJS_DIR) $(NAME)
 
 # Generates output file
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) -I include -lglfw -L "/USERS/$(USER)/.brew/opt/glfw/lib/" $(OBJS) -o $(NAME) $(MLXLIBA) $(LIBS)
+	@$(CC) $(CFLAGS) -I include -lglfw -L "/USERS/$(USER)/.brew/opt/glfw/lib/" $(OBJS) -o $(NAME) $(MLXLIBA) $(LIBFTA) $(LIBS)
 	@echo "$(ERASE_LINE)$(GREEN)✔️ $(ITALIC)$(NAME) successfully compile.$(RESET)\
 	$(GREEN) ✔️$(RESET)"
 
@@ -77,6 +81,13 @@ mlx:
         git clone -b v2.3.2 -q https://github.com/codam-coding-college/MLX42.git include/MLX42/; \
 	fi
 	@cmake include/MLX42/ -B include/MLX42/build/ && make -C include/MLX42/build/ -j4
+
+libft:
+	@if [ ! -d "$(LIBFT_DIR)" ]; then \
+        echo "libft directory does not exist, cloning..."; \
+        git clone -b $(LIBFT_VERSION) -q $(LIBFT_GIT_URL) $(LIBFT_DIR); \
+	fi
+	@$(MAKE) -sC $(LIBFT_DIR)
 
 # Permet de rediriger l'affichage graphique vers Xserver sous wsl
 #export DISPLAY=$(ip route list default | awk '{print $3}'):0
