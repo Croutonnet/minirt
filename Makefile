@@ -62,6 +62,7 @@ $(OBJS_DIR):
 # Removes objects
 clean:
 	@printf "💣 $(RED)Removing $(NAME) objects and MLX42... $(RESET) 💥\n"
+	@cd include/libft/ && make clean && cd ..
 	@$(RM) $(OBJS_DIR)
 	@$(RM) include/MLX42/build
 
@@ -69,6 +70,7 @@ clean:
 fclean: clean
 	@printf "💣 $(RED)Removing $(NAME) executable$(RESET) 💥\n"
 	@$(RM) $(NAME)
+	@cd include/libft/ && $(RM) libft.a && cd ..
 
 # Removes objects and executables and remakes
 re: fclean all

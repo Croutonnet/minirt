@@ -1,27 +1,35 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/10/18 09:23:06 by rapelcha          #+#    #+#              #
-#    Updated: 2023/12/03 14:53:58 by rapelcha         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 #------------------------------------------------------------------------------#
 #                                VARIABLES                                     #
 #------------------------------------------------------------------------------#
 
-NAME = libft.a
+NAME		=	libft.a
+OS := $(shell uname -s)
+
+# Style
+BOLD		=	\033[1m
+ITALIC		=	\033[3m
+UNDERLINE	=	\033[4m
+
+# Color text
+RESET		=	\033[0m
+BLACK		=	\033[30m
+RED			=	\033[31m
+GREEN		=	\033[32m
+YELLOW		=	\033[33m
+BLUE		=	\033[34m
+PURPLE		=	\033[35m
+CYAN		=	\033[36m
+WHITE		=	\033[37m
+DEFAULT		=	\033[39m
+ERASE_LINE	=	\033[2K\r
 
 # Compiler and flags
-CC		=	gcc
-CFLAGS	=	-Wall -Werror -Wextra
-RM		=	rm -f
+CC				=	gcc
+CFLAGS			=	-g #-Wall -Werror -Wextra
+RM				=	rm -rf
 
 # Sources are all .c files
+SRC_DIR	=	src/
 SRCS	=	ft_atof.c\
 			ft_atoi.c\
 			ft_bzero.c\
@@ -61,11 +69,8 @@ SRCS	=	ft_atof.c\
 			ft_xfree.c\
 			ft_xxfree.c\
 			get_next_line.c\
-			ft_toupper.c
-
-OBJS = $(SRCS:.c=.o)
-# BSources are all .c files
-BSRCS	=	ft_lstnew.c\
+			ft_toupper.c\
+			ft_lstnew.c\
 			ft_lstadd_front.c\
 			ft_lstsize.c\
 			ft_lstlast.c\
@@ -75,35 +80,35 @@ BSRCS	=	ft_lstnew.c\
 			ft_lstiter.c\
 			ft_lstmap.c
 
-BOBJS = $(BSRCS:.c=.o)
+OBJS_DIR	=	obj/
+OBJS		=	$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 
-#------------------------------------------------------------------------------#
-#                                 TARGETS                                      #
-#------------------------------------------------------------------------------#
+$(OBJS_DIR)%.o: $(SRC_DIR)%.c
+	@$(CC) $(CFLAGS) -c $< -o $@
 
-all: $(NAME)
+all: $(OBJS_DIR) $(NAME)
 
 # Generates output file
 $(NAME): $(OBJS)
-	ar -rcs $(NAME) $(OBJS)
+	@ar -rcs $(NAME) $(OBJS)
+	@echo "$(ERASE_LINE)$(GREEN)✔️ $(ITALIC)$(NAME) successfully compile.$(RESET)\
+	$(GREEN) ✔️$(RESET)"
 
-# Compiles sources into objects
-$(OBJS): $(SRCS)
-	$(CC) $(CFLAGS) -c $(SRCS)
-
-bonus: $(BOBJS)
-	ar -rs $(NAME) $(BOBJS)
-
-$(BOBJS): $(BSRCS)
-	$(CC) $(CFLAGS) -c $(BSRCS)
+# create objects directory
+$(OBJS_DIR):
+	@mkdir -p $(OBJS_DIR)
 
 # Removes objects
 clean:
-	$(RM) $(OBJS) $(BOBJS)
+	@printf "💣 $(RED)Removing $(NAME) objects $(RESET) 💥\n"
+	@$(RM) $(OBJS_DIR)
 
 # Removes objects and executables
 fclean: clean
-	$(RM) $(NAME)
+	@printf "💣 $(RED)Removing $(NAME) executable$(RESET) 💥\n"
+	@$(RM) $(NAME)
 
 # Removes objects and executables and remakes
 re: fclean all
+	@echo "$(ERASE_LINE)$(GREEN)✔️ $(ITALIC)Remake complete$(RESET)\
+	$(GREEN) ✔️$(RESET)"
