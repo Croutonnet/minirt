@@ -35,7 +35,7 @@ LIBFT_VERSION	=	v2.0.0
 
 # Sources are all .c files
 SRC_DIR		=	src/
-SRCS		=	main.c ray.c sphere.c vector_math.c vector.c cylinder.c parsing.c line_read.c
+SRCS		=	main.c ray.c sphere.c vector_math.c vector.c cylinder.c parsing.c parsing_utils.c line_read.c
 
 OBJS_DIR	=	obj/
 OBJS		=	$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
