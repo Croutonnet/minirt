@@ -2,20 +2,21 @@
 
 int	check_rgb(char *line, int j, int i, int k)
 {
-	int	nb;
+	float	nb;
 
+	if (check_coma_point(line) == false)
+		return(print_error(BADRGB, BADRGB));
 	while (k < 3)
 	{
-		nb = ft_atoi(&line[i]);
-		j = 0;
-		while (line[i] && j < 3 && line[i] != ',')
+		nb = ft_atof(&line[i]);
+		while (line[i] && line[i] != ',')
 		{
-			if (ft_isdigit(line[i]) == false)
+			if (ft_isdigit(line[i]) == false && line[i] != ','
+				&& line[i] != '\n' && line[i] != '.')
 				return(print_error(BADRGB, BADRGB));
 			i++;
-			j++;
 		}
-		if (nb < 0 || nb > 255)
+		if (nb < 0.0 || nb > 255.0)
 			return(print_error(BADRGB, BADRGB));
 		if (line[i] == ',')
 			i++;

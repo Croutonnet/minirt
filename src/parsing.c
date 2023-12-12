@@ -17,7 +17,7 @@ int	parsing(char *file)
 		if (line)
 			error = read_line(line);
 		if (error != CORRECT)
-			return (print_error(error, -1));
+			return (-1);
 	}
 	return (print_error(CORRECT, CORRECT));
 }

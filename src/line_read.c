@@ -105,7 +105,7 @@ int	p_cylindre(char *line)
 	if (err != CORRECT)
 		return (print_error(BADCYL, err));
 	temp = ft_split(line, 32);
-	if (!temp[0] || !temp[1] || !temp[2] || !temp[3] || !temp[4] || temp[5] != NULL)
+	if (!temp[0] || !temp[1] || !temp[2] || !temp[3] || !temp[4])
 		return (BADCYL);
 	err = check_vector(temp[1], 0, 0, 0);
 	if (err != CORRECT)

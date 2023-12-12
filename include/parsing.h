@@ -33,6 +33,9 @@ int		read_line(char *line);
 int		parsing(char *file);
 int		print_error(int err, int ret);
 
+// parsing_func
+int	check_coma_point(char *line);
+
 // parsing_utils
 int	check_rgb(char *line, int j, int i, int k);
 int	check_ratio(char *line);
