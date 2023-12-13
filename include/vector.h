@@ -16,8 +16,8 @@ t_vector	mul_2vec(t_vector vec1, t_vector vec2);
 t_vector	div_2vec(t_vector vec1, t_vector vec2);
 float		length_vec(t_vector vec);
 float		dot_vec(t_vector vec1, t_vector vec2);
-float		dot_vec2d(t_vector vec1, t_vector vec2);
 t_vector	normalize(t_vector vec);
+float		length_sqr(t_vector vec);
 
 //vector_math.c
 t_vector	add_vec(t_vector vec1, t_vector vec2);
