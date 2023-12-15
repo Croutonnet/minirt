@@ -23,7 +23,9 @@ enum e_error_parsing
 	BADFOV,
 	BADTABS,
 	BADVECTOR,
-	BADORI
+	BADORI,
+	BADSYN,
+	BADDIA
 };
 
 // parsing
@@ -31,17 +33,19 @@ int		is_there_tabs(char *line);
 int		p_ambient_light(char *line);
 int		read_line(char *line);
 int		parsing(char *file);
-int		print_error(int err, int ret);
+int		print_error(int err, int ret, int args);
 
 // parsing_func
-int	check_coma_point(char *line);
+int	check_coma_point(char *line, int id);
+int	check_syntaxe(char **input, int i, int j);
+int	check_diametre(char *line);
 
 // parsing_utils
-int	check_rgb(char *line, int j, int i, int k);
+int	check_rgb(char *line, int i, int k);
 int	check_ratio(char *line);
-int	check_vector(char *line, int i, int j, int k);
+int	check_vector(char *line, int i, int k);
 int	check_fov(char *line);
-int	check_vector_orientation(char *line, int i, int j, int k);
+int	check_vector_orientation(char *line, int i, int k);
 
 //line_read
 int		p_camera(char *line);

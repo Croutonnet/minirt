@@ -2,10 +2,10 @@
 #include <stdio.h>
 #include "../include/light.h"
 
-static int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
-{
-    return (r << 24 | g << 16 | b << 8 | a);
-}
+// static int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
+// {
+//     return (r << 24 | g << 16 | b << 8 | a);
+// }
 
 t_sphere create_sphere(float x, float y, float z, float radius, t_color pColor)
 {

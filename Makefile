@@ -25,7 +25,7 @@ ERASE_LINE	=	\033[2K\r
 
 # Compiler and flags
 CC				=	gcc
-CFLAGS			=	-g #-Wall -Werror -Wextra
+CFLAGS			=	-g -Wall -Werror -Wextra
 RM				=	rm -rf
 MLXLIBA			=	include/MLX42/build/libmlx42.a
 LIBFTA			=	include/Libft/libft.a
@@ -40,16 +40,23 @@ SRCS		=	main.c\
 				sphere.c\
 				vector_math.c\
 				vector.c\
-				cylinder.c\
+				cylinder.c
+
+PARS_DIR	=	src/parsing/
+SRCS_PARS	=	line_read.c\
 				parsing.c\
 				parsing_utils.c\
-				parsing_func.c\
-				line_read.c
+				parsing_func.c
 
 OBJS_DIR	=	obj/
-OBJS		=	$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
+OBJSBASE	=	$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
+OBJSPARS	=	$(addprefix $(OBJS_DIR), $(SRCS_PARS:.c=.o))
+
+OBJS		=	$(OBJSBASE) $(OBJSPARS)
 
 $(OBJS_DIR)%.o: $(SRC_DIR)%.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+$(OBJS_DIR)%.o: $(PARS_DIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 ifeq ($(OS),Linux) # règles en + pour Linux

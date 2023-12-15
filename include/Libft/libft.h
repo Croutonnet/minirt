@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 13:42:49 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/03 14:54:38 by rapelcha         ###   ########.fr       */
+/*   Updated: 2023/12/14 14:41:59 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ size_t	ft_strlcat(char *dst, const char *src, size_t dstsize);
 void	ft_lstadd_back(t_list **lst, t_list *new);
 void	ft_lstadd_front(t_list **lst, t_list *new);
 void	*ft_memset(void *str, int c, size_t n);
-void	*ft_xfree(void	*pointer);
-void	**ft_xxfree(void **pointer);
+void	*ft_xfree(void *pointer);
+void	*ft_xxfree(void **pointer);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
 void	*ft_memmove(void *str1, const void *str2, size_t n);
