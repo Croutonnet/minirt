@@ -1,6 +1,6 @@
 #include "../../include/parsing.h"
 
-int	p_camera(char *line)
+int	p_camera(char *line, t_count *count)
 {
 	int		err;
 	char	**temp;
@@ -25,10 +25,11 @@ int	p_camera(char *line)
 		return (print_error(BADCAMERA, err, false));
 	ft_xxfree((void **)temp);
 	printf ("Pour la Camera, ");
+	count->cam++;
 	return (print_error(CORRECT, CORRECT, false));
 }
 
-int	p_light(char *line)
+int	p_light(char *line, t_count *count)
 {
 	int		err;
 	char	**temp;
@@ -52,10 +53,11 @@ int	p_light(char *line)
 		return (print_error(BADLIGHT, err, false));
 	ft_xxfree((void **)temp);
 	printf ("Pour la lumière, ");
+	count->light++;
 	return (print_error(CORRECT, CORRECT, false));
 }
 
-int	p_plane(char *line)
+int	p_plane(char *line, t_count *count)
 {
 	int		err;
 	char	**temp;
@@ -79,10 +81,11 @@ int	p_plane(char *line)
 		return (print_error(BADPLANE, err, false));
 	ft_xxfree((void **)temp);
 	printf ("Pour le plane, ");
+	count->plane++;
 	return (print_error(CORRECT, CORRECT, false));
 }
 
-int	p_sphere(char *line)
+int	p_sphere(char *line, t_count *count)
 {
 	int		err;
 	char	**temp;
@@ -106,10 +109,11 @@ int	p_sphere(char *line)
 		return (print_error(BADSPHERE, err, false));
 	ft_xxfree((void **)temp);
 	printf ("Pour la sphère, ");
+	count->sphere++;
 	return (print_error(CORRECT, CORRECT, false));
 }
 
-int	p_cylindre(char *line)
+int	p_cylindre(char *line, t_count *count)
 {
 	int		err;
 	char	**temp;
@@ -139,5 +143,6 @@ int	p_cylindre(char *line)
 		return (print_error(BADCYL, err, false));
 	ft_xxfree((void **)temp);
 	printf ("Pour le cylindre, ");
+	count->cyl++;
 	return (print_error(CORRECT, CORRECT, false));
 }

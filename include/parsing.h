@@ -25,14 +25,26 @@ enum e_error_parsing
 	BADVECTOR,
 	BADORI,
 	BADSYN,
-	BADDIA
+	BADDIA,
+	BADCOUNT
 };
+
+typedef struct	s_count
+{
+	int	cam;
+	int	la;
+	int	light;
+	int	sphere;
+	int	plane;
+	int	cyl;
+}				t_count;
+
 
 // parsing
 int		is_there_tabs(char *line);
-int		p_ambient_light(char *line);
-int		read_line(char *line);
+int		read_line(char *line, t_count *count);
 int		parsing(char *file);
+int		p_ambient_light(char *line, t_count *count);
 int		print_error(int err, int ret, int args);
 
 // parsing_func
@@ -48,10 +60,10 @@ int	check_fov(char *line);
 int	check_vector_orientation(char *line, int i, int k);
 
 //line_read
-int		p_camera(char *line);
-int		p_light(char *line);
-int		p_plane(char *line);
-int		p_sphere(char *line);
-int		p_cylindre(char *line);
+int		p_camera(char *line, t_count *count);
+int		p_light(char *line, t_count *count);
+int		p_plane(char *line, t_count *count);
+int		p_sphere(char *line, t_count *count);
+int		p_cylindre(char *line, t_count *count);
 
 #endif

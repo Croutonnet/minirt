@@ -22,6 +22,27 @@ int	check_rgb(char *line, int i, int k)
 	return (CORRECT);
 }
 
+int	check_vector(char *line, int i, int k)
+{
+	if (check_coma_point(line, 1) == false)
+		return(print_error(BADVECTOR, BADVECTOR, false));
+	while (k < 3)
+	{
+		while (line[i] && line[i] != ',')
+		{
+			if (ft_isdigit(line[i]) == false && line[i] != ',' && line[i] != '-' && line[i] != '.')
+				return(print_error(BADVECTOR, BADVECTOR, false));
+			i++;
+		}
+		if (line[i] == ',')
+			i++;
+		k++;
+		if (k == 3 && line[i] != '\0' && line[i] != '\n')
+			return(print_error(BADVECTOR, BADVECTOR, false));
+	}
+	return (CORRECT);
+}
+
 int	check_ratio(char *line)
 {
 	int		i;
@@ -42,43 +63,19 @@ int	check_ratio(char *line)
 	return (CORRECT);
 }
 
-int	check_vector(char *line, int i, int k)
-{
-	double	nb;
-
-	if (check_coma_point(line, 0) == false)
-		return(print_error(BADVECTOR, BADVECTOR, false));
-	while (k < 3)
-	{
-		nb = ft_atof(&line[i]);
-		while (line[i] && line[i] != ',')
-		{
-			if (ft_isdigit(line[i]) == false && line[i] != ',' && line[i] != '-' && line[i] != '.')
-				return(print_error(BADVECTOR, BADVECTOR, false));
-			i++;
-		}
-		if (line[i] == ',')
-			i++;
-		k++;
-		if (k == 3 && line[i] != '\0' && line[i] != '\n')
-			return(print_error(BADVECTOR, BADVECTOR, false));
-	}
-	return (CORRECT);
-}
-
 int check_fov(char *line)
 {
-	int	i;
-	int	nb;
+	int		i;
+	double	nb;
 
 	i = 0;
 	while (line[i])
 	{
-		if (ft_isdigit(line[i]) == false && line[i] != '\n')
+		if (ft_isdigit(line[i]) == false && line[i] != '\n' && line[i] != '.')
 			return(print_error(BADFOV, BADFOV, false));
 		i++;
 	}
-	nb = ft_atoi(line);
+	nb = ft_atof(line);
 	if (nb < 0 || nb > 180)
 		return(print_error(BADFOV, BADFOV, false));
 	return (CORRECT);

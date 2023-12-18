@@ -49,6 +49,7 @@ int	main(void)
 	// t_viewport	viewport;
 	// t_shapes_arr shapes;
 	// shapes.count = 0;
+	parsing("map/test.rt");
 
 	// //add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, 0, -10, 3, (t_vector){1,0,0}));
 	// //add_shape(&shapes, SPHERE, (u_geom)create_sphere(10, 0, -10, 3,(t_vector){0,1,0}));
@@ -71,5 +72,4 @@ int	main(void)
 	// create_rays(&viewport, &shapes, image);
 	// mlx_image_to_window(mlx, image, 0, 0);
 	// mlx_loop(mlx);
-	parsing("map/test.rt");
 }

@@ -33,7 +33,7 @@ void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image)
     int         y;
     t_ray       r;
     t_vector    dest;
-    t_vector    left_corner;
+    //t_vector    left_corner;
     t_vector    temp;
     t_vector point;
     t_color pixel;
@@ -48,7 +48,7 @@ void create_rays(t_viewport *view, t_shapes_arr *arr,mlx_image_t *image)
     x = 0;
     y = 0;
     clear_img(image);
-    left_corner = view->pixel00_loc;
+    //left_corner = view->pixel00_loc;
 
     while (y < IMAGE_HEIGHT)
     {

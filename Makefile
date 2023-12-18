@@ -66,8 +66,13 @@ endif
 all: libft mlx $(OBJS_DIR) $(NAME)
 
 # Generates output file
+#$(NAME): $(OBJS)
+#	@$(CC) $(CFLAGS) -I include -lglfw -L "/USERS/$(USER)/.brew/opt/glfw/lib/" $(OBJS) -o $(NAME) $(MLXLIBA) $(LIBFTA) $(LIBS)
+#	@echo "$(ERASE_LINE)$(GREEN)✔️ $(ITALIC)$(NAME) successfully compile.$(RESET)\
+#	$(GREEN) ✔️$(RESET)"
+
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) -I include -lglfw -L "/USERS/$(USER)/.brew/opt/glfw/lib/" $(OBJS) -o $(NAME) $(MLXLIBA) $(LIBFTA) $(LIBS)
+	@$(CC) $(CFLAGS) -I include -lglfw -L "/opt/homebrew/Cellar/glfw/3.3.9/lib" $(OBJS) -o $(NAME) $(MLXLIBA) $(LIBFTA) $(LIBS)
 	@echo "$(ERASE_LINE)$(GREEN)✔️ $(ITALIC)$(NAME) successfully compile.$(RESET)\
 	$(GREEN) ✔️$(RESET)"
 
