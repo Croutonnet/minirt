@@ -54,13 +54,13 @@ typedef union u_geometry
     t_cylinder cylinder;
 
 } u_geom;
+
 // represente une forme 3D quelquonque
 typedef struct s_shape
 {
     e_shape_type type;
     u_geom geom;
 }t_shape;
-
 
 // tableau de shapes 3D
 typedef struct s_shapes_arr

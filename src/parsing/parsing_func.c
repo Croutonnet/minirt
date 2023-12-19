@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_func.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/19 16:13:50 by rapelcha          #+#    #+#             */
+/*   Updated: 2023/12/19 16:18:15 by rapelcha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/parsing.h"
 
-static int count_coma(char *line)
+static int	count_coma(char *line)
 {
 	int	i;
 	int	nb;
@@ -19,7 +31,7 @@ static int count_coma(char *line)
 		return (false);
 }
 
-static int count_point(char *line)
+static int	count_point(char *line)
 {
 	int	i;
 	int	nb;
@@ -94,37 +106,19 @@ int	check_syntaxe(char **input, int i, int j)
 				&& input[i][j] != ',' && ft_isdigit(input[i][j]) == false
 				&& input[i][j] != '\n')
 			{
-				printf("Char Problematique : |%c|	dans a str: %s\n", input[i][j], input[i]);
+				printf("Char Problematique : |%c|	dans a str: %s\n",
+					input[i][j], input[i]);
 				return (print_error(BADSYN, -1, false));
 			}
 			if (input[i][j] == '-' && check_minus(input[i], j) == true)
 			{
-				printf("Char Problematique : |%c|	dans a str: %s\n", input[i][j], input[i]);
+				printf("Char Problematique : |%c|	dans a str: %s\n",
+					input[i][j], input[i]);
 				return (print_error(BADSYN, -1, false));
 			}
 			j++;
 		}
 		i++;
 	}
-	return (CORRECT);
-}
-
-int	check_diametre(char *line)
-{
-	int	i;
-	int	nb;
-
-	i = 0;
-	if (check_coma_point(line, 0) == false)
-		return (print_error(BADDIA, BADDIA, false));
-	while (line[i])
-	{
-		if (ft_isdigit(line[i]) == false && line[i] != '.')
-			return (print_error(BADDIA, BADDIA, false));
-		i++;
-	}
-	nb = ft_atof(line);
-	if (nb < 0.0)
-		return (print_error(BADDIA, BADDIA, false));
 	return (CORRECT);
 }

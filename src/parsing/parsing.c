@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/19 14:02:12 by rapelcha          #+#    #+#             */
+/*   Updated: 2023/12/19 16:24:33 by rapelcha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/parsing.h"
 
 static int	check_count(t_count *count)
@@ -7,17 +19,18 @@ static int	check_count(t_count *count)
 	flag = 0;
 	if (count->cam != 1)
 	{
-		printf("Trop de caméra ou aucune caméra trouver\n");
+		ft_printf_fd(2, "Trop de caméra ou aucune caméra trouver\n");
 		flag++;
 	}
 	if (count->la != 1)
 	{
-		printf("Trop de ambient light ou aucune ambient light trouver\n");
+		ft_printf_fd(2, "Trop de ambient light ou aucune ambient\
+		light trouver\n");
 		flag++;
 	}
 	if (count->light != 1)
 	{
-		printf("Trop de light ou aucune light trouver\n");
+		ft_printf_fd(2, "Trop de light ou aucune light trouver\n");
 		flag++;
 	}
 	if (flag > 0)
@@ -25,64 +38,30 @@ static int	check_count(t_count *count)
 	return (CORRECT);
 }
 
-int	parsing(char *file)
+int	parsing(char *file, t_count *count)
 {
 	int		fd;
 	char	*line;
 	int		error;
-	t_count	count;
 
+	if (check_file(file) != CORRECT)
+		return (-1);
 	fd = open(file, O_RDONLY);
-	if (!fd)
+	if (fd < 0)
 		return (print_error(OPENWRONG, OPENWRONG, false));
 	line = ft_strdup("coucou");
-	ft_bzero(&count, sizeof(count));
 	while (line)
 	{
 		ft_xfree(line);
 		line = get_next_line(fd);
 		if (line)
-			error = read_line(line, &count);
+			error = read_line(line, count);
 		if (error != CORRECT)
 			return (-1);
 	}
-	if (check_count(&count) != CORRECT)
-		return(print_error(BADCOUNT, -1, false));
+	if (check_count(count) != CORRECT)
+		return (print_error(BADCOUNT, -1, false));
 	return (print_error(CORRECT, CORRECT, false));
-}
-
-int	is_there_tabs(char *line)
-{
-	int	i;
-
-	i = 0;
-	while (line[i])
-	{
-		if (line[i] == 9)
-			return (print_error(BADTABS, BADTABS, false));
-		i++;
-	}
-	return (CORRECT);
-}
-
-int	read_line(char *line, t_count *count)
-{
-	if (!ft_strncmp(line, "A ", 2))
-		return (p_ambient_light(line, count));
-	else if (!ft_strncmp(line, "C ", 2))
-		return (p_camera(line, count));
-	else if (!ft_strncmp(line, "L ", 2))
-		return (p_light(line, count));
-	else if (!ft_strncmp(line, "pl ", 2))
-		return (p_plane(line, count));
-	else if (!ft_strncmp(line, "sp ", 3))
-		return (p_sphere(line, count));
-	else if (!ft_strncmp(line, "cy ", 3))
-		return (p_cylindre(line, count));
-	else if (line[0] == '\n')
-		return (CORRECT);
-	else
-		return (print_error(BADTYPE, BADTYPE, false));
 }
 
 int	p_ambient_light(char *line, t_count *count)
@@ -92,64 +71,78 @@ int	p_ambient_light(char *line, t_count *count)
 
 	err = is_there_tabs(line);
 	if (err != CORRECT)
-		return(print_error(BADALIGHT, BADALIGHT, false));
+		return (print_error(BADALIGHT, BADALIGHT, false));
 	temp = ft_split(line, 32);
 	if (!temp[0] || !temp[1] || !temp[2] || temp[3] != NULL)
-		return(print_error(BADALIGHT, BADALIGHT, true));
+		return (print_error(BADALIGHT, BADALIGHT, true));
 	err = check_syntaxe(temp, 1, 0);
 	if (err != CORRECT)
 		return (print_error(BADALIGHT, err, false));
 	err = check_ratio(temp[1]);
 	if (err != 0)
-		return(print_error(BADALIGHT, BADALIGHT, false));
+		return (print_error(BADALIGHT, BADALIGHT, false));
 	err = check_rgb(temp[2], 0, 0);
 	if (err != 0)
-		return(print_error(BADALIGHT, BADALIGHT, false));
+		return (print_error(BADALIGHT, BADALIGHT, false));
 	ft_xxfree((void **)temp);
-	printf ("Pour le Ambient Light, ");
+	ft_printf_fd (2, "Pour le Ambient Light, ");
 	count->la++;
 	return (print_error(CORRECT, CORRECT, false));
+}
+
+static void	print_error2(int err)
+{
+	if (err == BADRATIO)
+		ft_printf_fd (2, "Error #%d: Problème avec le ratio\n", err);
+	else if (err == BADFOV)
+		ft_printf_fd (2, "Error #%d: Probleme avec le Fov\n", err);
+	else if (err == BADTABS)
+		ft_printf_fd (2, "Error #%d: Probleme avec les tabs\n", err);
+	else if (err == BADVECTOR)
+		ft_printf_fd (2, "Error #%d: Probleme avec le vector\n", err);
+	else if (err == BADORI)
+		ft_printf_fd (2, "Error #%d: Probleme avec vector d'orientation\n", err);
+	else if (err == BADSYN)
+		ft_printf_fd (2, "Error #%d: Probleme avec la syntaxe\n", err);
+	else if (err == BADDIA)
+		ft_printf_fd (2, "Error #%d: Probleme avec le Diametre\n", err);
+	else if (err == BADCOUNT)
+		ft_printf_fd (2, "Error #%d: Probleme avec le Count\n", err);
+	else if (err == NOEXT)
+		ft_printf_fd (2, "Error #%d: Aucun ext pour le ficher (.rt)\n", err);
+	else if (err == TOOEXT)
+		ft_printf_fd (2, "Error #%d: Trop d'extension pour un seul fichier,\
+		se limité à un seul (.rt)\n", err);
+	else if (err == WRONGEXT)
+		ft_printf_fd (2, "Error #%d : Mauvaise extension, l'extension\
+		recherchée est (.rt)\n", err);
 }
 
 int	print_error(int err, int ret, int args)
 {
 	if (err == CORRECT)
-		printf ("TOUT EST CORRECT\n");
+		ft_printf_fd (2, "TOUT EST CORRECT\n");
 	if (args == true)
-		printf ("Error #17 : Nombre d'arguments incorrect\n");
+		ft_printf_fd (2, "Error #17: Nombre d'arguments incorrect\n");
 	if (err == OPENWRONG)
-		printf ("Error #%d : File non existant\n", err);
+		ft_printf_fd (2, "Error #%d: File non existant\n", err);
 	else if (err == BADTYPE)
-		printf ("Error #%d : Type d'objet non existant\n", err);
+		ft_printf_fd (2, "Error #%d: Type d'objet non existant\n", err);
 	else if (err == BADALIGHT)
-		printf ("Error #%d : Problème avec la lumière ambiante\n", err);
+		ft_printf_fd (2, "Error #%d: Problème avec la lumière ambiante\n", err);
 	else if (err == BADCAMERA)
-		printf ("Error #%d : Problème avec la caméra\n", err);
+		ft_printf_fd (2, "Error #%d: Problème avec la caméra\n", err);
 	else if (err == BADLIGHT)
-		printf ("Error #%d : Problème avec la lumière\n", err);
+		ft_printf_fd (2, "Error #%d: Problème avec la lumière\n", err);
 	else if (err == BADPLANE)
-		printf ("Error #%d : Problème avec le plane\n", err);
+		ft_printf_fd (2, "Error #%d: Problème avec le plane\n", err);
 	else if (err == BADSPHERE)
-		printf ("Error #%d : Problème avec la sphère\n", err);
+		ft_printf_fd (2, "Error #%d: Problème avec la sphère\n", err);
 	else if (err == BADCYL)
-		printf ("Error #%d : Problème avec le cylindre\n", err);
+		ft_printf_fd (2, "Error #%d: Problème avec le cylindre\n", err);
 	else if (err == BADRGB)
-		printf ("Error #%d : Problème avec le RGB\n", err);
-	else if (err == BADRATIO)
-		printf ("Error #%d : Problème avec le ratio\n", err);
-	else if (err == BADFOV)
-		printf ("Error #%d : Probleme avec le fOV\n", err);
-	else if (err == BADTABS)
-		printf ("Error #%d : Probleme avec les tabs\n", err);
-	else if (err == BADVECTOR)
-		printf ("Error #%d : Probleme avec le vector\n", err);
-	else if (err == BADORI)
-		printf ("Error #%d : Probleme avec le vector d'orientation\n", err);
-	else if (err == BADSYN)
-		printf ("Error #%d : Probleme avec la syntaxe\n", err);
-	else if (err == BADDIA)
-		printf ("Error #%d : Probleme avec le Diametre\n", err);
-	else if (err == BADCOUNT)
-		printf ("Error #%d : Probleme avec le Count\n", err);
+		ft_printf_fd (2, "Error #%d: Problème avec le RGB\n", err);
+	else
+		print_error2(err);
 	return (ret);
 }

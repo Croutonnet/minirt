@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/19 14:03:30 by rapelcha          #+#    #+#             */
+/*   Updated: 2023/12/19 17:16:53 by rapelcha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef PARSING_H
 # define PARSING_H
 
@@ -5,7 +17,6 @@
 # include "ray.h"
 # include <fcntl.h>
 # include <stdio.h>
-
 
 enum e_error_parsing
 {
@@ -26,10 +37,13 @@ enum e_error_parsing
 	BADORI,
 	BADSYN,
 	BADDIA,
-	BADCOUNT
+	BADCOUNT,
+	NOEXT,
+	TOOEXT,
+	WRONGEXT
 };
 
-typedef struct	s_count
+typedef struct s_count
 {
 	int	cam;
 	int	la;
@@ -39,18 +53,14 @@ typedef struct	s_count
 	int	cyl;
 }				t_count;
 
-
 // parsing
-int		is_there_tabs(char *line);
-int		read_line(char *line, t_count *count);
-int		parsing(char *file);
-int		p_ambient_light(char *line, t_count *count);
-int		print_error(int err, int ret, int args);
+int	parsing(char *file, t_count *count);
+int	p_ambient_light(char *line, t_count *count);
+int	print_error(int err, int ret, int args);
 
 // parsing_func
 int	check_coma_point(char *line, int id);
 int	check_syntaxe(char **input, int i, int j);
-int	check_diametre(char *line);
 
 // parsing_utils
 int	check_rgb(char *line, int i, int k);
@@ -60,10 +70,19 @@ int	check_fov(char *line);
 int	check_vector_orientation(char *line, int i, int k);
 
 //line_read
-int		p_camera(char *line, t_count *count);
-int		p_light(char *line, t_count *count);
-int		p_plane(char *line, t_count *count);
-int		p_sphere(char *line, t_count *count);
-int		p_cylindre(char *line, t_count *count);
+int	p_camera(char *line, t_count *count);
+int	p_light(char *line, t_count *count);
+int	p_plane(char *line, t_count *count);
+int	p_sphere(char *line, t_count *count);
+int	p_cylindre(char *line, t_count *count);
+
+//check_file
+int	check_file(char *str);
+int	is_there_tabs(char *line);
+int	read_line(char *line, t_count *count);
+int	check_diametre(char *line);
+
+//read_map
+void	read_map(char *file_path, t_count *count);
 
 #endif

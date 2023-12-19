@@ -42,34 +42,41 @@ void add_shape(t_shapes_arr *arr, e_shape_type type, u_geom geo)
 
 }
 
-int	main(void)
+int	main(int argc, char **argv)
 {
-	// mlx_t		*mlx;
-	// mlx_image_t	*image;
-	// t_viewport	viewport;
-	// t_shapes_arr shapes;
-	// shapes.count = 0;
-	parsing("map/test.rt");
+	mlx_t		*mlx;
+	mlx_image_t	*image;
+	t_viewport	viewport;
+	t_shapes_arr shapes;
+	t_count		count;
+	shapes.count = 0;
 
-	// //add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, 0, -10, 3, (t_vector){1,0,0}));
-	// //add_shape(&shapes, SPHERE, (u_geom)create_sphere(10, 0, -10, 3,(t_vector){0,1,0}));
-	// //add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, 10, -10, 2,(t_vector){0,0,1}));
-	// //add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, -10, -10,5,(t_vector){1,1,0}));
-	// add_shape(&shapes, CYLINDER, (u_geom)create_cylinder((t_vector){10,0,-10},(t_vector){2,0,0}, 3, 8, (t_vector){1,1,0}));
+	if (argc != 2)
+	{
+		ft_printf_fd(2, "Trop de argument ou pas assez you dum biche\n");
+		return (1);
+	}
+	ft_bzero(&count, sizeof(count));
+	parsing(argv[1], &count);
+	read_map(argv[1], &count);
+	// add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, 0, -10, 3, (t_vector){1,0,0}));
+	// add_shape(&shapes, SPHERE, (u_geom)create_sphere(10, 0, -10, 3,(t_vector){0,1,0}));
+	// add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, 10, -10, 2,(t_vector){0,0,1}));
+	// add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, -10, -10,5,(t_vector){1,1,0}));
 
-	// viewport.ratio = IMAGE_WIDTH / IMAGE_HEIGHT;
-	// viewport.height = 2.0;
-	// viewport.width = viewport.height * viewport.ratio;
-	// viewport.camera_center = create_vector(0, 0, 0);
-	// viewport.v = create_vector(viewport.width, 0, 0);
-	// viewport.u = create_vector(0, -viewport.height, 0);
-	// viewport.pixel_delta_u = div_vec(viewport.u, IMAGE_HEIGHT);
-	// viewport.pixel_delta_v = div_vec(viewport.v, IMAGE_WIDTH);
-	// calculate_upper_left(&viewport, 1.0);
-	// calculate_p00_loc(&viewport);
-	// mlx = mlx_init(IMAGE_WIDTH, IMAGE_HEIGHT, "coucou", true);
-	// image = mlx_new_image(mlx, IMAGE_WIDTH, IMAGE_HEIGHT);
-	// create_rays(&viewport, &shapes, image);
-	// mlx_image_to_window(mlx, image, 0, 0);
-	// mlx_loop(mlx);
+	viewport.ratio = IMAGE_WIDTH / IMAGE_HEIGHT;
+	viewport.height = 2.0;
+	viewport.width = viewport.height * viewport.ratio;
+	viewport.camera_center = create_vector(0, 0, 0);
+	viewport.v = create_vector(viewport.width, 0, 0);
+	viewport.u = create_vector(0, -viewport.height, 0);
+	viewport.pixel_delta_u = div_vec(viewport.u, IMAGE_HEIGHT);
+	viewport.pixel_delta_v = div_vec(viewport.v, IMAGE_WIDTH);
+	calculate_upper_left(&viewport, 1.0);
+	calculate_p00_loc(&viewport);
+	mlx = mlx_init(IMAGE_WIDTH, IMAGE_HEIGHT, "coucou", true);
+	image = mlx_new_image(mlx, IMAGE_WIDTH, IMAGE_HEIGHT);
+	create_rays(&viewport, &shapes, image);
+	mlx_image_to_window(mlx, image, 0, 0);
+	mlx_loop(mlx);
 }
