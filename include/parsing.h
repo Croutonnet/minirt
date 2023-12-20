@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 14:03:30 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 17:16:53 by rapelcha         ###   ########.fr       */
+/*   Updated: 2023/12/20 15:21:27 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,13 @@ int	read_line(char *line, t_count *count);
 int	check_diametre(char *line);
 
 //read_map
-void	read_map(char *file_path, t_count *count);
+void	read_map(char *file_path, t_data *data, t_viewport *viewport);
+
+//create_shape
+void		pcreate_plane(t_shapes_arr *shapes);
+void		pcreate_sphere(t_shapes_arr *shapes);
+void		pcreate_cylindre(t_shapes_arr *shapes);
+t_vector	create_vector_str(char *str);
+
 
 #endif

@@ -25,7 +25,7 @@ ERASE_LINE	=	\033[2K\r
 
 # Compiler and flags
 CC				=	gcc
-CFLAGS			=	-g -Wall -Werror -Wextra
+CFLAGS			=	-g #-Wall -Werror -Wextra
 RM				=	rm -rf
 MLXLIBA			=	include/MLX42/build/libmlx42.a
 LIBFTA			=	include/Libft/libft.a
@@ -47,7 +47,9 @@ SRCS_PARS	=	line_read.c\
 				parsing.c\
 				parsing_utils.c\
 				parsing_func.c\
-				check_file.c
+				check_file.c\
+				read_map.c\
+				create_shape.c
 
 OBJS_DIR	=	obj/
 OBJSBASE	=	$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
