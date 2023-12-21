@@ -10,12 +10,12 @@
 
 // If sphere intersect ray
 // return a color and put r.hit = true
-t_sphere create_sphere(float x, float y, float z, float radius, t_color pColor)
+t_sphere create_sphere(t_vector coord, float radius, t_color pColor)
 {
     t_sphere s;
-    s.origin.x = x;
-    s.origin.y = y;
-    s.origin.z = z;
+    s.origin.x = coord.x;
+    s.origin.y = coord.y;
+    s.origin.z = coord.z;
     s.radius = radius;
     s.base_color = pColor;
     return (s);

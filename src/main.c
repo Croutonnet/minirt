@@ -32,18 +32,6 @@ static void	calculate_p00_loc(t_viewport *view)
 	print_vec(view->pixel00_loc);
 }
 
-// ajoute une Shape au tableau
-void add_shape(t_shapes_arr *arr, e_shape_type type, u_geom geo)
-{
-	if (type == SPHERE)
-		arr->shapes[arr->count].type = SPHERE;
-	else if (type == CYLINDER)
-		arr->shapes[arr->count].type = CYLINDER;
-	arr->shapes[arr->count].geom = geo;
-	arr->count++;
-
-}
-
 int	main(int argc, char **argv)
 {
 	mlx_t		*mlx;
@@ -60,11 +48,6 @@ int	main(int argc, char **argv)
 	ft_bzero(&count, sizeof(count));
 	if (parsing(argv[1], &count) == -1)
 		return (1);
-	add_shape(&data.shapes, SPHERE, (u_geom)create_sphere(0, 0, 10, 3, (t_vector){1,0,0}));
-	// add_shape(&shapes, SPHERE, (u_geom)create_sphere(10, -10, -10, 3,(t_vector){0,1,0}));
-	// add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, -10, -10, 2,(t_vector){0,0,1}));
-	// add_shape(&shapes, SPHERE, (u_geom)create_sphere(0, -10, -10, 5,(t_vector){1,1,0}));
-
 	viewport.ratio = IMAGE_WIDTH / IMAGE_HEIGHT;
 	viewport.height = 2.0;
 	viewport.width = viewport.height * viewport.ratio;

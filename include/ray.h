@@ -70,12 +70,12 @@ typedef struct s_data
 }				t_data;
 
 // shapes creation functions
-t_sphere create_sphere(float x, float y, float z, float radius, t_color pColor);
+t_sphere create_sphere(t_vector coord, float radius, t_color pColor);
 t_cylinder create_cylinder(t_vector p, t_vector r, float d, float h, t_vector c);
 
 // collision functions
 t_vector sphere_intersect_ray(t_sphere s, t_ray *r, t_light light);
-// t_vector cylinder_intersect_ray(t_cylinder c, t_ray *r, t_data *data);
+t_vector cylinder_intersect_ray(t_cylinder c, t_ray *r, t_light light);
 
 
 void create_rays(t_viewport *view, t_data *data, mlx_image_t *image);

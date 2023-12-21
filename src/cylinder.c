@@ -14,130 +14,42 @@ t_cylinder create_cylinder(t_vector p, t_vector r, float d, float h, t_vector c)
 	return (cylinder);
 }
 
-static double	deg_to_rad(double deg)
+t_vector cylinder_intersect_ray(t_cylinder cy, t_ray *r, t_light light)
 {
-	return (deg * (PI / 180.0));
-}
+	t_vector v[2];
+	float dist[2];
+	t_vector v_cy2ray;
+	t_color color;
+	color.x = 0;
+    color.y = 0;
+    color.z = 0;
 
-
-void	rotation_matrix_z(double matrix[3][3], double angle)
-{
-	angle = deg_to_rad(angle);
-	matrix[0][0] = cos(angle);
-	matrix[0][1] = -sin(angle);
-	matrix[0][2] = 0;
-	matrix[1][0] = sin(angle);
-	matrix[1][1] = cos(angle);
-	matrix[1][2] = 0;
-	matrix[2][0] = 0;
-	matrix[2][1] = 0;
-	matrix[2][2] = 1;
-}
-
-void	rotation_matrix_x(double matrix[3][3], double angle)
-{
-	angle = deg_to_rad(angle);
-	matrix[0][0] = 1;
-	matrix[0][1] = 0;
-	matrix[0][2] = 0;
-	matrix[1][0] = 0;
-	matrix[1][1] = cos(angle);
-	matrix[1][2] = -sin(angle);
-	matrix[2][0] = 0;
-	matrix[2][1] = sin(angle);
-	matrix[2][2] = cos(angle);
-}
-
-void	rotation_matrix_y(double matrix[3][3], double angle)
-{
-	angle = deg_to_rad(angle);
-	matrix[0][0] = cos(angle);
-	matrix[0][1] = 0;
-	matrix[0][2] = sin(angle);
-	matrix[1][0] = 0;
-	matrix[1][1] = 1;
-	matrix[1][2] = 0;
-	matrix[2][0] = -sin(angle);
-	matrix[2][1] = 0;
-	matrix[2][2] = cos(angle);
-}
-
-void multiply(double matrix[3][3], t_vector *v)
-{
-	int		i;
-	double	pointresult[3];
-
-	i = 0;
-	while (i < 3)
-	{
-		pointresult[i] = (matrix[i][0] * v->x)
-			+(matrix[i][1] * v->y) + (matrix[i][2] * v->z);
-		i++;
-	}
-    v->x = pointresult[0];
-    v->y = pointresult[1];
-    v->z = pointresult[2];
-}
-
-// t_vector cylinder_intersect_ray(t_cylinder cy, t_ray *r, t_light light)
-// {
-//     t_color color;
-//     color.x = 0;
-//     color.y = 0;
-//     color.z = 0;
-	
-// 	double matrix[3][3];
-// 	rotation_matrix_z(matrix, 45);
-// 	t_ray rayonmodif;
-	
-// 	rayonmodif.direction = minus_vec(r->direction, r->origin_point);
-
-// 	multiply(matrix, &rayonmodif.direction);
-// 	// deplace le point dorigine du rayon
-// 	rayonmodif.direction.x += cy.origin.x;
-// 	rayonmodif.direction.y += cy.origin.y;
-// 	r->origin_point.x += cy.origin.x;
-// 	r->origin_point.y += cy.origin.y;
-
-	
-// 	t_vector av =  create_vector((r->origin_point.x - cy.origin.x),0,(r->origin_point.z - cy.origin.z));
-//     t_vector bv = create_vector(rayonmodif.direction.x - r->origin_point.x,0,rayonmodif.direction.z - r->origin_point.z);
+	v[0] = minus_vec(r->direction, mul_vec(cy.rotation, dot_vec(r->direction, cy.rotation)));
+	v[1] = minus_vec(minus_vec(r->origin_point, cy.origin),
+	mul_vec(cy.rotation, dot_vec(minus_vec(r->origin_point, cy.origin), cy.rotation)));
     
 	
-//     float a = pow(bv.x,2) + pow(bv.z,2);
-// 	float b = (2.0 * av.x * bv.x) +  (2.0 * av.z * bv.z);
-//     float       c = pow(av.x, 2) + pow(av.z,2) - pow(cy.radius,2);
-//     float       dis = pow(b, 2) - (4 * a * c); //Discriminant < 0 si rien toucher, 0 toucher une fois, 1 toucher deux fois
+    float a = length_sqr(v[0]);
+	float b = 2.0 * dot_vec(v[0], v[1]);
+    float c = length_sqr(v[1]) - pow(cy.radius, 2);
+    float dis = pow(b, 2) - (4 * a * c);
 
-//     if (dis >= 0)
-//     {
-//         // // calcule la valeur de t
-//         //float t1 = (-b + sqrt(dis))/2.0f;
-//         float t2 = (-b - sqrtf(dis))/(2.0f * a);
-//         // calcule points de collision
-//         t_vector h2 = get_ray_point(rayonmodif, t2);
 
-//         if (h2.y > cy.height/2 || h2.y < -cy.height/2)
-//         {
-//             r->hit = false;
-//             return color;
-//         }
+	float t1 = (-b - sqrt(dis)) / (2 * a);
+	float t2 = (-b + sqrt(dis)) / (2 * a);
+	v_cy2ray = minus_vec(cy.origin, r->origin_point);
+	dist[0] = dot_vec(cy.rotation, minus_vec(mul_vec(r->direction, t1), v_cy2ray));
+	dist[1] = dot_vec(cy.rotation, minus_vec(mul_vec(r->direction, t2), v_cy2ray));
 
-//         // calcul normal
-//         t_vector normal = normalize(minus_vec(h2, cy.origin)); // x,y,z entre -1 et 1
-		
-//         // // calcul lumiere
-//         t_vector lightDir = normalize(minus_vec(light.origin, cy.origin));
-//         float intensity =  dot_vec(normal, lightDir) / 2;
-//         if (intensity < 0)
-//             intensity = 0;
-//         color.x = intensity * cy.base_color.x * light.color.x;
-//         color.y = intensity * cy.base_color.y * light.color.y;
-//         color.z = intensity * cy.base_color.z * light.color.z;
-// 		//color = (t_vector){1,1,0};
-//         r->hit = true;
-//         return color;
-//     }
-//     r->hit = false;
-//     return color;
-// }
+
+    if (dist[1] < cy.height)
+    {
+		r->hit = true;
+		color.x = 1;
+		color.y = 1;
+		color.z = 1;
+        return color;
+    }
+    r->hit = false;
+    return color;
+}
