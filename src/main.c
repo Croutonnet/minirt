@@ -42,7 +42,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_printf_fd(2, "Trop de argument ou pas assez you dum biche\n");
+		ft_printf_fd(2, "Trop d'argument ou pas assez d'argument\n");
 		return (1);
 	}
 	ft_bzero(&count, sizeof(count));

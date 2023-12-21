@@ -44,6 +44,7 @@ SRCS		=	main.c\
 
 PARS_DIR	=	src/parsing/
 SRCS_PARS	=	line_read.c\
+				line_read_utils.c\
 				parsing.c\
 				parsing_utils.c\
 				parsing_func.c\

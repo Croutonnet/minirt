@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:20:29 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/21 13:38:49 by rapelcha         ###   ########.fr       */
+/*   Updated: 2023/12/21 13:52:24 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static void	pcreate_ambient_light(char **line, t_data *data)
 static void	pcreate_camera(char **line, t_viewport *viewport)
 {
 	viewport->camera_center = create_vector_str(line[1]);
-	viewport->focal_lenght = tan((ft_atof(line[3]) / 2) * (viewport->width / 2));
+	viewport->focal_lenght = tan((ft_atof(line[3]) / 2)
+			* (viewport->width / 2));
 	// printf("Focal_lenght: %f\n", viewport->focal_lenght);
-
 	ft_xxfree((void **)line);
 }
 
@@ -62,8 +62,8 @@ static void	create_line(char *line, t_data *data, t_viewport *viewport)
 
 void	read_map(char *file_path, t_data *data, t_viewport *viewport)
 {
-	int	fd;
-	char *line;
+	int		fd;
+	char	*line;
 
 	fd = open(file_path, O_RDONLY);
 	line = "coucou";

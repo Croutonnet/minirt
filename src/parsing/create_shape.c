@@ -6,13 +6,13 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 12:37:13 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/21 13:38:35 by rapelcha         ###   ########.fr       */
+/*   Updated: 2023/12/21 13:51:34 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parsing.h"
 
-void add_shape(t_shapes_arr *arr, e_shape_type type, u_geom geo)
+void	add_shape(t_shapes_arr *arr, e_shape_type type, u_geom geo)
 {
 	if (type == SPHERE)
 		arr->shapes[arr->count].type = SPHERE;
@@ -24,11 +24,11 @@ void add_shape(t_shapes_arr *arr, e_shape_type type, u_geom geo)
 
 t_vector	create_vector_str(char *str)
 {
-	double nb1;
-	double nb2;
-	double nb3;
+	double	nb1;
+	double	nb2;
+	double	nb3;
 	int		i;
-	
+
 	i = 0;
 	nb1 = ft_atof(str);
 	while (str[i] != ',')
@@ -39,13 +39,13 @@ t_vector	create_vector_str(char *str)
 		i++;
 	i++;
 	nb3 = ft_atof(&str[i]);
-	return(create_vector(nb1, nb2, nb3));
+	return (create_vector(nb1, nb2, nb3));
 }
 
-void	pcreate_plane(char **line, t_data *data)
-{
+// void	pcreate_plane(char **line, t_data *data)
+// {
 
-}
+// }
 
 void	pcreate_sphere(char **line, t_data *data)
 {
@@ -72,6 +72,6 @@ void	pcreate_cylindre(char **line, t_data *data)
 	dia = ft_atof(line[3]);
 	height = ft_atof(line[4]);
 	color = (t_color)normalize(create_vector_str(line[5]));
-	add_shape(&data->shapes, CYLINDER, (u_geom)create_cylinder(coord, ori, dia, height, color));
+	add_shape(&data->shapes, CYLINDER, (u_geom)create_cylinder(coord, ori,
+			dia, height, color));
 }
-

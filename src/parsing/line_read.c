@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:13:40 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 16:13:41 by rapelcha         ###   ########.fr       */
+/*   Updated: 2023/12/21 13:57:32 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ int	p_camera(char *line, t_count *count)
 	err = check_syntaxe(temp, 1, 0);
 	if (err != CORRECT)
 		return (print_error(BADCAMERA, err, false));
-	err = check_vector(temp[1], 0 ,0);
+	err = check_vector(temp[1], 0, 0);
 	if (err != CORRECT)
 		return (print_error(BADCAMERA, err, false));
-	err = check_vector_orientation(temp[2], 0 ,0);
+	err = check_vector_orientation(temp[2], 0, 0);
 	if (err != CORRECT)
 		return (print_error(BADCAMERA, err, false));
 	err = check_fov(temp[3]);
@@ -146,16 +146,7 @@ int	p_cylindre(char *line, t_count *count)
 	err = check_vector(temp[1], 0, 0);
 	if (err != CORRECT)
 		return (print_error(BADCYL, err, false));
-	err = check_vector_orientation(temp[2], 0, 0);
-	if (err != CORRECT)
-		return (print_error(BADCYL, err, false));
-	err = check_diametre(temp[3]);
-	if (err != CORRECT)
-		return (print_error(BADCYL, err, false));
-	err = check_diametre(temp[4]);
-	if (err != CORRECT)
-		return (print_error(BADCYL, err, false));
-	err = check_rgb(temp[5], 0, 0);
+	err = p_cylindre_2(temp, err);
 	if (err != CORRECT)
 		return (print_error(BADCYL, err, false));
 	ft_xxfree((void **)temp);
