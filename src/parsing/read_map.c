@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:20:29 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/20 15:43:54 by rapelcha         ###   ########.fr       */
+/*   Updated: 2023/12/21 11:53:49 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static void	pcreate_ambient_light(char **line, t_data *data)
 {
 	data->alight.intensity = ft_atof(line[1]);
-	data->alight.color = (t_color)create_vector_str(line[2]);
+	data->alight.color = (t_color)normalize(create_vector_str(line[2]));
 	printf("IN FUNCTION alight intensity: %f\n", data->alight.intensity);
 	printf("IN FUNCTION alight color: ");
 	print_vec(data->alight.color);

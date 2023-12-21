@@ -59,7 +59,7 @@ void create_rays(t_viewport *view, t_data *data, mlx_image_t *image)
                 t_shape *shape;
                 shape = &data->shapes.shapes[id];
                 if (shape->type == SPHERE)
-                    pixel = sphere_intersect_ray(shape->geom.sphere, &r, data);
+                    pixel = sphere_intersect_ray(shape->geom.sphere, &r, data->light);
                 // else if (shape->type == CYLINDER)
                 //     pixel = cylinder_intersect_ray(shape->geom.cylinder, &r, light);
                 if (r.hit == true)
