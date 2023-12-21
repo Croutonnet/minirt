@@ -13,7 +13,7 @@ static void	calculate_upper_left(t_viewport *view)
 	t_vector	res2;
 	t_vector	res3;
 
-	res1 = minus_vec(view->camera_center, create_vector(0, 0, view->focal_lenght));
+	res1 = minus_vec(view->camera_center, create_vector(0, 0, -view->focal_lenght));
 	res2 = div_vec(view->u, 2);
 	res3 = div_vec(view->v, 2);
 	view->upper_left = minus_vec(res1, res2);

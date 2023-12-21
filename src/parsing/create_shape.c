@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 12:37:13 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/21 13:51:34 by rapelcha         ###   ########.fr       */
+/*   Updated: 2023/12/21 14:53:34 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	pcreate_sphere(char **line, t_data *data)
 	t_color		color;
 
 	coord = create_vector_str(line[1]);
-	dia = ft_atof(line[2]);
+	dia = ft_atof(line[2]) / 2;
 	color = (t_color)normalize(create_vector_str(line[3]));
 	add_shape(&data->shapes, SPHERE, (u_geom)create_sphere(coord, dia, color));
 }
@@ -69,7 +69,7 @@ void	pcreate_cylindre(char **line, t_data *data)
 
 	coord = create_vector_str(line[1]);
 	ori = normalize(create_vector_str(line[2]));
-	dia = ft_atof(line[3]);
+	dia = ft_atof(line[3]) / 2;
 	height = ft_atof(line[4]);
 	color = (t_color)normalize(create_vector_str(line[5]));
 	add_shape(&data->shapes, CYLINDER, (u_geom)create_cylinder(coord, ori,

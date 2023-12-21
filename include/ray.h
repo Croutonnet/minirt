@@ -58,8 +58,8 @@ typedef struct s_shape
 // tableau de shapes 3D
 typedef struct s_shapes_arr
 {
-    t_shape shapes[100];
-    int count;
+	t_shape shapes[100];
+	int count;
 } t_shapes_arr;
 
 typedef struct s_data
