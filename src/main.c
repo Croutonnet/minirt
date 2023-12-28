@@ -40,6 +40,8 @@ void add_shape(t_shapes_arr *arr, e_shape_type type, u_geom geo)
 		arr->shapes[arr->count].type = SPHERE;
 	else if (type == CYLINDER)
 		arr->shapes[arr->count].type = CYLINDER;
+	else if (type == PLANE)
+		arr->shapes[arr->count].type = PLANE;
 	arr->shapes[arr->count].geom = geo;
 	arr->count++;
 
@@ -76,13 +78,12 @@ int	main(void)
 {
 	mlx_t		*mlx;
 	shapes.count = 0;
-
+	add_shape(&shapes, PLANE, (u_geom)create_plane((t_vector){0,0,-20}, (t_vector){0.4,1,0}, (t_color){0,0,1}));
 	add_shape(&shapes, SPHERE, (u_geom)create_sphere((t_vector){0, 0, -10}, 3, (t_vector){1,0,0}));
 	//add_shape(&shapes, SPHERE, (u_geom)create_sphere((t_vector){10, 0, -10}, 3,(t_vector){0,1,0}));
 	//add_shape(&shapes, SPHERE, (u_geom)create_sphere((t_vector){0, 10, -10}, 2,(t_vector){0,0,1}));
 	//add_shape(&shapes, SPHERE, (u_geom)create_sphere((t_vector){0, -10, -10},5,(t_vector){1,1,0}));
 	//add_shape(&shapes, CYLINDER, (u_geom)create_cylinder((t_vector){10,5,-10},(t_vector){0,1,0}, 3, 8, (t_vector){1,1,0}));
-	add_shape(&shapes, PLANE, (u_geom)create_plane((t_vector){0,0,-20}, (t_vector){1,0,0}, (t_color){0,0,1}));
 	viewport.ratio = IMAGE_WIDTH / IMAGE_HEIGHT;
 	viewport.height = 2.0;
 	viewport.width = viewport.height * viewport.ratio;

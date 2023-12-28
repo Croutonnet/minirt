@@ -25,7 +25,7 @@ ERASE_LINE	=	\033[2K\r
 
 # Compiler and flags
 CC			=	gcc
-CFLAGS		=	-g -Wall -Werror -Wextra
+CFLAGS		=	-g #-Wall -Werror -Wextra
 RM			=	rm -rf
 MLXLIBA		=	include/MLX42/build/libmlx42.a
 

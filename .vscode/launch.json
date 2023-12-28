@@ -6,7 +6,7 @@
       "request": "launch",
       "args": [],
       "cwd": "/Users/bbouchar/Desktop/minirt/src",
-      "program": "/Users/bbouchar/Desktop/minirt/src/build/Debug/outDebug"
+      "program": "minirt"
     }
   ]
 }

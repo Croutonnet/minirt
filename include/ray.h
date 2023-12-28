@@ -83,7 +83,7 @@ t_cylinder create_cylinder(t_vector p, t_vector r, float d, float h, t_vector c)
 t_cone create_cone(float x, float y, float z);
 t_plane create_plane(t_vector p_position, t_vector p_axis, t_color p_Color);
 
-// collision functions
+// collision func  tions
 t_vector sphere_intersect_ray(t_sphere s, t_ray *r, t_light light, t_light_ambient light_amb);
 t_vector cylinder_intersect_ray(t_cylinder c, t_ray *r);
 t_vector plane_intersect_ray(t_plane p, t_ray *r, t_light light, t_light_ambient light_amb);
