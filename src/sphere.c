@@ -23,7 +23,7 @@ t_sphere	create_sphere(t_vector coord, float radius, t_color pColor)
 
 // If sphere intersect ray
 // return a color and put r.hit = true
-t_vector sphere_intersect_ray(t_sphere s, t_ray *r, t_light light)
+t_vector sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
 {
 	t_color color;
 	color.x = 0;
@@ -45,13 +45,13 @@ t_vector sphere_intersect_ray(t_sphere s, t_ray *r, t_light light)
 		// calcul normal
 		t_vector normal = normalize(minus_vec(h2, s.origin)); // x,y,z entre -1 et 1
 		// // calcul lumiere
-		t_vector lightDir = normalize(minus_vec(light.origin, s.origin));
+		t_vector lightDir = normalize(minus_vec(data->light.origin, s.origin));
 		float intensity =  dot_vec(normal, lightDir) / 2;
 		if (intensity < 0)
 			intensity = 0;
-		color.x = intensity * s.base_color.x * light.color.x;
-		color.y = intensity * s.base_color.y * light.color.y;
-		color.z = intensity * s.base_color.z * light.color.z;
+		color.x = intensity * s.base_color.x * data->light.color.x;
+		color.y = intensity * s.base_color.y * data->light.color.y;
+		color.z = intensity * s.base_color.z * data->light.color.z;
 		r->hit = true;
 		return color;
 	}

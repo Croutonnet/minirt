@@ -7,6 +7,18 @@
 #include <stdio.h>
 #include <stdbool.h>
 
+void	key_func(mlx_key_data_t keydata, void *param)
+{
+	mlx_t	*mlx;
+
+	mlx = param;
+	if (keydata.key == MLX_KEY_ESCAPE){
+		mlx_terminate(mlx);
+		exit(0);
+	}
+	return ;
+}
+
 static void	calculate_upper_left(t_viewport *view)
 {
 	t_vector	res1;
@@ -62,5 +74,6 @@ int	main(int argc, char **argv)
 	image = mlx_new_image(mlx, IMAGE_WIDTH, IMAGE_HEIGHT);
 	create_rays(&viewport, &data, image);
 	mlx_image_to_window(mlx, image, 0, 0);
+	mlx_key_hook(mlx, key_func, mlx);
 	mlx_loop(mlx);
 }
