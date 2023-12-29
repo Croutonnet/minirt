@@ -11,6 +11,7 @@ typedef struct s_viewport
 	double		width;
 	double		height;
 	double		ratio;
+	double		focal_lenght;
 	t_vector	camera_center;
 	t_vector	v;
 	t_vector	u;
