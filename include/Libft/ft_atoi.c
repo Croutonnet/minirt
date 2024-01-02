@@ -1,40 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printfp_fd.c                                    :+:      :+:    :+:   */
+/*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/03 23:35:47 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 15:53:22 by rapelcha         ###   ########.fr       */
+/*   Created: 2022/10/24 10:25:26 by rapelcha          #+#    #+#             */
+/*   Updated: 2022/12/04 13:07:08 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
-#include <stdint.h>
+#include "libft.h"
 
-static void	convx(uintptr_t p, int *count, int fd)
+int	ft_atoi(const char *str)
 {
-	if (p > 15)
-	{
-		convx(p / 16, count, fd);
-		convx(p % 16, count++, fd);
-	}
-	else
-	{
-		if (p > 9)
-			(*count) += ft_printfc_fd(p + 87, fd);
-		else
-			(*count) += ft_printfc_fd(p + 48, fd);
-	}
-}
+	size_t	i;
+	int		neg;
+	int		res;
 
-int	ft_printfp_fd(void *p, int fd)
-{
-	int	count;
-
-	count = 2;
-	ft_printfs_fd("0x", fd);
-	convx((uintptr_t)p, &count, fd);
-	return (count);
+	if (!str)
+		return (0);
+	i = 0;
+	neg = 1;
+	res = 0;
+	while ((str[i] >= 9 && str[i] <= 13) || str[i] == 32)
+		i++;
+	if (str[i] == 43 || str[i] == 45)
+	{
+		if (str[i] == 45)
+			neg = -1;
+		i++;
+	}
+	while (str[i] >= '0' && str[i] <= '9')
+	{
+		res *= 10;
+		res += str[i] - 48;
+		i++;
+	}
+	return (res * neg);
 }

@@ -6,16 +6,18 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 11:00:41 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 14:48:19 by rapelcha         ###   ########.fr       */
+/*   Updated: 2022/12/04 13:43:48 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "libft.h"
 
 char	*ft_strdup(const char *s1)
 {
 	char	*str;
+	size_t	i;
 
+	i = 0;
 	if (!s1)
 		return (NULL);
 	str = (char *)ft_calloc((ft_strlen(s1) + 1), sizeof(char));

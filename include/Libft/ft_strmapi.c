@@ -1,40 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printfp_fd.c                                    :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/03 23:35:47 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 15:53:22 by rapelcha         ###   ########.fr       */
+/*   Created: 2022/10/24 16:37:31 by rapelcha          #+#    #+#             */
+/*   Updated: 2022/11/03 19:59:50 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
-#include <stdint.h>
+#include "libft.h"
 
-static void	convx(uintptr_t p, int *count, int fd)
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
 {
-	if (p > 15)
-	{
-		convx(p / 16, count, fd);
-		convx(p % 16, count++, fd);
-	}
-	else
-	{
-		if (p > 9)
-			(*count) += ft_printfc_fd(p + 87, fd);
-		else
-			(*count) += ft_printfc_fd(p + 48, fd);
-	}
-}
+	char	*str;
+	int		i;
 
-int	ft_printfp_fd(void *p, int fd)
-{
-	int	count;
-
-	count = 2;
-	ft_printfs_fd("0x", fd);
-	convx((uintptr_t)p, &count, fd);
-	return (count);
+	i = 0;
+	if (!s)
+		return (NULL);
+	str = (char *)malloc((ft_strlen(s) + 1) * sizeof(char));
+	if (!str)
+		return (NULL);
+	while (s[i])
+	{
+		str[i] = s[i];
+		i++;
+	}
+	str[i] = '\0';
+	i = 0;
+	while (str[i])
+	{
+		str[i] = f(i, str[i]);
+		i++;
+	}
+	return (str);
 }

@@ -37,8 +37,5 @@ t_vector plane_intersect_ray(t_plane p, t_ray *r, t_light light, t_light_ambient
 
 	t = num/denom;
 	r->hit = true;
-	color.x = 1;
-	color.y = 0;
-	color.z = 0;
-    return color;
+    return p.base_color;
 }

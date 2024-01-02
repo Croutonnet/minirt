@@ -1,26 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_substr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 11:00:41 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 14:48:19 by rapelcha         ###   ########.fr       */
+/*   Created: 2022/10/24 12:42:02 by rapelcha          #+#    #+#             */
+/*   Updated: 2022/11/07 11:05:40 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "libft.h"
 
-char	*ft_strdup(const char *s1)
+char	*ft_substr(char const *s, unsigned int start, size_t len)
 {
-	char	*str;
+	char			*str;
+	unsigned int	i;
+	unsigned int	count;
 
-	if (!s1)
+	count = 0;
+	i = start;
+	if (!s)
 		return (NULL);
-	str = (char *)ft_calloc((ft_strlen(s1) + 1), sizeof(char));
+	if (start < ft_strlen(s))
+	{
+		while (s[i++] && count < len)
+			count++;
+	}
+	i = 0;
+	str = (char *)ft_calloc((count + 1), sizeof(char));
 	if (!str)
-		return (0);
-	ft_memcpy(str, s1, ft_strlen(s1));
+		return (NULL);
+	if (start >= ft_strlen(s))
+	{
+		str[i] = '\0';
+		return (str);
+	}
+	while (s[start] && i < len)
+		str[i++] = s[start++];
 	return (str);
 }

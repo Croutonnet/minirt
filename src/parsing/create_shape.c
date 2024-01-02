@@ -18,6 +18,8 @@ void	add_shape(t_shapes_arr *arr, e_shape_type type, u_geom geo)
 		arr->shapes[arr->count].type = SPHERE;
 	else if (type == CYLINDER)
 		arr->shapes[arr->count].type = CYLINDER;
+	else if (type == PLANE)
+		arr->shapes[arr->count].type = PLANE;
 	arr->shapes[arr->count].geom = geo;
 	arr->count++;
 }
@@ -42,10 +44,17 @@ t_vector	create_vector_str(char *str)
 	return (create_vector(nb1, nb2, nb3));
 }
 
-// void	pcreate_plane(char **line, t_data *data)
-// {
+void	pcreate_plane(char **line, t_data *data)
+{
+	t_vector coord;
+	t_vector axis;
+	t_color color;
 
-// }
+	coord = create_vector_str(line[1]);
+	axis = create_vector_str(line[2]);
+	color = (t_color)normalize(create_vector_str(line[3]));
+	add_shape(&data->shapes, PLANE, (u_geom)create_plane(coord, axis, color));
+}
 
 void	pcreate_sphere(char **line, t_data *data)
 {

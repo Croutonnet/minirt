@@ -31,7 +31,6 @@ MLXLIBA			=	include/MLX42/build/libmlx42.a
 LIBFTA			=	include/Libft/libft.a
 LIBFT_DIR		=	include/Libft/
 LIBFT_GIT_URL	=	https://github.com/Croutonnet/Libft.git
-LIBFT_VERSION	=	v2.0.0
 
 # Sources are all .c files
 SRC_DIR		=	src/
@@ -88,7 +87,7 @@ $(OBJS_DIR):
 # Removes objects
 clean:
 	@printf "💣 $(RED)Removing $(NAME) objects and MLX42... $(RESET) 💥\n"
-	@cd include/libft/ && make clean && cd ..
+	@cd include/Libft/ && make clean && cd ..
 	@$(RM) $(OBJS_DIR)
 	@$(RM) include/MLX42/build
 
@@ -96,7 +95,7 @@ clean:
 fclean: clean
 	@printf "💣 $(RED)Removing $(NAME) executable$(RESET) 💥\n"
 	@$(RM) $(NAME)
-	@cd include/libft/ && $(RM) libft.a && cd ..
+	@cd include/Libft/ && $(RM) libft.a && cd ..
 
 # Removes objects and executables and remakes
 re: fclean all
@@ -113,7 +112,7 @@ mlx:
 libft:
 	@if [ ! -d "$(LIBFT_DIR)" ]; then \
         echo "libft directory does not exist, cloning..."; \
-        git clone -b $(LIBFT_VERSION) -q $(LIBFT_GIT_URL) $(LIBFT_DIR); \
+        git clone -q $(LIBFT_GIT_URL) $(LIBFT_DIR); \
 	fi
 	@$(MAKE) -sC $(LIBFT_DIR)
 
