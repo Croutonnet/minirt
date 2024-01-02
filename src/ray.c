@@ -27,7 +27,7 @@ static void clear_img(mlx_image_t *image)
 	}
 }
 
-void create_rays(t_viewport *view, t_data *data, mlx_image_t *image)
+void create_rays(t_data *data)
 {
 	int			x;
 	int			y;
@@ -42,17 +42,19 @@ void create_rays(t_viewport *view, t_data *data, mlx_image_t *image)
 	id = 0;
 	x = 0;
 	y = 0;
-	clear_img(image);
-	//left_corner = view->pixel00_loc;
+	//left_corner = data->viewport.pixel00_loc;
+	printf("CAM COORD:");
+	print_vec(data->viewport.camera_center);
+	clear_img(data->image);
 	while (y < IMAGE_HEIGHT)
 	{
 		x = 0;
 		while (x < IMAGE_WIDTH)
 		{
-			temp = add_vec(mul_vec(view->pixel_delta_v, x), mul_vec(view->pixel_delta_u, y));
-			point = add_vec(view->pixel00_loc, temp);
-			dest = normalize(minus_vec(point, view->camera_center));
-			r = create_ray(r, view->camera_center, dest);
+			temp = add_vec(mul_vec(data->viewport.pixel_delta_v, x), mul_vec(data->viewport.pixel_delta_u, y));
+			point = add_vec(data->viewport.pixel00_loc, temp);
+			dest = normalize(minus_vec(point, data->viewport.camera_center));
+			r = create_ray(r, data->viewport.camera_center, dest);
 			id = 0;
 			while (id < data->shapes.count)
 			{
@@ -63,13 +65,14 @@ void create_rays(t_viewport *view, t_data *data, mlx_image_t *image)
 				else if (shape->type == CYLINDER)
 					pixel = cylinder_intersect_ray(shape->geom.cylinder, &r, data->light);
 				if (r.hit == true)
-					mlx_put_pixel(image, x, y, ft_pixel(pixel.x * 255, pixel.y * 255, pixel.z * 255, 255));
+					mlx_put_pixel(data->image, x, y, ft_pixel(pixel.x * 255, pixel.y * 255, pixel.z * 255, 255));
 				id++;
 			}
 			x++;
 		}
 		y++;
 	}
+	printf("gar\n");
 }
 
 t_ray create_ray(t_ray r, t_vector origin, t_vector dir)

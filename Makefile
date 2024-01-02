@@ -36,6 +36,7 @@ LIBFT_VERSION	=	v2.0.0
 # Sources are all .c files
 SRC_DIR		=	src/
 SRCS		=	main.c\
+				cam_mouvement.c\
 				ray.c\
 				sphere.c\
 				vector_math.c\
