@@ -38,11 +38,6 @@ void create_rays(t_viewport *view, t_data *data,mlx_image_t *image)
     t_vector point;
     t_color pixel;
     int         id;
-    t_light light;
-
-    light.origin = create_vector(10,20, - 10);
-    light.intensity = 1;
-    light.color = create_vector(1,1,1);
 
     id = 0;
     x = 0;
@@ -69,9 +64,9 @@ void create_rays(t_viewport *view, t_data *data,mlx_image_t *image)
                 if (shape->type == SPHERE)
                     pixel = sphere_intersect_ray(shape->geom.sphere, &r, data);
                 else if (shape->type == CYLINDER)
-                    pixel = cylinder_intersect_ray(shape->geom.cylinder, &r, light);
+                    pixel = cylinder_intersect_ray(shape->geom.cylinder, &r, data->light);
                 else if (shape->type == PLANE)
-                    pixel = plane_intersect_ray(shape->geom.plane, &r, light, data->alight);
+                    pixel = plane_intersect_ray(shape->geom.plane, &r, data->light, data->alight);
                 if (r.hit == true)
                     mlx_put_pixel(image, x, y, ft_pixel(pixel.x * 255, pixel.y * 255, pixel.z * 255, 255));
                 id++;

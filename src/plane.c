@@ -36,6 +36,14 @@ t_vector plane_intersect_ray(t_plane p, t_ray *r, t_light light, t_light_ambient
 	}
 
 	t = num/denom;
+	t_vector lightDir = normalize(minus_vec(light.origin, p.origin));
+	float intensity =  dot_vec(p.axis, lightDir) / 2;
+	if (intensity < 0)
+		intensity = 0;
+    color.x = (light_amb.intensity * light_amb.color.x) + (intensity * p.base_color.x * light.color.x);
+    color.y = (light_amb.intensity * light_amb.color.y) + (intensity * p.base_color.y * light.color.y);
+    color.z = (light_amb.intensity * light_amb.color.z) + (intensity * p.base_color.z * light.color.z);
+	
 	r->hit = true;
-    return p.base_color;
+    return color;
 }
