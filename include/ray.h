@@ -85,6 +85,6 @@ int		cam_mouvement_key(mlx_key_data_t keydata, t_data *data);
 
 void create_rays(t_data *data);
 t_vector get_ray_point(t_ray r, float t);
-t_ray create_ray(t_ray r, t_vector origin, t_vector dir);
+t_ray create_ray(t_vector origin, t_vector dir);
 
 #endif

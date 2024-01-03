@@ -32,31 +32,29 @@ void create_rays(t_data *data)
 	int			x;
 	int			y;
 	t_ray		r;
-	t_vector	dest;
-	//t_vector	left_corner;
-	t_vector	temp;
+	t_vector	dir;
+	t_vector	delta;
 	t_vector	point;
 	t_color		pixel;
 	int			id;
 
-	id = 0;
-	x = 0;
 	y = 0;
-	//left_corner = data->viewport.pixel00_loc;
 	printf("CAM COORD:");
 	print_vec(data->viewport.camera_center);
+	printf("P_00");
+	print_vec(data->viewport.pixel00_loc);
 	clear_img(data->image);
 	while (y < IMAGE_HEIGHT)
 	{
 		x = 0;
 		while (x < IMAGE_WIDTH)
 		{
-			temp = add_vec(mul_vec(data->viewport.pixel_delta_v, x), mul_vec(data->viewport.pixel_delta_u, y));
-			point = add_vec(data->viewport.pixel00_loc, temp);
-			dest = normalize(minus_vec(point, data->viewport.camera_center));
-			r = create_ray(r, data->viewport.camera_center, dest);
+			delta = add_vec(mul_vec(data->viewport.pixel_delta_v, x), mul_vec(data->viewport.pixel_delta_u, y));
+			point = add_vec(data->viewport.pixel00_loc, delta);
+			dir = normalize(minus_vec(point, data->viewport.camera_center));
+			r = create_ray(data->viewport.camera_center, dir);
 			id = 0;
-			while (id < data->shapes.count)
+			while (id < data->shapes.count) 
 			{
 				t_shape *shape;
 				shape = &data->shapes.shapes[id];
@@ -72,15 +70,16 @@ void create_rays(t_data *data)
 		}
 		y++;
 	}
-	printf("gar\n");
 }
 
-t_ray create_ray(t_ray r, t_vector origin, t_vector dir)
+t_ray create_ray(t_vector origin, t_vector dir)
 {
-	r.hit = false;
-	r.origin_point = origin;
-	r.direction = dir;
-	return (r);
+	t_ray temp_ray;
+
+	temp_ray.hit = false;
+	temp_ray.origin_point = origin;
+	temp_ray.direction = dir;
+	return (temp_ray);
 }
 
 // renvoi le point p (x,y,z) dintersection du rayon a la distance t

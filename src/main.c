@@ -11,14 +11,17 @@ static void	calculate_upper_left(t_data *data)
 {
 	t_vector	res1;
 	t_vector	res2;
-	t_vector	res3;
+	// t_vector	res3;
 
-	res1 = minus_vec(data->viewport.camera_center, create_vector(0, 0, -data->viewport.focal_lenght));
-	res2 = div_vec(data->viewport.u, 2);
-	res3 = div_vec(data->viewport.v, 2);
-	data->viewport.upper_left = minus_vec(res1, res2);
-	data->viewport.upper_left = minus_vec(data->viewport.upper_left, res3);
-	printf("upper_left: ");
+	// res1 = minus_vec(data->viewport.camera_center, create_vector(0, 0, -data->viewport.focal_lenght));
+	// res2 = div_vec(data->viewport.u, 2);
+	// res3 = div_vec(data->viewport.v, 2);
+	// data->viewport.upper_left = minus_vec(res1, res2);
+	// data->viewport.upper_left = minus_vec(data->viewport.upper_left, res3);
+	res1 = minus_vec(create_vector(0, 0, 0), create_vector(0, 0, -data->viewport.focal_lenght));
+	res2 = minus_vec(res1, div_vec(data->viewport.u, 2));
+	data->viewport.upper_left = minus_vec(res2, div_vec(data->viewport.v, 2));
+	printf("UPPER_LEFT: ");
 	print_vec(data->viewport.upper_left);
 }
 
@@ -28,8 +31,9 @@ static void	calculate_p00_loc(t_data *data)
 
 	res1 = mul_vec(add_vec(data->viewport.pixel_delta_u, data->viewport.pixel_delta_v), 0.5);
 	data->viewport.pixel00_loc = add_vec(data->viewport.upper_left, res1);
-	printf("pixel_00: ");
-	print_vec(data->viewport.pixel00_loc);
+	// res1 = add_vec(data->viewport.pixel_delta_u, data->viewport.pixel_delta_v);
+	// data->viewport.pixel00_loc = add_vec(data->viewport.upper_left, mul_vec(res1, 0.5));
+	data->viewport.pixel00_loc_base = data->viewport.pixel00_loc;
 }
 
 void	key_func(mlx_key_data_t keydata, void *param)
@@ -44,8 +48,7 @@ void	key_func(mlx_key_data_t keydata, void *param)
 	else if (cam_mouvement_key(keydata, data) == true)
 	{
 		change_camera(data, keydata.key);
-		calculate_upper_left(data);
-		calculate_p00_loc(data);
+		data->viewport.pixel00_loc = add_vec(data->viewport.pixel00_loc_base, data->viewport.camera_center);
 		create_rays(data);
 	}
 	return ;
@@ -55,11 +58,13 @@ void	initialisation(t_data *data, char *input)
 	data->viewport.ratio = IMAGE_WIDTH / IMAGE_HEIGHT;
 	data->viewport.height = 2.0;
 	data->viewport.width = data->viewport.height * data->viewport.ratio;
+	printf("Viewport width: %f\n", data->viewport.width);
 	data->viewport.v = create_vector(data->viewport.width, 0, 0);
 	data->viewport.u = create_vector(0, -data->viewport.height, 0);
 	data->viewport.pixel_delta_u = div_vec(data->viewport.u, IMAGE_HEIGHT);
 	data->viewport.pixel_delta_v = div_vec(data->viewport.v, IMAGE_WIDTH);
 	read_map(input, data);
+	data->viewport.viewport_center = minus_vec(create_vector(0, 0, 0), create_vector(0, 0, -data->viewport.focal_lenght));
 	calculate_upper_left(data);
 	calculate_p00_loc(data);
 	data->mlx = mlx_init(IMAGE_WIDTH, IMAGE_HEIGHT, "coucou", true);
@@ -74,7 +79,7 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 	{
 		ft_printf_fd(2, "Il faut loader une map dans map/quelquechose.rt et rien d'autre\n");
-		argv[1] = "map/test.rt";
+		return (1);
 	}
 	ft_bzero(&count, sizeof(count));
 	ft_bzero(&data, sizeof(data));

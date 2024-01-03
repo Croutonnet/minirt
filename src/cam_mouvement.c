@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 13:00:58 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/02 15:12:14 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/03 12:45:40 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	change_camera(t_data *data, keys_t key)
 	// else if(key == MLX_KEY_S)
 		// data->viewport.camera_center.z = ;
 	if(key == MLX_KEY_D)
-		data->viewport.camera_center = add_vec(data->viewport.camera_center, normalize(data->viewport.v));
+		data->viewport.camera_center = add_vec(data->viewport.camera_center, normalize(data->viewport.pixel_delta_v));
 	else if(key == MLX_KEY_A)
-		data->viewport.camera_center = add_vec(data->viewport.camera_center, mul_vec(normalize(data->viewport.v), -1));
+		data->viewport.camera_center = add_vec(data->viewport.camera_center, mul_vec(normalize(data->viewport.pixel_delta_v), -1));
 }
