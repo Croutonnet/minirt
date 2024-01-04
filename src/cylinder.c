@@ -14,7 +14,7 @@ t_cylinder create_cylinder(t_vector p, t_vector r, float d, float h, t_vector c)
 	return (cylinder);
 }
 
-t_vector cylinder_intersect_ray(t_cylinder cy, t_ray *r, t_light light)
+t_vector cylinder_intersect_ray(t_cylinder cy, t_ray *r)
 {
 	t_vector v[2];
 	float dist[2];

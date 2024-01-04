@@ -26,7 +26,7 @@ t_vector plane_intersect_ray(t_plane p, t_ray *r, t_light light, t_light_ambient
 	float denom;
 	float t;
 
-	num = dot_vec(minus_vec(p.origin, r->origin_point), p.axis);
+	num = dot_vec(minus_vec(r->origin_point, p.origin), p.axis);
 	denom = dot_vec(r->direction, p.axis);
 
 	if (denom < 0.001)
@@ -35,7 +35,7 @@ t_vector plane_intersect_ray(t_plane p, t_ray *r, t_light light, t_light_ambient
 		return color;
 	}
 
-	t = num/denom;
+	t = 100; //num / denom; // bug ici
 	t_vector lightDir = normalize(minus_vec(light.origin, p.origin));
 	float intensity =  dot_vec(p.axis, lightDir) / 2;
 	if (intensity < 0)
@@ -43,7 +43,8 @@ t_vector plane_intersect_ray(t_plane p, t_ray *r, t_light light, t_light_ambient
     color.x = (light_amb.intensity * light_amb.color.x) + (intensity * p.base_color.x * light.color.x);
     color.y = (light_amb.intensity * light_amb.color.y) + (intensity * p.base_color.y * light.color.y);
     color.z = (light_amb.intensity * light_amb.color.z) + (intensity * p.base_color.z * light.color.z);
-	
+	r->t = t;
 	r->hit = true;
+	r->intersect = get_ray_point(*r, t);
     return color;
 }

@@ -10,9 +10,12 @@
 typedef struct s_ray
 {
 	bool hit;
-	t_vector plane_point;
+	t_vector intersect; // retour du point dintersection
 	t_vector origin_point;
 	t_vector direction;
+	t_color color; // couleur de retour
+	int id; // retour de id de lobjet
+	int t; // distance t du point dintersection
 }t_ray;
 
 // types de geometries possibles
@@ -86,7 +89,7 @@ t_plane create_plane(t_vector p_position, t_vector p_axis, t_color p_Color);
 
 // collision func  tions
 t_vector sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data);
-t_vector cylinder_intersect_ray(t_cylinder c, t_ray *r, t_light light);
+t_vector cylinder_intersect_ray(t_cylinder c, t_ray *r);
 t_vector plane_intersect_ray(t_plane p, t_ray *r, t_light light, t_light_ambient light_amb);
 
 void create_rays(t_viewport *view, t_data *data, mlx_image_t *image);

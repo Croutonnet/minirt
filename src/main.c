@@ -57,6 +57,7 @@ int	main(int argc, char **argv)
 		ft_printf_fd(2, "Trop d'argument ou pas assez d'argument\n");
 		return (1);
 	}
+	data.shapes.count = 0; // important !
 	ft_bzero(&count, sizeof(count));
 	if (parsing(argv[1], &count) == -1)
 		return (1);

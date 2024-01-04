@@ -20,7 +20,7 @@ t_sphere create_sphere(t_vector pPosition, float radius, t_color pColor)
 }
 
 // If sphere intersect ray
-// return a color and put r.hit = true
+// return a color and put r.hit = true, retunr intersection point.
 t_vector sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
 {
 	t_color color;
@@ -44,13 +44,18 @@ t_vector sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
 		t_vector normal = normalize(minus_vec(h2, s.origin)); // x,y,z entre -1 et 1
 		// // calcul lumiere
 		t_vector lightDir = normalize(minus_vec(data->light.origin, s.origin));
+		// si un object intersecte lightDir, alors le pixel est une ombre...
+
+
 		float intensity =  dot_vec(normal, lightDir) / 2;
 		if (intensity < 0)
 			intensity = 0;
         color.x = (data->alight.intensity * data->alight.color.x) + (intensity * s.base_color.x * data->light.color.x);
         color.y = (data->alight.intensity * data->alight.color.y) + (intensity * s.base_color.y * data->light.color.y);
         color.z = (data->alight.intensity * data->alight.color.z) + (intensity * s.base_color.z * data->light.color.z);
+		r->t = t2;
 		r->hit = true;
+		r->intersect = h2;
 		return color;
 	}
 	r->hit = false;
