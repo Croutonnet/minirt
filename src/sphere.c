@@ -58,6 +58,5 @@ t_vector sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
 		r->intersect = h2;
 		return color;
 	}
-	r->hit = false;
 	return color;
 }

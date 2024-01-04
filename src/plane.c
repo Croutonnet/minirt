@@ -31,11 +31,10 @@ t_vector plane_intersect_ray(t_plane p, t_ray *r, t_light light, t_light_ambient
 
 	if (denom < 0.001)
 	{
-		r->hit = false;
 		return color;
 	}
 
-	t = 100; //num / denom; // bug ici
+	t = num/denom;
 	t_vector lightDir = normalize(minus_vec(light.origin, p.origin));
 	float intensity =  dot_vec(p.axis, lightDir) / 2;
 	if (intensity < 0)

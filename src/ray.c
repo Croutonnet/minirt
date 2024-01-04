@@ -34,7 +34,6 @@ static bool ray_intersect(t_ray *r, t_data *data)
     t_shape *shape;
     int         min_t;
     int         id;
-    bool hit = false;
 
     pixel.x = 0;
     pixel.y = 0;
@@ -48,19 +47,16 @@ static bool ray_intersect(t_ray *r, t_data *data)
             c = sphere_intersect_ray(shape->geom.sphere, r, data);   
         else if (shape->type == PLANE)
             c = plane_intersect_ray(shape->geom.plane, r, data->light, data->alight);
-
-        if (r->hit == true)
-            hit = true;
-        if (hit == true && r->t < min_t)
+        // else if (shape->type == CYLINDER)
+        //     pixel = cylinder_intersect_ray(shape->geom.cylinder, r);
+        if (r->hit == true && r->t < min_t)
         {
             pixel = c;
             min_t = r->t;
         }
-        // else if (shape->type == CYLINDER)
-        //     pixel = cylinder_intersect_ray(shape->geom.cylinder, r);
         id++;
     }
-    if (hit == true)
+    if (r->hit == true)
     {
         r->id = id;
         r->color = pixel;
