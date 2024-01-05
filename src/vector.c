@@ -12,7 +12,7 @@ t_vector	create_vector(double x, double y, double z)
 	return (vec);
 }
 
-float length_sqr(t_vector vec)
+float	length_sqr(t_vector vec)
 {
 	return ((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z));
 }

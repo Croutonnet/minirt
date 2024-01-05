@@ -5,7 +5,7 @@
         "type": "cppdbg",
         "request": "launch",
         "program": "${workspaceFolder}/minirt",
-        "args": ["map/test.rt"],
+        "args": ["map/test_castshadow.rt"],
         "stopAtEntry": false,
         "cwd": "${workspaceFolder}",
         "environment": [],

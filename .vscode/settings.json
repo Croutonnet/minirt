@@ -6,7 +6,8 @@
     "vector.h": "c",
     "ray.h": "c",
     "color.h": "c",
-    "libft.h": "c"
+    "libft.h": "c",
+    "image.h": "c"
   },
   "C_Cpp_Runner.msvcBatchPath": "",
   "C_Cpp_Runner.cCompilerPath": "clang",

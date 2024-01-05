@@ -8,22 +8,23 @@
 //     return (r << 24 | g << 16 | b << 8 | a);
 // }
 
-t_sphere create_sphere(t_vector pPosition, float radius, t_color pColor)
+t_sphere	create_sphere(t_vector pPosition, float radius, t_color pColor)
 {
-    t_sphere s;
-    s.origin.x = pPosition.x;
-    s.origin.y = pPosition.y;
-    s.origin.z = pPosition.z;
-    s.radius = radius;
-    s.base_color = pColor;
-    return (s);
+	t_sphere	s;
+
+	s.origin.x = pPosition.x;
+	s.origin.y = pPosition.y;
+	s.origin.z = pPosition.z;
+	s.radius = radius;
+	s.base_color = pColor;
+	return (s);
 }
 
 // If sphere intersect ray
 // return a color and put r.hit = true, retunr intersection point.
-t_vector sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
+t_vector	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
 {
-	t_color color;
+	t_color	color;
 	color.x = 0;
 	color.y = 0;
 	color.z = 0;
@@ -35,11 +36,9 @@ t_vector sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
 
 	if (dis >= 0)
 	{
-		// calcule la valeur de t
 		//float t1 = (-b + sqrt(dis))/2.0f;
-		float t2 = (-b - sqrtf(dis))/(2.0f);
-		// calcule points de collision
-		t_vector h2 = get_ray_point(*r, t2);
+		float t2 = (-b - sqrtf(dis))/(2.0f); // calcule la valeur de t
+		t_vector h2 = get_ray_point(*r, t2); // calcule points de collision
 		// calcul normal
 		t_vector normal = normalize(minus_vec(h2, s.origin)); // x,y,z entre -1 et 1
 		// // calcul lumiere
@@ -55,7 +54,6 @@ t_vector sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
         color.z = (data->alight.intensity * data->alight.color.z) + (intensity * s.base_color.z * data->light.color.z);
 		r->t = t2;
 		r->hit = true;
-		r->intersect = h2;
 		return color;
 	}
 	return color;

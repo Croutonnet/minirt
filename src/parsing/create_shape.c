@@ -46,9 +46,9 @@ t_vector	create_vector_str(char *str)
 
 void	pcreate_plane(char **line, t_data *data)
 {
-	t_vector coord;
-	t_vector axis;
-	t_color color;
+	t_vector	coord;
+	t_vector	axis;
+	t_color		color;
 
 	coord = create_vector_str(line[1]);
 	axis = create_vector_str(line[2]);

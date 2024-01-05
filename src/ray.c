@@ -7,19 +7,20 @@ static int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
     return (r << 24 | g << 16 | b << 8 | a);
 }
 
-static void clear_img(mlx_image_t *image)
+static void	clear_img(mlx_image_t *image)
 {
-    int         x;
-    int         y;
+	int	x;
+	int	y;
+	int	py;
 
 	x = 0;
 	y = 0;
-    while (y < IMAGE_HEIGHT)
-    {
-        x = 0;
-        while (x < IMAGE_WIDTH)
-        {
-            int py = (y/IMAGE_HEIGHT)*160;
+	while (y < IMAGE_HEIGHT)
+	{
+		x = 0;
+		while (x < IMAGE_WIDTH)
+		{
+			py = (y / IMAGE_HEIGHT) * 160;
 			mlx_put_pixel(image, x, y, ft_pixel(75 + py, 75 + py, 255, 255));
 			x++;
 		}
@@ -32,9 +33,10 @@ static bool ray_intersect(t_ray *r, t_data *data)
     t_color pixel;
     t_color c;
     t_shape *shape;
+
     int         min_t;
     int         id;
-
+    t_shape *obj = NULL;
     pixel.x = 0;
     pixel.y = 0;
     pixel.z = 0;
@@ -51,15 +53,17 @@ static bool ray_intersect(t_ray *r, t_data *data)
         //     pixel = cylinder_intersect_ray(shape->geom.cylinder, r);
         if (r->hit == true && r->t < min_t)
         {
+            obj = shape;
             pixel = c;
             min_t = r->t;
         }
         id++;
     }
-    if (r->hit == true)
+    if (obj != NULL)
     {
-        r->id = id;
+        r->obj = obj;
         r->color = pixel;
+        r->t = min_t;
         return true;
     }
     return false;
@@ -74,7 +78,7 @@ void create_rays(t_viewport *view, t_data *data,mlx_image_t *image)
     t_vector    temp;
     t_vector point;
     t_color pixel;
-    t_ray v_lightDir;
+    t_ray r_lightDir;
     x = 0;
     y = 0;
     clear_img(image);
@@ -93,18 +97,17 @@ void create_rays(t_viewport *view, t_data *data,mlx_image_t *image)
             {
                 pixel = r.color;
                 // calcul lumiere
-                t_vector lightDir = normalize(minus_vec(data->light.origin, r.intersect));
-                v_lightDir = create_ray(v_lightDir, r.intersect, lightDir);
-                // if (ray_intersect(&v_lightDir, data) && r.id != v_lightDir.id)
-                // {
-                    // si un object intersecte lightDir, alors le pixel est une ombre...
-                    //mlx_put_pixel(image, x, y, ft_pixel(0, 0, 0, 255));
-                // }
-                // else
-                // {
-                //     // sinon renvoi  pleine couleur.
-                mlx_put_pixel(image, x, y, ft_pixel(pixel.x * 255, pixel.y * 255, pixel.z * 255, 255));
-                // }
+                t_vector intersect = normalize(minus_vec(get_ray_point(r, r.t),data->light.origin));
+                r_lightDir = create_ray(r_lightDir, data->light.origin, intersect);
+                bool isShadow = false;
+                if (ray_intersect(&r_lightDir, data) && r.obj != r_lightDir.obj)
+                {
+                    isShadow = true;
+                }
+                if (isShadow)
+                    mlx_put_pixel(image, x, y, ft_pixel(pixel.x * 100, pixel.y * 100,pixel.z * 100 , 255));
+                else
+                    mlx_put_pixel(image, x, y, ft_pixel(pixel.x * 255, pixel.y * 255, pixel.z * 255, 255));
             }
             x++;
         }
@@ -112,22 +115,22 @@ void create_rays(t_viewport *view, t_data *data,mlx_image_t *image)
     }
 }
 
-t_ray create_ray(t_ray r, t_vector origin, t_vector dir)
+t_ray	create_ray(t_ray r, t_vector origin, t_vector dir)
 {
-    r.hit = false;
-    r.origin_point = origin;
-    r.direction = dir;
-    return (r);
+	r.hit = false;
+	r.origin_point = origin;
+	r.direction = dir;
+	return (r);
 }
 
 // renvoi le point p (x,y,z) dintersection du rayon a la distance t
-t_vector get_ray_point(t_ray r, float t)
+t_vector	get_ray_point(t_ray r, float t)
 {
-    t_vector intersec;
+	t_vector	intersec;
 
-    intersec.x = r.origin_point.x + (r.direction.x * t);
-    intersec.y = r.origin_point.y + (r.direction.y * t);
-    intersec.z = r.origin_point.z + (r.direction.z * t);
+	intersec.x = r.origin_point.x + (r.direction.x * t);
+	intersec.y = r.origin_point.y + (r.direction.y * t);
+	intersec.z = r.origin_point.z + (r.direction.z * t);
 
-    return (intersec);
+	return (intersec);
 }
