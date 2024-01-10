@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:20:29 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/28 15:31:30 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:01:43 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static void	pcreate_ambient_light(char **line, t_data *data)
 
 static void	pcreate_camera(char **line, t_data *data)
 {
-	data->viewport.camera_center = create_vector_str(line[1]);
+	data->final_viewport.camera_center = create_vector_str(line[1]);
+	data->viewport.cam_rot = create_vector_str(line[2]);
 	data->viewport.focal_lenght = (data->viewport.width / 2) / tan(((ft_atof(line[3]) * M_PI / 180) / 2));
 	printf("Focal_lenght: %f\n", data->viewport.focal_lenght);
 	ft_xxfree((void **)line);

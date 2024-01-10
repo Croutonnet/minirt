@@ -8,10 +8,10 @@
 
 typedef struct s_viewport
 {
-	double		width;
-	double		height;
-	double		ratio;
-	double		focal_lenght;
+	float		width;
+	float		height;
+	float		ratio;
+	float		focal_lenght;
 	t_vector	viewport_center;
 	t_vector	camera_center;
 	t_vector	v;
@@ -20,7 +20,9 @@ typedef struct s_viewport
 	t_vector	pixel_delta_v;
 	t_vector	upper_left;
 	t_vector	pixel00_loc;
-	t_vector	pixel00_loc_base;
+	t_vector	cam_rot;
+	float		cam_pitch;
+	float		cam_yaw;
 }			t_viewport;
 
 

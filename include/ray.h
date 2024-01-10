@@ -6,6 +6,7 @@
 # include "MLX42/include/MLX42/MLX42.h"
 # include "color.h"
 # include "light.h"
+# include "Libft/libft.h"
 
 typedef struct s_ray
 {
@@ -64,11 +65,15 @@ typedef struct s_shapes_arr
 typedef struct s_data
 {
 	t_viewport		viewport;
+	t_viewport		final_viewport;
 	mlx_t			*mlx;
 	mlx_image_t		*image;
 	t_shapes_arr	shapes;
 	t_light			light;
 	t_light_ambient	alight;
+	bool			cam_selected;
+	bool			light_selected;
+	bool			obj_selected;
 }				t_data;
 
 // shapes creation functions
@@ -81,7 +86,17 @@ t_vector cylinder_intersect_ray(t_cylinder c, t_ray *r, t_light light);
 
 // cam_mouvement.c
 void	change_camera(t_data *data, keys_t key);
-int		cam_mouvement_key(mlx_key_data_t keydata, t_data *data);
+void	rotate_camera(t_data *data, keys_t key);
+void	move_light(t_data *data, keys_t key);
+int		special_key(t_data *data, keys_t key);
+
+// rotation.c
+t_vector	rotation_x(t_vector vec, float deg);
+t_vector	rotation_y(t_vector vec, float deg);
+
+// final_viewport.c
+void	read_rotation(t_data *data);
+void	final_viewport(t_data *data);
 
 void create_rays(t_data *data);
 t_vector get_ray_point(t_ray r, float t);

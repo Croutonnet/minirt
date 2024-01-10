@@ -25,36 +25,36 @@ t_sphere	create_sphere(t_vector coord, float radius, t_color pColor)
 // return a color and put r.hit = true
 t_vector sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
 {
-	t_color color;
+	t_color	color;
 	color.x = 0;
 	color.y = 0;
 	color.z = 0;
 
 	t_vector	oc = minus_vec(r->origin_point, s.origin); //Direction vers le centre de la sphere
-	float		b = dot_vec(oc, r->direction);
+	float		b = 2.0 * dot_vec(minus_vec(r->direction,r->origin_point), oc);
 	float		c = pow(length_vec(oc), 2) - pow(s.radius, 2); //
-	float		dis = pow(b, 2) - c; //Discriminant < 0 si rien toucher, 0 toucher une fois, 1 toucher deux fois
+	float		dis = pow(b, 2) - (4 * c); //Discriminant < 0 si rien toucher, 0 toucher une fois, 1 toucher deux fois
 
 	if (dis >= 0)
 	{
-		// calcule la valeur de t
 		//float t1 = (-b + sqrt(dis))/2.0f;
-		float t2 = (-b - pow(dis, 2));
-		// calcule points de collision
-		t_vector h2 = get_ray_point(*r, t2);
+		float t2 = (-b - sqrtf(dis))/(2.0f); // calcule la valeur de t
+		t_vector h2 = get_ray_point(*r, t2); // calcule points de collision
 		// calcul normal
 		t_vector normal = normalize(minus_vec(h2, s.origin)); // x,y,z entre -1 et 1
-		if (dot_vec(r->direction, normal) > 0)
-			normal = mul_vec(normal, -1);
 		// // calcul lumiere
 		t_vector lightDir = normalize(minus_vec(data->light.origin, s.origin));
-		float intensity =  dot_vec(normal, lightDir) / 2;
+		// si un object intersecte lightDir, alors le pixel est une ombre...
+
+
+		float intensity = dot_vec(normal, lightDir) / 2;
 		if (intensity < 0)
 			intensity = 0;
+		color.x = (data->alight.intensity * data->alight.color.x) + (intensity * s.base_color.x * data->light.color.x);
+		color.y = (data->alight.intensity * data->alight.color.y) + (intensity * s.base_color.y * data->light.color.y);
+		color.z = (data->alight.intensity * data->alight.color.z) + (intensity * s.base_color.z * data->light.color.z);
 		r->hit = true;
-		color = add_vec(mul_vec(s.base_color, data->alight.intensity), mul_2vec(normal, lightDir));
 		return color;
 	}
-	r->hit = false;
 	return color;
 }

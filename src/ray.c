@@ -39,20 +39,18 @@ void create_rays(t_data *data)
 	int			id;
 
 	y = 0;
-	printf("CAM COORD:");
-	print_vec(data->viewport.camera_center);
-	printf("P_00");
-	print_vec(data->viewport.pixel00_loc);
+	printf ("LIGHT ");
+	print_vec(data->light.origin);
 	clear_img(data->image);
 	while (y < IMAGE_HEIGHT)
 	{
 		x = 0;
 		while (x < IMAGE_WIDTH)
 		{
-			delta = add_vec(mul_vec(data->viewport.pixel_delta_v, x), mul_vec(data->viewport.pixel_delta_u, y));
-			point = add_vec(data->viewport.pixel00_loc, delta);
-			dir = normalize(minus_vec(point, data->viewport.camera_center));
-			r = create_ray(data->viewport.camera_center, dir);
+			delta = add_vec(mul_vec(data->final_viewport.pixel_delta_v, x), mul_vec(data->final_viewport.pixel_delta_u, y));
+			point = add_vec(data->final_viewport.pixel00_loc, delta);
+			dir = normalize(minus_vec(point, data->final_viewport.camera_center));
+			r = create_ray(data->final_viewport.camera_center, dir);
 			id = 0;
 			while (id < data->shapes.count) 
 			{

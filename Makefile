@@ -41,7 +41,9 @@ SRCS		=	main.c\
 				sphere.c\
 				vector_math.c\
 				vector.c\
-				cylinder.c
+				cylinder.c\
+				final_viewport.c\
+				rotation.c
 
 PARS_DIR	=	src/parsing/
 SRCS_PARS	=	line_read.c\
