@@ -39,8 +39,6 @@ void create_rays(t_data *data)
 	int			id;
 
 	y = 0;
-	printf ("LIGHT ");
-	print_vec(data->light.origin);
 	clear_img(data->image);
 	while (y < IMAGE_HEIGHT)
 	{

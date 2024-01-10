@@ -31,15 +31,19 @@ t_vector sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
 	color.z = 0;
 
 	t_vector	oc = minus_vec(r->origin_point, s.origin); //Direction vers le centre de la sphere
-	float		b = 2.0 * dot_vec(minus_vec(r->direction,r->origin_point), oc);
+	float		b = dot_vec(r->direction, oc);
 	float		c = pow(length_vec(oc), 2) - pow(s.radius, 2); //
-	float		dis = pow(b, 2) - (4 * c); //Discriminant < 0 si rien toucher, 0 toucher une fois, 1 toucher deux fois
+	float		dis = pow(b, 2) - c; //Discriminant < 0 si rien toucher, 0 toucher une fois, 1 toucher deux fois
 
 	if (dis >= 0)
 	{
-		//float t1 = (-b + sqrt(dis))/2.0f;
-		float t2 = (-b - sqrtf(dis))/(2.0f); // calcule la valeur de t
-		t_vector h2 = get_ray_point(*r, t2); // calcule points de collision
+		float t = (-b - sqrtf(dis)); // calcule la valeur de t
+		if (t <= 0 || INFINITY <= t){
+			t = (-b + sqrt(dis));
+			if (t <= 0 || INFINITY <= t)
+				return color;
+		}
+		t_vector h2 = get_ray_point(*r, t); // calcule points de collision
 		// calcul normal
 		t_vector normal = normalize(minus_vec(h2, s.origin)); // x,y,z entre -1 et 1
 		// // calcul lumiere

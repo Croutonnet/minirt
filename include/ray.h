@@ -74,6 +74,9 @@ typedef struct s_data
 	bool			cam_selected;
 	bool			light_selected;
 	bool			obj_selected;
+	t_vector		avant;
+	t_vector		droite;
+	t_vector		bas;
 }				t_data;
 
 // shapes creation functions

@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 13:00:58 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/10 16:49:08 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/10 17:55:43 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ int special_key(t_data *data, keys_t key)
 void	rotate_camera(t_data *data, keys_t key)
 {
 	if (key == MLX_KEY_UP)
-		data->final_viewport.cam_pitch--;
-	else if (key == MLX_KEY_DOWN)
 		data->final_viewport.cam_pitch++;
+	else if (key == MLX_KEY_DOWN)
+		data->final_viewport.cam_pitch--;
 	else if (key == MLX_KEY_LEFT)
-		data->final_viewport.cam_yaw--;
-	else if (key == MLX_KEY_RIGHT)
 		data->final_viewport.cam_yaw++;
+	else if (key == MLX_KEY_RIGHT)
+		data->final_viewport.cam_yaw--;
 	return ;
 }
 
@@ -95,15 +95,15 @@ void	move_light(t_data *data, keys_t key)
 void	change_camera(t_data *data, keys_t key)
 {
 	if (key == MLX_KEY_W)
-		data->final_viewport.camera_center = add_vec(data->final_viewport.camera_center, normalize(mul_vec(minus_vec(data->final_viewport.viewport_center, data->final_viewport.camera_center), -1)));
+		data->final_viewport.camera_center = add_vec(data->final_viewport.camera_center, data->avant);
 	else if(key == MLX_KEY_S)
-		data->final_viewport.camera_center = add_vec(data->final_viewport.camera_center, normalize(minus_vec(data->final_viewport.viewport_center, data->final_viewport.camera_center)));
+		data->final_viewport.camera_center = add_vec(data->final_viewport.camera_center, mul_vec(data->avant, -1));
 	else if(key == MLX_KEY_D)
-		data->final_viewport.camera_center = add_vec(data->final_viewport.camera_center, normalize(data->final_viewport.pixel_delta_v));
+		data->final_viewport.camera_center = add_vec(data->final_viewport.camera_center, data->droite);
 	else if(key == MLX_KEY_A)
-		data->final_viewport.camera_center = add_vec(data->final_viewport.camera_center, mul_vec(normalize(data->final_viewport.pixel_delta_v), -1));
+		data->final_viewport.camera_center = add_vec(data->final_viewport.camera_center, mul_vec(data->droite, -1));
 	else if (key == MLX_KEY_E)
-		data->final_viewport.camera_center = add_vec(data->final_viewport.camera_center, normalize(data->final_viewport.pixel_delta_u));
+		data->final_viewport.camera_center = add_vec(data->final_viewport.camera_center, data->bas);
 	else if (key == MLX_KEY_Q)
-		data->final_viewport.camera_center = add_vec(data->final_viewport.camera_center, mul_vec(normalize(data->final_viewport.pixel_delta_u), -1));
+		data->final_viewport.camera_center = add_vec(data->final_viewport.camera_center, mul_vec(data->bas, -1));
 }

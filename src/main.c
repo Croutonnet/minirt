@@ -58,10 +58,10 @@ void	initialisation(t_data *data, char *input)
 	data->viewport.width = data->viewport.height * data->viewport.ratio;
 	data->viewport.v = create_vector(data->viewport.width, 0, 0);
 	data->viewport.u = create_vector(0, -data->viewport.height, 0);
-	data->viewport.pixel_delta_u = div_vec(data->viewport.u, IMAGE_HEIGHT);
 	data->viewport.pixel_delta_v = div_vec(data->viewport.v, IMAGE_WIDTH);
+	data->viewport.pixel_delta_u = div_vec(data->viewport.u, IMAGE_HEIGHT);
 	read_map(input, data);
-	data->viewport.viewport_center = minus_vec(create_vector(0, 0, 0), create_vector(0, 0, data->viewport.focal_lenght));
+	data->viewport.viewport_center = minus_vec(create_vector(0, 0, 0), create_vector(0, 0, -data->viewport.focal_lenght));
 	calculate_upper_left(data);
 	calculate_p00_loc(data);
 	read_rotation(data);
@@ -84,8 +84,6 @@ int	main(int argc, char **argv)
 	if (parsing(argv[1], &count) == -1)
 		return (1);
 	initialisation(&data, argv[1]);
-	printf ("CAMERA CALISS: ");
-	print_vec(data.final_viewport.camera_center);
 	final_viewport(&data);
 	create_rays(&data);
 	mlx_image_to_window(data.mlx, data.image, 0, 0);
