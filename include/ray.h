@@ -77,6 +77,7 @@ typedef struct s_data
 	t_vector		avant;
 	t_vector		droite;
 	t_vector		bas;
+	int				id_touch;
 }				t_data;
 
 // shapes creation functions
@@ -92,6 +93,10 @@ void	change_camera(t_data *data, keys_t key);
 void	rotate_camera(t_data *data, keys_t key);
 void	move_light(t_data *data, keys_t key);
 int		special_key(t_data *data, keys_t key);
+
+// obj_mouvement.c
+void	move_object(t_data *data, keys_t key);
+void	touch_object(mouse_key_t button, action_t action, modifier_key_t mods, void *param);
 
 // rotation.c
 t_vector	rotation_x(t_vector vec, float deg);

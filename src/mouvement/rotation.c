@@ -6,11 +6,22 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:22:04 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/10 13:25:00 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/11 14:34:08 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ray.h"
+#include "../../include/ray.h"
+
+t_vector	rotation_z(t_vector vec, float deg)
+{
+	t_vector	result;
+
+	deg = deg * (M_PI / 180);
+	result.x = vec.x * cos(deg) + vec.y * -sin(deg);
+	result.y = vec.x * sin(deg) + vec.y * cos(deg);
+	result.z = vec.z;
+	return (result);
+}
 
 t_vector	rotation_x(t_vector vec, float deg)
 {

@@ -46,6 +46,8 @@ void	key_func(mlx_key_data_t keydata, void *param)
 	}
 	else if (data->light_selected == true)
 		move_light(data, keydata.key);
+	else if (data->obj_selected == true)
+		move_object(data, keydata.key);
 	else
 		return ;
 	create_rays(data);
@@ -88,6 +90,7 @@ int	main(int argc, char **argv)
 	create_rays(&data);
 	mlx_image_to_window(data.mlx, data.image, 0, 0);
 	mlx_key_hook(data.mlx, key_func, &data);
+	mlx_mouse_hook(data.mlx, touch_object, &data);
 	mlx_loop(data.mlx);
 	mlx_terminate(data.mlx);
 }

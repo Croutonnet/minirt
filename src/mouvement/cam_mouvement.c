@@ -6,11 +6,11 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 13:00:58 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/10 17:55:43 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/11 09:09:13 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/ray.h"
+#include "../../include/ray.h"
 
 int special_key(t_data *data, keys_t key)
 {
