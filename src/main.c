@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/10 13:25:10 by bbouchar          #+#    #+#             */
+/*   Updated: 2024/01/10 15:10:52 by bbouchar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/vector.h"
 #include "../include/color.h"
 #include "../include/parsing.h"
@@ -53,7 +65,7 @@ int	main(int argc, char **argv)
 	t_viewport	viewport;
 	t_data		data;
 	t_count		count;
-
+	
 	if (argc != 2)
 	{
 		ft_printf_fd(2, "Trop d'argument ou pas assez d'argument\n");
