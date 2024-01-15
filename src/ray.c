@@ -6,7 +6,7 @@
 /*   By: bbouchar <BrunoPierreBouchard@hotmail.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:04 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/10 22:33:44 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/15 17:07:39 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,84 +40,43 @@ static void	clear_img(mlx_image_t *image)
 	}
 }
 
-static	bool	ray_intersect(t_ray *r, t_data *data)
-{
-	t_color	pixel;
-	t_color	c;
-	t_shape	*shape;
-	t_shape	*obj;
-	int		min_t;
-	int		id;
-
-	obj = NULL;
-	pixel.x = 0;
-	pixel.y = 0;
-	pixel.z = 0;
-	id = 0;
-	min_t = INT32_MAX;
-	while (id < data->shapes.count)
-	{
-		shape = &data->shapes.shapes[id];
-		if (shape->type == SPHERE)
-			c = sphere_intersect_ray(shape->geom.sphere, r, data);   
-		else if (shape->type == PLANE)
-			c = plane_intersect_ray(shape->geom.plane, r, data);
-		// else if (shape->type == CYLINDER)
-		//     pixel = cylinder_intersect_ray(shape->geom.cylinder, r);
-		if (r->hit == true && r->t < min_t)
-		{
-			obj = shape;
-			pixel = c;
-			min_t = r->t;
-		}
-		id++;
-	}
-	if (obj != NULL)
-	{
-		r->obj = obj;
-		r->color = pixel;
-		r->t = min_t;
-		return (true);
-    }
-    return (false);
-}
-
-void create_rays(t_viewport *view, t_data *data,mlx_image_t *image)
+void create_rays(t_data *data)
 {
 	int			x;
 	int			y;
+	int			id;
 	t_ray		r;
-	t_vector	dest;
-	t_vector	temp;
+	t_vector	dir;
+	t_vector	delta;
 	t_vector	point;
 	t_color		pixel;
 	t_ray		r_lightDir;
 
-	x = 0;
 	y = 0;
-	clear_img(image);
+	clear_img(data->image);
 	while (y < IMAGE_HEIGHT)
 	{
 		x = 0;
 		while (x < IMAGE_WIDTH)
 		{
-			temp = add_vec(mul_vec(view->pixel_delta_v, x), mul_vec(view->pixel_delta_u, y));
-			point = add_vec(view->pixel00_loc, temp);
-			dest = normalize(minus_vec(point, view->camera_center));
-			r = create_ray(r, view->camera_center, dest);
-			if (ray_intersect(&r, data))
+			delta = add_vec(mul_vec(data->final_viewport.pixel_delta_v, x), mul_vec(data->final_viewport.pixel_delta_u, y));
+			point = add_vec(data->final_viewport.pixel00_loc, delta);
+			dir = normalize(minus_vec(point, data->final_viewport.camera_center));
+			r = create_ray(data->final_viewport.camera_center, dir);
+			id = 0;
+			while (id < data->shapes.count) 
 			{
-				pixel = r.color;
-				// calcul lumiere
-				t_vector intersect = normalize(minus_vec(get_ray_point(r, r.t),data->light.origin));
-				r_lightDir = create_ray(r_lightDir, data->light.origin, intersect);
-				bool isShadow = false;
-				if (ray_intersect(&r_lightDir, data) && r.obj != r_lightDir.obj)
-					isShadow = true;
-				if (isShadow)
-					mlx_put_pixel(image, x, y, ft_pixel(pixel.x * 100, pixel.y * 100,pixel.z * 100 , 255));
-				else
-					mlx_put_pixel(image, x, y, ft_pixel(pixel.x * 255, pixel.y * 255, pixel.z * 255, 255));
+				t_shape	*shape;
+				shape = &data->shapes.shapes[id];
+				if (shape->type == SPHERE)
+					pixel = sphere_intersect_ray(shape->geom.sphere, &r, data);
+				// else if (shape->type == CYLINDER)
+				// 	pixel = cylinder_intersect_ray(shape->geom.cylinder, &r);
+				// else if (shape->type == PLANE)
+				// 	pixel = plane_intersect_ray(shape->geom.plane, &r, data);
+				if (r.hit == true)
+					mlx_put_pixel(data->image, x, y, ft_pixel(pixel.x * 255, pixel.y * 255, pixel.z * 255, 255));
+				id++;
 			}
 			x++;
 		}
@@ -125,12 +84,14 @@ void create_rays(t_viewport *view, t_data *data,mlx_image_t *image)
 	}
 }
 
-t_ray	create_ray(t_ray r, t_vector origin, t_vector dir)
+t_ray	create_ray(t_vector origin, t_vector dir)
 {
-	r.hit = false;
-	r.origin_point = origin;
-	r.direction = dir;
-	return (r);
+	t_ray	temp_ray;
+
+	temp_ray.hit = false;
+	temp_ray.origin_point = origin;
+	temp_ray.direction = dir;
+	return (temp_ray);
 }
 
 // renvoi le point p (x,y,z) dintersection du rayon a la distance t

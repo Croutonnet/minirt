@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:20:29 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/21 14:30:11 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/10 14:01:43 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ static void	pcreate_ambient_light(char **line, t_data *data)
 	ft_xxfree((void **)line);
 }
 
-static void	pcreate_camera(char **line, t_viewport *viewport)
+static void	pcreate_camera(char **line, t_data *data)
 {
-	viewport->camera_center = create_vector_str(line[1]);
-	viewport->focal_lenght = (viewport->width / 2) / tan(((ft_atof(line[3]) * M_PI / 180) / 2));
-	printf("Focal_lenght: %f\n", viewport->focal_lenght);
+	data->final_viewport.camera_center = create_vector_str(line[1]);
+	data->viewport.cam_rot = create_vector_str(line[2]);
+	data->viewport.focal_lenght = (data->viewport.width / 2) / tan(((ft_atof(line[3]) * M_PI / 180) / 2));
+	printf("Focal_lenght: %f\n", data->viewport.focal_lenght);
 	ft_xxfree((void **)line);
 }
 
@@ -43,12 +44,12 @@ static void	pcreate_light(char **line, t_data *data)
 	ft_xxfree((void **)line);
 }
 
-static void	create_line(char *line, t_data *data, t_viewport *viewport)
+static void	create_line(char *line, t_data *data)
 {
 	if (!ft_strncmp(line, "A ", 2))
 		pcreate_ambient_light(ft_split(line, ' '), data);
 	if (!ft_strncmp(line, "C ", 2))
-		pcreate_camera(ft_split(line, ' '), viewport);
+		pcreate_camera(ft_split(line, ' '), data);
 	else if (!ft_strncmp(line, "L ", 2))
 		pcreate_light(ft_split(line, ' '), data);
 	else if (!ft_strncmp(line, "sp ", 3))
@@ -59,7 +60,7 @@ static void	create_line(char *line, t_data *data, t_viewport *viewport)
 		pcreate_plane(ft_split(line, ' '), data);
 }
 
-void	read_map(char *file_path, t_data *data, t_viewport *viewport)
+void	read_map(char *file_path, t_data *data)
 {
 	int		fd;
 	char	*line;
@@ -70,6 +71,6 @@ void	read_map(char *file_path, t_data *data, t_viewport *viewport)
 	{
 		line = get_next_line(fd);
 		if (line)
-			create_line(line, data, viewport);
+			create_line(line, data);
 	}
 }

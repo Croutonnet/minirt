@@ -6,6 +6,7 @@
 # include "MLX42/include/MLX42/MLX42.h"
 # include "color.h"
 # include "light.h"
+# include "Libft/libft.h"
 
 // types de geometries possibles
 typedef enum enum_shape_type
@@ -75,9 +76,20 @@ typedef struct s_shapes_arr
 
 typedef struct s_data
 {
+	t_viewport		viewport;
+	t_viewport		final_viewport;
+	mlx_t			*mlx;
+	mlx_image_t		*image;
 	t_shapes_arr	shapes;
 	t_light			light;
 	t_light_ambient	alight;
+	bool			cam_selected;
+	bool			light_selected;
+	bool			obj_selected;
+	t_vector		avant;
+	t_vector		droite;
+	t_vector		bas;
+	int				id_touch;
 }				t_data;
 
 // shapes creation functions
@@ -91,8 +103,26 @@ t_vector	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data);
 t_vector	cylinder_intersect_ray(t_cylinder c, t_ray *r);
 t_vector	plane_intersect_ray(t_plane p, t_ray *r, t_data *data);
 
-void		create_rays(t_viewport *view, t_data *data, mlx_image_t *image);
-t_vector	get_ray_point(t_ray r, float t);
-t_ray		create_ray(t_ray r, t_vector origin, t_vector dir);
+// cam_mouvement.c
+void	change_camera(t_data *data, keys_t key);
+void	rotate_camera(t_data *data, keys_t key);
+void	move_light(t_data *data, keys_t key);
+int		special_key(t_data *data, keys_t key);
+
+// obj_mouvement.c
+void	move_object(t_data *data, keys_t key);
+void	touch_object(mouse_key_t button, action_t action, modifier_key_t mods, void *param);
+
+// rotation.c
+t_vector	rotation_x(t_vector vec, float deg);
+t_vector	rotation_y(t_vector vec, float deg);
+
+// final_viewport.c
+void	read_rotation(t_data *data);
+void	final_viewport(t_data *data);
+
+void create_rays(t_data *data);
+t_vector get_ray_point(t_ray r, float t);
+t_ray create_ray(t_vector origin, t_vector dir);
 
 #endif

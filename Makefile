@@ -39,8 +39,9 @@ SRCS		=	main.c\
 				sphere.c\
 				vector_math.c\
 				vector.c\
-				cylinder.c \
-				plane.c 
+				cylinder.c\
+				final_viewport.c\
+				plane.c\
 
 PARS_DIR	=	src/parsing/
 SRCS_PARS	=	line_read.c\
@@ -52,15 +53,25 @@ SRCS_PARS	=	line_read.c\
 				read_map.c\
 				create_shape.c
 
+MOUV_DIR	=	src/mouvement/
+SRCS_MOUV	=	rotation.c\
+				cam_mouvement.c\
+				more_obj_mouvement.c\
+				obj_mouvement.c\
+				object_intersect.c
+
 OBJS_DIR	=	obj/
 OBJSBASE	=	$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 OBJSPARS	=	$(addprefix $(OBJS_DIR), $(SRCS_PARS:.c=.o))
+OBJSMOUV	=	$(addprefix $(OBJS_DIR), $(SRCS_MOUV:.c=.o))
 
-OBJS		=	$(OBJSBASE) $(OBJSPARS)
+OBJS		=	$(OBJSBASE) $(OBJSPARS) $(OBJSMOUV)
 
 $(OBJS_DIR)%.o: $(SRC_DIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 $(OBJS_DIR)%.o: $(PARS_DIR)%.c
+	@$(CC) $(CFLAGS) -c $< -o $@
+$(OBJS_DIR)%.o: $(MOUV_DIR)%.c
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 ifeq ($(OS),Linux) # règles en + pour Linux

@@ -6,7 +6,7 @@
 /*   By: bbouchar <BrunoPierreBouchard@hotmail.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:45 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/15 14:27:21 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/15 14:58:01 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,12 @@ t_color	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
 	if (dis >= 0)
 	{
 		t2 = (-b - sqrtf(dis)) / (2.0f);
+		if (t2 <= 0 || INFINITY <= t2)
+		{
+			t2 = (-b + sqrt(dis));
+			if (t2 <= 0 || INFINITY <= t2)
+				return ((t_color){0, 0, 0});
+		}
 		return (light(s, r, t2, data));
 	}
 	return ((t_color){0, 0, 0});
