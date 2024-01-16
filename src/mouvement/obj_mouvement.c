@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 09:01:06 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/11 13:37:39 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/16 11:12:43 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ static void move_cyl(t_shape *cyl, keys_t key)
 		cyl->geom.cylinder.height += 1;
 	else if (key == MLX_KEY_N && cyl->geom.cylinder.radius > 1)
 		cyl->geom.cylinder.height -= 1;
+	else
+		rotate_cyl(cyl, key);
 	ft_printf_fd(0, "Coord Cylindre Sélectionner: ");
 	print_vec(cyl->geom.cylinder.origin);
 }
