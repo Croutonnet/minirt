@@ -54,11 +54,13 @@ t_vector sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
 		float intensity = dot_vec(normal, lightDir) / 2;
 		if (intensity < 0)
 			intensity = 0;
-		color.x = (data->alight.intensity * data->alight.color.x) + (intensity * s.base_color.x * data->light.color.x);
-		color.y = (data->alight.intensity * data->alight.color.y) + (intensity * s.base_color.y * data->light.color.y);
-		color.z = (data->alight.intensity * data->alight.color.z) + (intensity * s.base_color.z * data->light.color.z);
+		color.x = (data->alight.intensity * data->alight.color.x) + (intensity * s.base_color.x);
+		color.y = (data->alight.intensity * data->alight.color.y) + (intensity * s.base_color.y);
+		color.z = (data->alight.intensity * data->alight.color.z) + (intensity * s.base_color.z);
 		r->hit = true;
 		return color;
 	}
+	else
+		r->hit = false;
 	return color;
 }

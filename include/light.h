@@ -15,7 +15,6 @@ typedef struct s_light
 {
 	t_vector origin;
 	float intensity;
-	t_color color;
 } t_light;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 09:01:06 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/16 11:12:43 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/16 12:58:13 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static int search_object(t_ray *ray, t_data *data)
 	return (id_of_touch);
 }
 
-void touch_object(mouse_key_t button, action_t action, modifier_key_t mods, void *param)
+void	touch_object(mouse_key_t button, action_t action,
+	modifier_key_t mods, void *param)
 {
 	t_data	*data;
 	int		x;
@@ -69,7 +70,7 @@ void touch_object(mouse_key_t button, action_t action, modifier_key_t mods, void
 	}
 }
 
-static void move_sphere(t_shape *sphere, keys_t key)
+static void	move_sphere(t_shape *sphere, keys_t key)
 {
 	if (key == MLX_KEY_W)
 		sphere->geom.sphere.origin.z++;
@@ -91,7 +92,7 @@ static void move_sphere(t_shape *sphere, keys_t key)
 	print_vec(sphere->geom.sphere.origin);
 }
 
-static void move_cyl(t_shape *cyl, keys_t key)
+static void	move_cyl(t_shape *cyl, keys_t key)
 {
 	if (key == MLX_KEY_W)
 		cyl->geom.cylinder.origin.z++;
@@ -119,7 +120,7 @@ static void move_cyl(t_shape *cyl, keys_t key)
 	print_vec(cyl->geom.cylinder.origin);
 }
 
-void move_object(t_data *data, keys_t key)
+void	move_object(t_data *data, keys_t key)
 {
 	if (data->id_touch == -1)
 		return ;

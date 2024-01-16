@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:20:29 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/10 14:01:43 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/16 12:42:03 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ static void	pcreate_light(char **line, t_data *data)
 {
 	data->light.origin = create_vector_str(line[1]);
 	data->light.intensity = ft_atof(line[2]);
-	data->light.color = create_vector_str(line[3]);
 	// printf("IN FUNCTION light origin: ");
 	// print_vec(data->light.origin);
 	// printf("IN FUNCTION light intensity: %f\n", data->light.intensity);
