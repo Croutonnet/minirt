@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_isalpha.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 11:00:41 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 14:48:19 by rapelcha         ###   ########.fr       */
+/*   Created: 2022/10/17 14:00:35 by rapelcha          #+#    #+#             */
+/*   Updated: 2022/12/04 13:13:14 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "libft.h"
 
-char	*ft_strdup(const char *s1)
+int	ft_isalpha(int a)
 {
-	char	*str;
-
-	if (!s1)
-		return (NULL);
-	str = (char *)ft_calloc((ft_strlen(s1) + 1), sizeof(char));
-	if (!str)
+	if (a >= 65 && a <= 90)
+		return (a);
+	else if (a >= 97 && a <= 122)
+		return (a);
+	else
 		return (0);
-	ft_memcpy(str, s1, ft_strlen(s1));
-	return (str);
 }

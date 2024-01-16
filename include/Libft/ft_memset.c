@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_memset.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 11:00:41 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 14:48:19 by rapelcha         ###   ########.fr       */
+/*   Created: 2022/10/17 14:45:15 by rapelcha          #+#    #+#             */
+/*   Updated: 2022/11/03 19:45:06 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "libft.h"
 
-char	*ft_strdup(const char *s1)
+void	*ft_memset(void *str, int c, size_t n)
 {
-	char	*str;
+	char	*pstr;
 
-	if (!s1)
-		return (NULL);
-	str = (char *)ft_calloc((ft_strlen(s1) + 1), sizeof(char));
+	pstr = str;
 	if (!str)
-		return (0);
-	ft_memcpy(str, s1, ft_strlen(s1));
+		return (NULL);
+	while (n-- > 0)
+		*pstr++ = c;
 	return (str);
 }

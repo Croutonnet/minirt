@@ -1,26 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_lstclear.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 11:00:41 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 14:48:19 by rapelcha         ###   ########.fr       */
+/*   Created: 2022/11/03 10:55:33 by rapelcha          #+#    #+#             */
+/*   Updated: 2023/03/21 15:21:38 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "libft.h"
 
-char	*ft_strdup(const char *s1)
+void	ft_lstclear(t_list **lst, void (*del)(void*))
 {
-	char	*str;
+	t_list	*temp;
 
-	if (!s1)
-		return (NULL);
-	str = (char *)ft_calloc((ft_strlen(s1) + 1), sizeof(char));
-	if (!str)
-		return (0);
-	ft_memcpy(str, s1, ft_strlen(s1));
-	return (str);
+	while (lst && *lst)
+	{
+		temp = (*lst)->next;
+		ft_lstdelone(*lst, del);
+		*lst = temp;
+	}
 }

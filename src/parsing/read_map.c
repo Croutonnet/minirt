@@ -55,8 +55,8 @@ static void	create_line(char *line, t_data *data)
 		pcreate_sphere(ft_split(line, ' '), data);
 	else if (!ft_strncmp(line, "cy ", 3))
 		pcreate_cylindre(ft_split(line, ' '), data);
-	// else if (!ft_strncmp(line, "pl ", 2))
-	// 	pcreate_plane(shapes);
+	else if (!ft_strncmp(line, "pl ", 2))
+		pcreate_plane(ft_split(line, ' '), data);
 }
 
 void	read_map(char *file_path, t_data *data)

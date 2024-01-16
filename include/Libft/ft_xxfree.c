@@ -1,26 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_xxfree.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 11:00:41 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 14:48:19 by rapelcha         ###   ########.fr       */
+/*   Created: 2023/12/03 14:41:18 by rapelcha          #+#    #+#             */
+/*   Updated: 2023/12/03 14:49:32 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "libft.h"
 
-char	*ft_strdup(const char *s1)
+void	**ft_xxfree(void **pointer)
 {
-	char	*str;
+	int	i;
 
-	if (!s1)
+	if (!pointer)
 		return (NULL);
-	str = (char *)ft_calloc((ft_strlen(s1) + 1), sizeof(char));
-	if (!str)
-		return (0);
-	ft_memcpy(str, s1, ft_strlen(s1));
-	return (str);
+	i = 0;
+	while (pointer[i])
+	{
+		free(pointer[i]);
+		i++;
+	}
+	free (pointer);
+	return (NULL);
 }

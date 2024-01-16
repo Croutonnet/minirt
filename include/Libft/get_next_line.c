@@ -6,18 +6,11 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 10:27:09 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 14:45:39 by rapelcha         ###   ########.fr       */
+/*   Updated: 2022/12/04 20:35:50 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
-#include <stdio.h>
-
-#ifndef OPEN_MAX
-# define MAX_FILES FOPEN_MAX
-#else
-# define MAX_FILES OPEN_MAX
-#endif
+#include "libft.h"
 
 static char	*ft_trimstorage(char *storage)
 {
@@ -90,10 +83,10 @@ static char	*gnl_strjoin(char *src1, char *src2)
 
 char	*get_next_line(int fd)
 {
-	static char	*storage[MAX_FILES];
+	static char	*storage[OPEN_MAX];
 	t_var		t_var;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || fd > MAX_FILES)
+	if (fd < 0 || BUFFER_SIZE <= 0 || fd > OPEN_MAX)
 		return (NULL);
 	if (!storage[fd])
 		storage[fd] = ft_calloc(1, sizeof(char));

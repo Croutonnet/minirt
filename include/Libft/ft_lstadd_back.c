@@ -1,40 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printfp_fd.c                                    :+:      :+:    :+:   */
+/*   ft_lstadd_back.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/03 23:35:47 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 15:53:22 by rapelcha         ###   ########.fr       */
+/*   Created: 2022/11/01 14:20:23 by rapelcha          #+#    #+#             */
+/*   Updated: 2022/11/03 10:26:48 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
-#include <stdint.h>
+#include "libft.h"
 
-static void	convx(uintptr_t p, int *count, int fd)
+void	ft_lstadd_back(t_list **lst, t_list *new)
 {
-	if (p > 15)
+	t_list	*temp;
+
+	if (lst)
 	{
-		convx(p / 16, count, fd);
-		convx(p % 16, count++, fd);
-	}
-	else
-	{
-		if (p > 9)
-			(*count) += ft_printfc_fd(p + 87, fd);
+		if (*lst)
+		{
+			temp = ft_lstlast(*lst);
+			temp->next = new;
+		}
 		else
-			(*count) += ft_printfc_fd(p + 48, fd);
+			*lst++ = new;
 	}
-}
-
-int	ft_printfp_fd(void *p, int fd)
-{
-	int	count;
-
-	count = 2;
-	ft_printfs_fd("0x", fd);
-	convx((uintptr_t)p, &count, fd);
-	return (count);
 }

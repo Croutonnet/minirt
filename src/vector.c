@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   vector.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/10 13:24:58 by bbouchar          #+#    #+#             */
+/*   Updated: 2024/01/10 13:24:59 by bbouchar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/vector.h"
 #include <stdlib.h>
 #include <stdio.h>
@@ -12,7 +24,7 @@ t_vector	create_vector(double x, double y, double z)
 	return (vec);
 }
 
-float length_sqr(t_vector vec)
+float	length_sqr(t_vector vec)
 {
 	return ((vec.x * vec.x) + (vec.y * vec.y) + (vec.z * vec.z));
 }

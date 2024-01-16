@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_printfp_fd.c                                    :+:      :+:    :+:   */
+/*   ft_putnbr_fd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/03 23:35:47 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 15:53:22 by rapelcha         ###   ########.fr       */
+/*   Created: 2022/10/24 15:31:02 by rapelcha          #+#    #+#             */
+/*   Updated: 2022/10/31 12:49:52 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
-#include <stdint.h>
+#include "libft.h"
 
-static void	convx(uintptr_t p, int *count, int fd)
+void	ft_putnbr_fd(int n, int fd)
 {
-	if (p > 15)
+	if (n == -2147483648)
 	{
-		convx(p / 16, count, fd);
-		convx(p % 16, count++, fd);
+		ft_putchar_fd('-', fd);
+		ft_putchar_fd('2', fd);
+		ft_putnbr_fd(147483648, fd);
+	}
+	else if (n < 0)
+	{
+		n = -n;
+		ft_putchar_fd('-', fd);
+		ft_putnbr_fd(n, fd);
+	}
+	else if (n > 9)
+	{
+		ft_putnbr_fd((n / 10), fd);
+		ft_putnbr_fd((n % 10), fd);
 	}
 	else
-	{
-		if (p > 9)
-			(*count) += ft_printfc_fd(p + 87, fd);
-		else
-			(*count) += ft_printfc_fd(p + 48, fd);
-	}
-}
-
-int	ft_printfp_fd(void *p, int fd)
-{
-	int	count;
-
-	count = 2;
-	ft_printfs_fd("0x", fd);
-	convx((uintptr_t)p, &count, fd);
-	return (count);
+		ft_putchar_fd((n + 48), fd);
 }

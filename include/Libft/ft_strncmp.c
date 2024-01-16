@@ -1,26 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strncmp.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 11:00:41 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 14:48:19 by rapelcha         ###   ########.fr       */
+/*   Created: 2022/10/20 13:43:56 by rapelcha          #+#    #+#             */
+/*   Updated: 2022/11/03 20:00:57 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
+#include "libft.h"
 
-char	*ft_strdup(const char *s1)
+int	ft_strncmp(const char *s1, const char *s2, size_t n)
 {
-	char	*str;
+	int				i;
+	unsigned char	c1;
+	unsigned char	c2;
 
-	if (!s1)
-		return (NULL);
-	str = (char *)ft_calloc((ft_strlen(s1) + 1), sizeof(char));
-	if (!str)
+	i = 0;
+	if (!s1 || !s2)
 		return (0);
-	ft_memcpy(str, s1, ft_strlen(s1));
-	return (str);
+	while (n-- > 0)
+	{
+		c1 = *s1++;
+		c2 = *s2++;
+		if (c1 != c2)
+			return (c1 - c2);
+		if (c1 == '\0')
+			return (i);
+	}
+	return (i);
 }

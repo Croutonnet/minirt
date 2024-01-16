@@ -93,6 +93,7 @@ void		read_map(char *file_path, t_data *data);
 void		add_shape(t_shapes_arr *arr, e_shape_type type, u_geom geo);
 void		pcreate_sphere(char **line, t_data *data);
 void		pcreate_cylindre(char **line, t_data *data);
+void		pcreate_plane(char **line, t_data *data);
 t_vector	create_vector_str(char *str);
 
 #endif

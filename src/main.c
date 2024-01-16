@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bbouchar <BrunoPierreBouchard@hotmail.c    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/10 13:25:10 by bbouchar          #+#    #+#             */
+/*   Updated: 2024/01/15 14:45:23 by bbouchar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/vector.h"
 #include "../include/color.h"
 #include "../include/parsing.h"
@@ -81,6 +93,7 @@ int	main(int argc, char **argv)
 		ft_printf_fd(2, "Il faut loader une map dans map/quelquechose.rt et rien d'autre\n");
 		return (1);
 	}
+	data.shapes.count = 0; // important !
 	ft_bzero(&count, sizeof(count));
 	ft_bzero(&data, sizeof(data));
 	if (parsing(argv[1], &count) == -1)

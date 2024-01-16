@@ -1,26 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 11:00:41 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 14:48:19 by rapelcha         ###   ########.fr       */
+/*   Created: 2022/10/20 11:12:11 by rapelcha          #+#    #+#             */
+/*   Updated: 2022/11/03 20:05:43 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../libft.h"
-
-char	*ft_strdup(const char *s1)
+char	*ft_strrchr(const char *s, int c)
 {
-	char	*str;
+	char	*temp;
+	char	find;
 
-	if (!s1)
-		return (NULL);
-	str = (char *)ft_calloc((ft_strlen(s1) + 1), sizeof(char));
-	if (!str)
+	temp = 0;
+	find = c;
+	if (!s)
 		return (0);
-	ft_memcpy(str, s1, ft_strlen(s1));
-	return (str);
+	while (*s)
+	{
+		if (*s == find)
+			temp = (char *)s;
+		s++;
+	}
+	if (*s == find)
+		return ((char *)s);
+	return (temp);
 }
