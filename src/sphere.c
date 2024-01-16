@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:45 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/16 14:17:35 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/16 14:56:11 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 #include "../include/light.h"
 #include <limits.h>
 
-// static int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
-// {
-//     return (r << 24 | g << 16 | b << 8 | a);
-// }
+static bool toucher_light()
+{
+	return (true);
+}
 
 t_sphere	create_sphere(t_vector pPosition, float radius, t_color pColor)
 {
@@ -61,8 +61,8 @@ static t_color	light(t_sphere s, t_ray *r, float t2, t_data *data)
 }
 
 // If sphere intersect ray
-// return a color and put r.hit = true, retunr intersection point.
-// oc = Direction vers le centre de la sphere
+// return a color and put r.hit = true, return intersection point.
+// oc = Direction vers le centre de la spherew
 // dis = Discriminant < 0 si rien toucher, 
 // 0 toucher une fois, 1 toucher deux fois
 t_color	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
@@ -74,7 +74,7 @@ t_color	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
 	float		t2;
 
 	oc = minus_vec(r->origin_point, s.origin);
-	b = 2.0 * dot_vec(minus_vec(r->direction, r->origin_point), oc);
+	b = 2.0 * dot_vec(r->direction, oc);
 	c = pow(length_vec(oc), 2) - pow(s.radius, 2);
 	dis = pow(b, 2) - (4 * c);
 
@@ -87,7 +87,10 @@ t_color	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
 			if (t2 <= 0 || INFINITY <= t2)
 				return ((t_color){0, 0, 0});
 		}
-		return (light(s, r, t2, data));
+		if (toucher_light() == true)
+			return (light(s, r, t2, data));
+		// else
+			// return (ambient_light())
 	}
 	return ((t_color){0, 0, 0});
 }

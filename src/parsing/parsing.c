@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 14:02:12 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 16:24:33 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/16 15:17:15 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ static void	print_error2(int err)
 	else if (err == BADVECTOR)
 		ft_printf_fd (2, "Error #%d: Probleme avec le vector\n", err);
 	else if (err == BADORI)
-		ft_printf_fd (2, "Error #%d: Probleme avec vector d'orientation\n", err);
+		ft_printf_fd (2, "Error #%d: Probleme avec vector\
+		 d'orientation\n", err);
 	else if (err == BADSYN)
 		ft_printf_fd (2, "Error #%d: Probleme avec la syntaxe\n", err);
 	else if (err == BADDIA)
