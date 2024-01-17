@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 14:03:30 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/28 13:51:53 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/17 14:44:20 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void		read_map(char *file_path, t_data *data);
 
 //create_shape
 // void		pcreate_plane(char **line, t_data *data);
-void		add_shape(t_shapes_arr *arr, e_shape_type type, u_geom geo);
+void		add_shape(t_shapes_arr *arr, t_eshape_type type, t_ugeom geo);
 void		pcreate_sphere(char **line, t_data *data);
 void		pcreate_cylindre(char **line, t_data *data);
 void		pcreate_plane(char **line, t_data *data);

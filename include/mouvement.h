@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mouvement.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/17 14:49:01 by bbouchar          #+#    #+#             */
+/*   Updated: 2024/01/17 14:49:21 by bbouchar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MOUVEMENT_H
 # define MOUVEMENT_H
 
-#include "ray.h"
-#include "vector.h"
+# include "ray.h"
+# include "vector.h"
 
 typedef struct s_mouv
 {

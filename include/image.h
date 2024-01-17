@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   image.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/17 14:50:59 by bbouchar          #+#    #+#             */
+/*   Updated: 2024/01/17 14:51:38 by bbouchar         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef IMAGE_H
 # define IMAGE_H
 
-#include "vector.h"
+# include "vector.h"
 
-#define IMAGE_WIDTH 1920.00
-#define IMAGE_HEIGHT 1080.00
+# define IMAGE_WIDTH 1920.00
+# define IMAGE_HEIGHT 1080.00
 
 typedef struct s_viewport
 {
@@ -24,6 +36,4 @@ typedef struct s_viewport
 	float		cam_pitch;
 	float		cam_yaw;
 }			t_viewport;
-
-
 #endif

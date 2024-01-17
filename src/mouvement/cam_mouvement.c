@@ -3,18 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   cam_mouvement.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 13:00:58 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/11 09:09:13 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/17 14:52:42 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ray.h"
 
-int special_key(t_data *data, keys_t key)
+int	special_key(t_data *data, keys_t key)
 {
-	if (key == MLX_KEY_C){
+	if (key == MLX_KEY_C)
+	{
 		if (data->light_selected == true || data->obj_selected == true){
 			ft_printf_fd(0, "Deja quelque chose de selectionner!\n");
 			return (false);

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   create_shape.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 12:37:13 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/28 10:22:26 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/17 14:44:20 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parsing.h"
 
-void	add_shape(t_shapes_arr *arr, e_shape_type type, u_geom geo)
+void	add_shape(t_shapes_arr *arr, t_eshape_type type, t_ugeom geo)
 {
 	if (type == SPHERE)
 		arr->shapes[arr->count].type = SPHERE;
@@ -53,7 +53,7 @@ void	pcreate_plane(char **line, t_data *data)
 	coord = create_vector_str(line[1]);
 	axis = create_vector_str(line[2]);
 	color = (t_color)normalize(create_vector_str(line[3]));
-	add_shape(&data->shapes, PLANE, (u_geom)create_plane(coord, axis, color));
+	add_shape(&data->shapes, PLANE, (t_ugeom)create_plane(coord, axis, color));
 }
 
 void	pcreate_sphere(char **line, t_data *data)
@@ -65,7 +65,7 @@ void	pcreate_sphere(char **line, t_data *data)
 	coord = create_vector_str(line[1]);
 	dia = ft_atof(line[2]) / 2;
 	color = (t_color)normalize(create_vector_str(line[3]));
-	add_shape(&data->shapes, SPHERE, (u_geom)create_sphere(coord, dia, color));
+	add_shape(&data->shapes, SPHERE, (t_ugeom)create_sphere(coord, dia, color));
 }
 
 void	pcreate_cylindre(char **line, t_data *data)
@@ -81,6 +81,6 @@ void	pcreate_cylindre(char **line, t_data *data)
 	dia = ft_atof(line[3]) / 2;
 	height = ft_atof(line[4]);
 	color = (t_color)normalize(create_vector_str(line[5]));
-	add_shape(&data->shapes, CYLINDER, (u_geom)create_cylinder(coord, ori,
+	add_shape(&data->shapes, CYLINDER, (t_ugeom)create_cylinder(coord, ori,
 			dia, height, color));
 }
