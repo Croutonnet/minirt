@@ -6,7 +6,7 @@
 /*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:36 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/10 13:24:39 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/17 13:34:29 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static t_color	calculate_light(t_data *data, t_plane p)
 		+ (intensity * p.base_color.y * data->light.color.y);
 	color.z = (data->alight.intensity * data->alight.color.z)
 		+ (intensity * p.base_color.z * data->light.color.z);
-
 	return (color);
 }
 
@@ -60,7 +59,6 @@ t_vector	plane_intersect_ray(t_plane p, t_ray *r, t_data *data)
 	color.z = 0;
 	num = dot_vec(minus_vec(r->origin_point, p.origin), p.axis);
 	denom = dot_vec(r->direction, p.axis);
-
 	if (denom < 0.001)
 		return (color);
 	t = num / denom;

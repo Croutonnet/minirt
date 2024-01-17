@@ -6,7 +6,7 @@
 /*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:52 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/10 13:24:54 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/17 14:36:54 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ t_vector	div_vec(t_vector vec, double div)
 	return (res);
 }
 
-void	print_vec(t_vector vec){
+void	print_vec(t_vector	vec)
+{
 	printf("x: %f	y: %f	z: %f\n", vec.x, vec.y, vec.z);
 }

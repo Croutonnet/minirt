@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbouchar <BrunoPierreBouchard@hotmail.c    +#+  +:+       +#+        */
+/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:04 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/15 17:07:39 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/17 14:37:36 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 #include "../include/image.h"
 #include <stdio.h>
 
-static int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
+static int32_t	ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
 {
-    return (r << 24 | g << 16 | b << 8 | a);
+	return (r << 24 | g << 16 | b << 8 | a);
 }
 
 static void	clear_img(mlx_image_t *image)
@@ -102,6 +102,5 @@ t_vector	get_ray_point(t_ray r, float t)
 	intersec.x = r.origin_point.x + (r.direction.x * t);
 	intersec.y = r.origin_point.y + (r.direction.y * t);
 	intersec.z = r.origin_point.z + (r.direction.z * t);
-
 	return (intersec);
 }

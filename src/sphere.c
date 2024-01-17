@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbouchar <BrunoPierreBouchard@hotmail.c    +#+  +:+       +#+        */
+/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:45 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/15 14:58:01 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/17 13:34:44 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ t_color	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
 	b = 2.0 * dot_vec(minus_vec(r->direction, r->origin_point), oc);
 	c = pow(length_vec(oc), 2) - pow(s.radius, 2);
 	dis = pow(b, 2) - (4 * c);
-
 	if (dis >= 0)
 	{
 		t2 = (-b - sqrtf(dis)) / (2.0f);

@@ -116,6 +116,7 @@ void	touch_object(mouse_key_t button, action_t action, modifier_key_t mods, void
 // rotation.c
 t_vector	rotation_x(t_vector vec, float deg);
 t_vector	rotation_y(t_vector vec, float deg);
+t_vector	rotation_z(t_vector vec, float deg);
 
 // final_viewport.c
 void	read_rotation(t_data *data);

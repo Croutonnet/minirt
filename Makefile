@@ -39,6 +39,7 @@ SRCS		=	main.c\
 				sphere.c\
 				vector_math.c\
 				vector.c\
+				vector2.c\
 				cylinder.c\
 				final_viewport.c\
 				plane.c\

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbouchar <BrunoPierreBouchard@hotmail.c    +#+  +:+       +#+        */
+/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:10 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/15 14:45:23 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/17 14:34:15 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ static void	calculate_upper_left(t_data *data)
 	t_vector	res1;
 	t_vector	res2;
 
-	res1 = minus_vec(create_vector(0, 0, 0), create_vector(0, 0, data->viewport.focal_lenght));
+	res1 = minus_vec(create_vector(0, 0, 0),
+			create_vector(0, 0, data->viewport.focal_lenght));
 	res2 = minus_vec(res1, div_vec(data->viewport.u, 2));
 	data->viewport.upper_left = minus_vec(res2, div_vec(data->viewport.v, 2));
 }
@@ -33,22 +34,22 @@ static void	calculate_p00_loc(t_data *data)
 {
 	t_vector	res1;
 
-	res1 = mul_vec(add_vec(data->viewport.pixel_delta_u, data->viewport.pixel_delta_v), 0.5);
+	res1 = mul_vec(add_vec(data->viewport.pixel_delta_u,
+				data->viewport.pixel_delta_v), 0.5);
 	data->viewport.pixel00_loc = add_vec(data->viewport.upper_left, res1);
 }
 
 void	key_func(mlx_key_data_t keydata, void *param)
 {
-	t_data *data;
+	t_data	*data;
 
 	data = param;
-	if (keydata.key == MLX_KEY_ESCAPE){
+	if (keydata.key == MLX_KEY_ESCAPE)
+	{
 		mlx_terminate(data->mlx);
 		exit(0);
 	}
-	if (keydata.action != MLX_PRESS)
-		return ;
-	if (special_key(data, keydata.key) == true)
+	if (special_key(data, keydata.key) == true || keydata.action != MLX_PRESS)
 		return ;
 	if (data->cam_selected == true)
 	{
@@ -65,6 +66,7 @@ void	key_func(mlx_key_data_t keydata, void *param)
 	create_rays(data);
 	return ;
 }
+
 void	initialisation(t_data *data, char *input)
 {
 	data->viewport.ratio = IMAGE_WIDTH / IMAGE_HEIGHT;
@@ -75,7 +77,8 @@ void	initialisation(t_data *data, char *input)
 	data->viewport.pixel_delta_v = div_vec(data->viewport.v, IMAGE_WIDTH);
 	data->viewport.pixel_delta_u = div_vec(data->viewport.u, IMAGE_HEIGHT);
 	read_map(input, data);
-	data->viewport.viewport_center = minus_vec(create_vector(0, 0, 0), create_vector(0, 0, -data->viewport.focal_lenght));
+	data->viewport.viewport_center = minus_vec(create_vector(0, 0, 0),
+			create_vector(0, 0, -data->viewport.focal_lenght));
 	calculate_upper_left(data);
 	calculate_p00_loc(data);
 	read_rotation(data);
@@ -93,7 +96,7 @@ int	main(int argc, char **argv)
 		ft_printf_fd(2, "Il faut loader une map dans map/quelquechose.rt et rien d'autre\n");
 		return (1);
 	}
-	data.shapes.count = 0; // important !
+	data.shapes.count = 0;
 	ft_bzero(&count, sizeof(count));
 	ft_bzero(&data, sizeof(data));
 	if (parsing(argv[1], &count) == -1)
