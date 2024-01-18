@@ -36,6 +36,7 @@ SRC_DIR		=	src/
 SRCS		=	main.c\
 				ray.c\
 				sphere.c\
+				sphere2.c\
 				vector_math.c\
 				vector.c\
 				vector2.c\

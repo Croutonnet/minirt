@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   obj_mouvement.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 09:01:06 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/18 12:39:35 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/18 18:13:36 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ray.h"
 #include "../../include/mouvement.h"
 
-static int search_object(t_ray *ray, t_data *data)
+static int	search_object(t_ray *ray, t_data *data)
 {
 	int		id;
 	t_shape	*shape;

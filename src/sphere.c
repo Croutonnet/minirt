@@ -6,7 +6,7 @@
 /*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:45 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/18 17:27:15 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/18 18:21:06 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,18 +44,6 @@ static bool	toucher_light(t_vector touche_point, t_data *data, int id)
 	return (true);
 }
 
-t_sphere	create_sphere(t_vector pPosition, float radius, t_color pColor)
-{
-	t_sphere	s;
-
-	s.origin.x = pPosition.x;
-	s.origin.y = pPosition.y;
-	s.origin.z = pPosition.z;
-	s.radius = radius;
-	s.base_color = pColor;
-	return (s);
-}
-
 // r->color = add_vec(mul_vec(s.base_color, intensity), ambient);
 static void	light(t_sphere s, t_ray *r, t_data *data, t_vector normal)
 {
@@ -71,14 +59,19 @@ static void	light(t_sphere s, t_ray *r, t_data *data, t_vector normal)
 	r->hit = true;
 }
 
-void	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data, int id)
+static void	compute_quadratic(t_ray *r, t_sphere s)
 {
-	t_vector	normal;
-
 	r->oc = minus_vec(r->origin_point, s.origin);
 	r->b = 2.0 * dot_vec(r->direction, r->oc);
 	r->c = pow(length_vec(r->oc), 2) - pow(s.radius, 2);
 	r->dis = pow(r->b, 2) - (4 * r->c);
+}
+
+void	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data, int id)
+{
+	t_vector	normal;
+
+	compute_quadratic(r, s);
 	if (r->dis >= 0)
 	{
 		r->t2 = (-r->b - sqrt(r->dis)) / (2.0f);
