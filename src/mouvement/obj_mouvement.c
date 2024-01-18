@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 09:01:06 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/11 13:37:39 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/18 12:39:35 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,26 @@ static int search_object(t_ray *ray, t_data *data)
 		shape = &data->shapes.shapes[id];
 		if (shape->type == SPHERE)
 			temp_touch = sphere_intersect_mouv(shape->geom.sphere, ray);
-		if (temp_touch < touch || (temp_touch != -1 && touch == -2))
-		{
-			touch = temp_touch;
-			id_of_touch = id;
-		}
+		if (temp_touch != -1)
+			return (id);
+		// if (temp_touch < touch || (temp_touch != -1 && touch == -2))
+		// {
+		// 	touch = temp_touch;
+		// 	id_of_touch = id;
+		// }
 		id++;
 	}
 	return (id_of_touch);
 }
 
-void touch_object(mouse_key_t button, action_t action, modifier_key_t mods, void *param)
+void	touch_object(mouse_key_t button, action_t action, modifier_key_t mods, void *param)
 {
 	t_data	*data;
 	int		x;
 	int		y;
 	t_mouv	mouv;
 
+	(void)mods;
 	data = param;
 	if (action == MLX_PRESS && button == MLX_MOUSE_BUTTON_LEFT)
 	{
@@ -57,7 +60,7 @@ void touch_object(mouse_key_t button, action_t action, modifier_key_t mods, void
 		mouv.ray = create_ray(data->final_viewport.camera_center, mouv.dir);
 		data->id_touch = search_object(&mouv.ray, data);
 		if (data->id_touch > -1 && data->cam_selected == false && data->light_selected == false){
-			ft_printf_fd(0, "Object sélectionner!\n");
+			ft_printf_fd(0, "Object sélectionner: %d!\n", data->id_touch);
 			data->obj_selected = true;
 		}
 	}
@@ -69,7 +72,7 @@ void touch_object(mouse_key_t button, action_t action, modifier_key_t mods, void
 	}
 }
 
-static void move_sphere(t_shape *sphere, keys_t key)
+static void	move_sphere(t_shape *sphere, keys_t key)
 {
 	if (key == MLX_KEY_W)
 		sphere->geom.sphere.origin.z++;
@@ -91,7 +94,7 @@ static void move_sphere(t_shape *sphere, keys_t key)
 	print_vec(sphere->geom.sphere.origin);
 }
 
-static void move_cyl(t_shape *cyl, keys_t key)
+static void	move_cyl(t_shape *cyl, keys_t key)
 {
 	if (key == MLX_KEY_W)
 		cyl->geom.cylinder.origin.z++;
@@ -113,11 +116,13 @@ static void move_cyl(t_shape *cyl, keys_t key)
 		cyl->geom.cylinder.height += 1;
 	else if (key == MLX_KEY_N && cyl->geom.cylinder.radius > 1)
 		cyl->geom.cylinder.height -= 1;
+	else
+		rotate_cyl(cyl, key);
 	ft_printf_fd(0, "Coord Cylindre Sélectionner: ");
 	print_vec(cyl->geom.cylinder.origin);
 }
 
-void move_object(t_data *data, keys_t key)
+void	move_object(t_data *data, keys_t key)
 {
 	if (data->id_touch == -1)
 		return ;

@@ -6,7 +6,7 @@
 /*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:39:29 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/17 14:48:17 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:50:59 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,10 @@ typedef enum enum_shape_type
 
 typedef struct s_plane
 {
-	t_vector	origin;
-	t_vector	axis;
-	t_color		base_color;
-}	t_plane;
+	t_vector origin;
+	t_vector axis;
+	t_color base_color;
+} t_plane;
 
 typedef struct s_sphere
 {
@@ -59,7 +59,7 @@ typedef union t_ugeometry
 	t_sphere	sphere;
 	t_cylinder	cylinder;
 	t_plane		plane;
-}	t_ugeom;
+} t_ugeom;
 
 // represente une forme 3D quelquonque
 typedef struct s_shape
@@ -77,9 +77,13 @@ typedef struct s_ray
 	t_vector	origin_point;
 	t_vector	direction;
 	t_color		color;
-	t_shape		*obj;
-	int			t;
-}	t_ray;
+	t_vector	oc;
+	float		b;
+	float		c;
+	float		dis;
+	float		t2;
+	t_vector	touch_point;
+}t_ray;
 
 // tableau de shapes 3D
 typedef struct s_shapes_arr
@@ -111,8 +115,11 @@ t_sphere	create_sphere(t_vector p_position, float radius, t_color pColor);
 t_cylinder	create_cylinder(t_vector p, t_vector r, float d, float h, t_vector c);
 t_plane		create_plane(t_vector p_position, t_vector p_axis, t_color p_Color);
 
+//collision.c
+bool		ray_collision(t_vector touch, t_data *data, t_shape *shape);
+
 // collision functions
-t_vector	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data);
+void		sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data, int id);
 t_vector	cylinder_intersect_ray(t_cylinder c, t_ray *r);
 t_vector	plane_intersect_ray(t_plane p, t_ray *r, t_data *data);
 
@@ -124,7 +131,7 @@ int			special_key(t_data *data, keys_t key);
 
 // obj_mouvement.c
 void		move_object(t_data *data, keys_t key);
-void		touch_object(mouse_key_t b, action_t a, modifier_key_t m, void *p);
+void		touch_object(mouse_key_t button, action_t action, modifier_key_t mods, void *param);
 
 // rotation.c
 t_vector	rotation_x(t_vector vec, float deg);

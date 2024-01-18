@@ -6,7 +6,7 @@
 /*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:45 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/17 13:34:44 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/18 17:27:15 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,34 @@
 #include "../include/light.h"
 #include <limits.h>
 
-// static int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
-// {
-//     return (r << 24 | g << 16 | b << 8 | a);
-// }
+static void	ambient_light(t_ray *r, t_sphere s, t_data *data, t_vector normal)
+{
+	t_vector	lightdir;
+	float		intensity;
+	t_color		ambient;
+
+	ambient = mul_vec(add_vec(data->alight.color, s.base_color),
+			data->alight.intensity);
+	r->color = ambient;
+	r->hit = true;
+}
+
+static bool	toucher_light(t_vector touche_point, t_data *data, int id)
+{
+	int		temp_id;
+	bool	ret;
+
+	temp_id = 0;
+	ret = false;
+	while (temp_id < data->shapes.count)
+	{
+		ret = ray_collision(touche_point, data, &data->shapes.shapes[id]);
+		if (ret == true)
+			return (false);
+		temp_id++;
+	}
+	return (true);
+}
 
 t_sphere	create_sphere(t_vector pPosition, float radius, t_color pColor)
 {
@@ -32,61 +56,49 @@ t_sphere	create_sphere(t_vector pPosition, float radius, t_color pColor)
 	return (s);
 }
 
-//float t1 = (-b + sqrt(dis))/2.0f;
-// calcule la valeur de t
-// calcule points de collision
-// x,y,z entre -1 et 1
-// si un object intersecte lightDir, alors le pixel est une ombre...
-static t_color	light(t_sphere s, t_ray *r, float t2, t_data *data)
+// r->color = add_vec(mul_vec(s.base_color, intensity), ambient);
+static void	light(t_sphere s, t_ray *r, t_data *data, t_vector normal)
 {
-	t_vector	normal;
 	t_vector	lightdir;
-	t_color		color;
 	float		intensity;
+	t_color		ambient;
 
-	normal = normalize(minus_vec(get_ray_point(*r, t2), s.origin));
-	lightdir = normalize(minus_vec(data->light.origin, s.origin));
-	intensity = dot_vec(normal, lightdir) / 2;
-	if (intensity < 0)
-		intensity = 0;
-	color.x = (data->alight.intensity * data->alight.color.x)
-		+ (intensity * s.base_color.x * data->light.color.x);
-	color.y = (data->alight.intensity * data->alight.color.y)
-		+ (intensity * s.base_color.y * data->light.color.y);
-	color.z = (data->alight.intensity * data->alight.color.z)
-		+ (intensity * s.base_color.z * data->light.color.z);
-	r->t = t2;
+	ambient = mul_vec(add_vec(data->alight.color, s.base_color),
+			data->alight.intensity);
+	lightdir = normalize(minus_vec(data->light.origin, r->touch_point));
+	intensity = dot_vec(normal, lightdir) * data->light.intensity;
+	r->color = mul_vec(s.base_color, intensity);
 	r->hit = true;
-	return (color);
 }
 
-// If sphere intersect ray
-// return a color and put r.hit = true, retunr intersection point.
-// oc = Direction vers le centre de la sphere
-// dis = Discriminant < 0 si rien toucher, 
-// 0 toucher une fois, 1 toucher deux fois
-t_color	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
+void	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data, int id)
 {
-	t_vector	oc;
-	float		b;
-	float		c;
-	float		dis;
-	float		t2;
+	t_vector	normal;
 
-	oc = minus_vec(r->origin_point, s.origin);
-	b = 2.0 * dot_vec(minus_vec(r->direction, r->origin_point), oc);
-	c = pow(length_vec(oc), 2) - pow(s.radius, 2);
-	dis = pow(b, 2) - (4 * c);
-	if (dis >= 0)
+	r->oc = minus_vec(r->origin_point, s.origin);
+	r->b = 2.0 * dot_vec(r->direction, r->oc);
+	r->c = pow(length_vec(r->oc), 2) - pow(s.radius, 2);
+	r->dis = pow(r->b, 2) - (4 * r->c);
+	if (r->dis >= 0)
 	{
-		t2 = (-b - sqrtf(dis)) / (2.0f);
-		if (t2 <= 0 || INFINITY <= t2)
+		r->t2 = (-r->b - sqrt(r->dis)) / (2.0f);
+		if (r->t2 <= 0 || INT_MAX <= r->t2)
 		{
-			t2 = (-b + sqrt(dis));
-			if (t2 <= 0 || INFINITY <= t2)
-				return ((t_color){0, 0, 0});
+			r->t2 = (-r->b + sqrt(r->dis)) / (2.0f);
+			if (r->t2 <= 0 || INT_MAX <= r->t2)
+				return ;
 		}
-		return (light(s, r, t2, data));
+		r->touch_point = get_ray_point(*r, r->t2);
+		normal = normalize(minus_vec(r->touch_point, s.origin));
+		if (dot_vec(r->direction, normal) > 0)
+			normal = mul_vec(normal, -1);
+		r->touch_point = get_ray_point(create_ray(r->touch_point,
+					normal), 0.001);
+		if (toucher_light(r->touch_point, data, id) == true)
+			light(s, r, data, normal);
+		else
+			ambient_light(r, s, data, normal);
 	}
-	return ((t_color){0, 0, 0});
+	else
+		r->hit = false;
 }

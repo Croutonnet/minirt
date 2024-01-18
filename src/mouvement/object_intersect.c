@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_intersect.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
+/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 11:02:24 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/11 11:14:49 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/18 17:31:38 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ float	sphere_intersect_mouv(t_sphere sphere, t_ray *ray)
 	float		b;
 	float		c;
 	float		dis;
+	float		t;
 
 	oc = minus_vec(ray->origin_point, sphere.origin);
 	b = dot_vec(ray->direction, oc);
@@ -26,7 +27,7 @@ float	sphere_intersect_mouv(t_sphere sphere, t_ray *ray)
 	dis = pow(b, 2) - c;
 	if (dis >= 0)
 	{
-		float t = (-b - sqrtf(dis));
+		t = (-b - sqrtf(dis));
 		if (t <= 0 || INFINITY <= t){
 			t = (-b + sqrt(dis));
 			if (t <= 0 || INFINITY <= t)

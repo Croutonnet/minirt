@@ -32,7 +32,6 @@ LIBFTA			=	include/Libft/libft.a
 LIBFT_DIR		=	include/Libft/
 LIBFT_GIT_URL	=	https://github.com/Croutonnet/Libft.git
 
-# Sources are all .c files
 SRC_DIR		=	src/
 SRCS		=	main.c\
 				ray.c\
@@ -52,7 +51,8 @@ SRCS_PARS	=	line_read.c\
 				parsing_func.c\
 				check_file.c\
 				read_map.c\
-				create_shape.c
+				create_shape.c\
+				collision.c
 
 MOUV_DIR	=	src/mouvement/
 SRCS_MOUV	=	rotation.c\
@@ -127,6 +127,18 @@ libft:
         git clone -q $(LIBFT_GIT_URL) $(LIBFT_DIR); \
 	fi
 	@$(MAKE) -sC $(LIBFT_DIR)
+
+fclean_run:
+	@printf "💣 $(RED)Removing $(NAME) objects $(RESET) 💥\n"
+	@$(RM) $(OBJS_DIR)
+	@printf "💣 $(RED)Removing $(NAME) executable$(RESET) 💥\n"
+	@$(RM) $(NAME)
+
+run : fclean_run all
+	@printf "$(ERASE_LINE)$(GREEN)✔️ $(RED)$(ITALIC)$(NAME) LAUNCHING🚀!!!!!!$(RESET)\
+	$(GREEN) ✔️$(RESET)\n"
+	@./minirt map/test.rt
+
 
 # Permet de rediriger l'affichage graphique vers Xserver sous wsl
 #export DISPLAY=$(ip route list default | awk '{print $3}'):0

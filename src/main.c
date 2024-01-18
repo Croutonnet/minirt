@@ -6,7 +6,7 @@
 /*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:10 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/17 14:34:15 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/18 17:21:55 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_printf_fd(2, "Il faut loader une map dans map/quelquechose.rt et rien d'autre\n");
+		ft_printf_fd(2, "Il faut loader une map"
+			"dans map/quelquechose.rt et rien d'autre\n");
 		return (1);
 	}
 	data.shapes.count = 0;

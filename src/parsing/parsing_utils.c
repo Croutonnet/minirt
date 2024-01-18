@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:13:54 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 16:14:58 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/16 12:38:11 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	check_ratio(char *line)
 		return (print_error(BADRATIO, BADRATIO, false));
 	while (line[i])
 	{
-		if (ft_isdigit(line[i]) == false && line[i] != '.')
+		if (ft_isdigit(line[i]) == false && line[i] != '.' && line[i] != '\n')
 			return (print_error(BADRATIO, BADRATIO, false));
 		i++;
 	}

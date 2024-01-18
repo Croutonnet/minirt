@@ -6,7 +6,7 @@
 /*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:49:34 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/17 14:50:44 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:41:44 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,8 @@ typedef struct s_light_ambient
 
 typedef struct s_light
 {
-	t_vector	origin;
-	float		intensity;
-	t_color		color;
-}	t_light;
+	t_vector origin;
+	float intensity;
+} t_light;
 
 #endif

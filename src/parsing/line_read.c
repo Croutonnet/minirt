@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   line_read.c                                        :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:13:40 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/10 14:16:32 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/16 15:15:34 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int	p_light(char *line, t_count *count)
 	if (err != CORRECT)
 		return (print_error(BADLIGHT, err, false));
 	temp = ft_split(line, 32);
-	if (!temp[0] || !temp[1] || !temp[2] || !temp[3] || temp[4] != NULL)
+	if (!temp[0] || !temp[1] || !temp[2] || temp[3] != NULL)
 		return (print_error(BADLIGHT, -1, true));
 	err = check_syntaxe(temp, 1, 0);
 	if (err != CORRECT)
@@ -59,9 +59,6 @@ int	p_light(char *line, t_count *count)
 	if (err != CORRECT)
 		return (print_error(BADLIGHT, err, false));
 	err = check_ratio(temp[2]);
-	if (err != CORRECT)
-		return (print_error(BADLIGHT, err, false));
-	err = check_rgb(temp[3], 0, 0);
 	if (err != CORRECT)
 		return (print_error(BADLIGHT, err, false));
 	ft_xxfree((void **)temp);

@@ -6,7 +6,7 @@
 /*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:36 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/17 13:34:29 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/18 16:42:59 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ static t_color	calculate_light(t_data *data, t_plane p)
 	if (intensity < 0)
 		intensity = 0;
 	color.x = (data->alight.intensity * data->alight.color.x)
-		+ (intensity * p.base_color.x * data->light.color.x);
+		+ (intensity * p.base_color.x);
 	color.y = (data->alight.intensity * data->alight.color.y)
-		+ (intensity * p.base_color.y * data->light.color.y);
+		+ (intensity * p.base_color.y);
 	color.z = (data->alight.intensity * data->alight.color.z)
-		+ (intensity * p.base_color.z * data->light.color.z);
+		+ (intensity * p.base_color.z);
+
 	return (color);
 }
 
@@ -63,7 +64,6 @@ t_vector	plane_intersect_ray(t_plane p, t_ray *r, t_data *data)
 		return (color);
 	t = num / denom;
 	color = calculate_light(data, p);
-	r->t = t;
 	r->hit = true;
 	return (color);
 }

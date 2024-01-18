@@ -27,6 +27,6 @@ typedef struct s_mouv
 float	sphere_intersect_mouv(t_sphere sphere, t_ray *ray);
 
 // more_obj_mouvement.c
-void	rotate_cyl(t_cylinder *cyl, keys_t key);
+void	rotate_cyl(t_shape *cyl, keys_t key);
 
 #endif
