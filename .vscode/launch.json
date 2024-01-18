@@ -6,13 +6,13 @@
       "request": "launch",
       "program": "${workspaceFolder}/minirt",
       "args": [
-        "map/test_castshadow.rt"
+        "map/test_cy.rt"
       ],
       "stopAtEntry": false,
       "cwd": "${workspaceFolder}",
       "environment": [],
       "externalConsole": false,
-      "MIMode": "gdb",
+      "MIMode": "lldb",
       "preLaunchTask": "BUILD",
       "miDebuggerPath": "",
       "setupCommands": [

@@ -6,7 +6,7 @@
 /*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:04 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/17 14:37:36 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/17 16:05:19 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,10 @@ void create_rays(t_data *data)
 				shape = &data->shapes.shapes[id];
 				if (shape->type == SPHERE)
 					pixel = sphere_intersect_ray(shape->geom.sphere, &r, data);
-				// else if (shape->type == CYLINDER)
-				// 	pixel = cylinder_intersect_ray(shape->geom.cylinder, &r);
-				// else if (shape->type == PLANE)
-				// 	pixel = plane_intersect_ray(shape->geom.plane, &r, data);
+				else if (shape->type == CYLINDER)
+					pixel = cylinder_intersect_ray(shape->geom.cylinder, &r);
+				else if (shape->type == PLANE)
+					pixel = plane_intersect_ray(shape->geom.plane, &r, data);
 				if (r.hit == true)
 					mlx_put_pixel(data->image, x, y, ft_pixel(pixel.x * 255, pixel.y * 255, pixel.z * 255, 255));
 				id++;

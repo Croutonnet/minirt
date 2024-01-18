@@ -6,12 +6,12 @@
 /*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:15 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/10 13:25:17 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/18 15:35:58 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ray.h"
-
+#include <stdio.h> // debug
 #define PI 3.141592654
 
 t_cylinder create_cylinder(t_vector p, t_vector r, float d, float h, t_vector c)
@@ -29,7 +29,7 @@ t_cylinder create_cylinder(t_vector p, t_vector r, float d, float h, t_vector c)
 t_vector cylinder_intersect_ray(t_cylinder cy, t_ray *r)
 {
 	t_vector v[2];
-	float dist[2];
+	t_vector dist[2];
 	t_vector v_cy2ray;
 	t_color color;
 	color.x = 0;
@@ -49,11 +49,13 @@ t_vector cylinder_intersect_ray(t_cylinder cy, t_ray *r)
 	float t1 = (-b - sqrt(dis)) / (2 * a);
 	float t2 = (-b + sqrt(dis)) / (2 * a);
 	v_cy2ray = minus_vec(cy.origin, r->origin_point);
-	dist[0] = dot_vec(cy.rotation, minus_vec(mul_vec(r->direction, t1), v_cy2ray));
-	dist[1] = dot_vec(cy.rotation, minus_vec(mul_vec(r->direction, t2), v_cy2ray));
+	dist[0] = add_vec(cy.origin, mul_vec(cy.rotation, 5));
+	dist[1] = add_vec(cy.origin, mul_vec(cy.rotation, -5));
 
-
-    if (dist[1] < cy.height || dist[0] > cy.height)
+	t_vector p1 = get_ray_point(*r, t1);
+	
+	float h = sqrt(pow(length_vec(p1),2) - pow((cy.radius / 2),2));
+    if (h < cy.height / 2)
     {
 		r->hit = true;
 		color.x = 1;
