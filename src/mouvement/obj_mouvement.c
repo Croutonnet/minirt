@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 09:01:06 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/16 12:58:13 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/18 12:39:35 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,24 +30,26 @@ static int search_object(t_ray *ray, t_data *data)
 		shape = &data->shapes.shapes[id];
 		if (shape->type == SPHERE)
 			temp_touch = sphere_intersect_mouv(shape->geom.sphere, ray);
-		if (temp_touch < touch || (temp_touch != -1 && touch == -2))
-		{
-			touch = temp_touch;
-			id_of_touch = id;
-		}
+		if (temp_touch != -1)
+			return (id);
+		// if (temp_touch < touch || (temp_touch != -1 && touch == -2))
+		// {
+		// 	touch = temp_touch;
+		// 	id_of_touch = id;
+		// }
 		id++;
 	}
 	return (id_of_touch);
 }
 
-void	touch_object(mouse_key_t button, action_t action,
-	modifier_key_t mods, void *param)
+void	touch_object(mouse_key_t button, action_t action, modifier_key_t mods, void *param)
 {
 	t_data	*data;
 	int		x;
 	int		y;
 	t_mouv	mouv;
 
+	(void)mods;
 	data = param;
 	if (action == MLX_PRESS && button == MLX_MOUSE_BUTTON_LEFT)
 	{
@@ -58,7 +60,7 @@ void	touch_object(mouse_key_t button, action_t action,
 		mouv.ray = create_ray(data->final_viewport.camera_center, mouv.dir);
 		data->id_touch = search_object(&mouv.ray, data);
 		if (data->id_touch > -1 && data->cam_selected == false && data->light_selected == false){
-			ft_printf_fd(0, "Object sélectionner!\n");
+			ft_printf_fd(0, "Object sélectionner: %d!\n", data->id_touch);
 			data->obj_selected = true;
 		}
 	}

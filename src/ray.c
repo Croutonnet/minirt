@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbouchar <BrunoPierreBouchard@hotmail.c    +#+  +:+       +#+        */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:04 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/15 17:07:39 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/18 13:04:41 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,7 @@ void create_rays(t_data *data)
 	t_vector	dir;
 	t_vector	delta;
 	t_vector	point;
-	t_color		pixel;
-	t_ray		r_lightDir;
+	t_ray		close_ray;
 
 	y = 0;
 	clear_img(data->image);
@@ -59,6 +58,8 @@ void create_rays(t_data *data)
 		x = 0;
 		while (x < IMAGE_WIDTH)
 		{
+			close_ray.hit = false;
+			close_ray.t2 = INFINITY;
 			delta = add_vec(mul_vec(data->final_viewport.pixel_delta_v, x), mul_vec(data->final_viewport.pixel_delta_u, y));
 			point = add_vec(data->final_viewport.pixel00_loc, delta);
 			dir = normalize(minus_vec(point, data->final_viewport.camera_center));
@@ -69,15 +70,17 @@ void create_rays(t_data *data)
 				t_shape	*shape;
 				shape = &data->shapes.shapes[id];
 				if (shape->type == SPHERE)
-					pixel = sphere_intersect_ray(shape->geom.sphere, &r, data);
+					sphere_intersect_ray(shape->geom.sphere, &r, data, id);
 				// else if (shape->type == CYLINDER)
 				// 	pixel = cylinder_intersect_ray(shape->geom.cylinder, &r);
 				// else if (shape->type == PLANE)
 				// 	pixel = plane_intersect_ray(shape->geom.plane, &r, data);
-				if (r.hit == true)
-					mlx_put_pixel(data->image, x, y, ft_pixel(pixel.x * 255, pixel.y * 255, pixel.z * 255, 255));
+				if (r.hit == true && r.t2 < close_ray.t2)
+					close_ray = r;
 				id++;
 			}
+			if (close_ray.hit == true)
+				mlx_put_pixel(data->image, x, y, ft_pixel(r.color.x * 255, r.color.y * 255, r.color.z * 255, 255));
 			x++;
 		}
 		y++;

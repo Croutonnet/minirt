@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:36 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/16 14:18:02 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/18 11:53:22 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ t_vector	plane_intersect_ray(t_plane p, t_ray *r, t_data *data)
 		return (color);
 	t = num / denom;
 	color = calculate_light(data, p);
-	r->t = t;
 	r->hit = true;
 	return (color);
 }
