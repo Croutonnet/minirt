@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:50:25 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/10 17:52:48 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/19 15:34:24 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,6 @@ void	final_viewport(t_data *data)
 {
 	pitch(data);
 	yaw(data);
-	printf ("Camera Center: ");
-	print_vec(data->final_viewport.camera_center);
 	data->final_viewport.pixel00_loc = add_vec(data->final_viewport.camera_center, data->final_viewport.pixel00_loc);
 	data->final_viewport.viewport_center = add_vec(data->final_viewport.camera_center, data->final_viewport.viewport_center);
 	data->avant = normalize(mul_vec(minus_vec(data->final_viewport.viewport_center, data->final_viewport.camera_center), -1));

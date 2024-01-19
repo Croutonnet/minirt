@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cylinder.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:15 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/10 13:25:17 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/19 15:38:54 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,8 +53,8 @@ t_vector cylinder_intersect_ray(t_cylinder cy, t_ray *r)
 	dist[1] = dot_vec(cy.rotation, minus_vec(mul_vec(r->direction, t2), v_cy2ray));
 
 
-    if (dist[1] < cy.height || dist[0] > cy.height)
-    {
+	if (dist[1] < cy.height || dist[0] > cy.height)
+	{
 		r->hit = true;
 		color.x = 1;
 		color.y = 1;

@@ -58,7 +58,8 @@ SRCS_MOUV	=	rotation.c\
 				cam_mouvement.c\
 				more_obj_mouvement.c\
 				obj_mouvement.c\
-				object_intersect.c
+				object_intersect.c\
+				key_mouv.c
 
 OBJS_DIR	=	obj/
 OBJSBASE	=	$(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
@@ -181,7 +182,7 @@ fclean_run:
 run : fclean_run all
 	@printf "$(ERASE_LINE)$(GREEN)✔️ $(RED)$(ITALIC)$(NAME) LAUNCHING🚀!!!!!!$(RESET)\
 	$(GREEN) ✔️$(RESET)\n"
-	@./minirt map/test.rt
+	@./minirt map/test_castshadow.rt
 
 
 # Permet de rediriger l'affichage graphique vers Xserver sous wsl
