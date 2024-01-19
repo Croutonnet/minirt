@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:45 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/19 09:07:01 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/19 13:18:44 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,19 @@ static void ambient_light(t_ray *r, t_sphere s, t_data *data, t_vector normal)
 	r->hit = true;
 }
 
-static bool	toucher_light(t_vector touche_point, t_data *data, int id)
+static bool	toucher_light(t_vector touche_point, t_data *data)
 {
-	int		temp_id;
+	int		id;
 	bool	ret;
 
-	temp_id = 0;
+	id = 0;
 	ret = false;
-	while (temp_id < data->shapes.count)
+	while (id < data->shapes.count)
 	{
 		ret = ray_collision(touche_point, data, &data->shapes.shapes[id]);
 		if (ret == true)
 			return (false);
-		temp_id++;
+		id++;
 	}
 	return (true);
 }
@@ -90,7 +90,7 @@ void	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data, int id)
 		if (dot_vec(r->direction, normal) > 0)
 			normal = mul_vec(normal, -1);
 		r->touch_point = get_ray_point(create_ray(r->touch_point, normal), 0.001);
-		if (toucher_light(r->touch_point, data, id) == true)
+		if (toucher_light(r->touch_point, data) == true)
 			light(s, r, r->t2, data, normal);
 		else
 			ambient_light(r, s, data, normal);

@@ -6,11 +6,12 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:34:49 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/19 08:40:36 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/19 13:20:11 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ray.h"
+#include <stdio.h>
 
 static float	tistance(t_vector v1, t_vector v2)
 {
@@ -23,15 +24,15 @@ static float	tistance(t_vector v1, t_vector v2)
 static bool	sphere_touchage(t_ray *r, t_sphere s, float t_max)
 {
 	r->oc = minus_vec(r->origin_point, s.origin);
-	r->b = 2.0 * dot_vec(r->direction, r->oc);
+	r->b = dot_vec(r->direction, r->oc);
 	r->c = pow(length_vec(r->oc), 2) - pow(s.radius, 2);
-	r->dis = pow(r->b, 2) - (4 * r->c);
+	r->dis = pow(r->b, 2) - r->c;
 	if (r->dis >= 0)
 	{
-		r->t2 = (-r->b - sqrt(r->dis)) / (2.0f);
+		r->t2 = (-r->b - sqrt(r->dis));
 		if (r->t2 <= 0 || t_max <= r->t2)
 		{
-			r->t2 = (-r->b + sqrt(r->dis)) / (2.0f);
+			r->t2 = (-r->b + sqrt(r->dis));
 			if (r->t2 <= 0 || t_max <= r->t2)
 				return (false);
 		}
@@ -48,7 +49,6 @@ bool	ray_collision(t_vector touch, t_data *data, t_shape *shape)
 	ret = false;
 	r = create_ray(touch, normalize(minus_vec(data->light.origin, touch)));
 	if (shape->type == SPHERE)
-		ret = sphere_touchage(&r, shape->geom.sphere,
-			tistance(touch, data->light.origin));
+		ret = sphere_touchage(&r, shape->geom.sphere, tistance(touch, data->light.origin));
 	return (ret);
 }
