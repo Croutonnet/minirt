@@ -78,11 +78,11 @@ ifeq ($(OS),Linux) # règles en + pour Linux
     LIBS = -ldl -lglfw -pthread -lm
 endif
 
-all: libft mlx $(OBJS_DIR) $(NAME)
+all: dependdown libft mlx $(OBJS_DIR) $(NAME)
 
 # Generates output file
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) -I include -lglfw -L "/USERS/$(USER)/.brew/opt/glfw/lib/" $(OBJS) -o $(NAME) $(MLXLIBA) $(LIBFTA) $(LIBS)
+	@$(CC) $(CFLAGS) -I include -lglfw -L "$(shell brew --prefix glfw)/lib/" $(OBJS) -o $(NAME) $(MLXLIBA) $(LIBFTA) $(LIBS)
 	@echo "$(ERASE_LINE)$(GREEN)✔️ $(ITALIC)$(NAME) successfully compile.$(RESET)\
 	$(GREEN) ✔️$(RESET)"
 
@@ -94,6 +94,51 @@ $(NAME): $(OBJS)
 # create objects directory
 $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)
+
+dependdown:
+	@if [ -x "$$HOME/homebrew/bin/brew" ] || [ -x "$$HOME/.brew/bin/brew" ]; then \
+		echo "$(GREEN)✔︎ $(ITALIC)Brew is already installed$(RESET)$(GREEN) ✔︎$(RESET)"; \
+	else \
+		echo "$(RED)✗ $(ITALIC)Brew not found$(RESET)$(RED) ✗"; \
+		read -p "Do you want to install brew? y/n: "  brewchoice; \
+		printf "$(RESET)"; \
+		if [ "$$brewchoice" = "y" ]; then \
+			rm -rf $$HOME/.brew && git clone --depth=1 https://github.com/Homebrew/brew $$HOME/.brew && \
+			echo 'export PATH=$$HOME/.brew/bin:$$PATH' >> $$HOME/.zshrc && source $$HOME/.zshrc && brew update; \
+			echo "$(GREEN)✔︎ $(ITALIC)Brew successfully installed$(RESET)$(GREEN) ✔︎$(RESET)"; \
+		else \
+			echo "Exit"; \
+			exit 2; \
+		fi \
+	fi
+	@if [ -d "$$HOME/homebrew/opt/glfw/lib" ] || [ -d "$$HOME/.brew/opt/glfw/lib" ]; then \
+		echo "$(GREEN)✔︎ $(ITALIC)glfw is already installed$(RESET)$(GREEN) ✔︎$(RESET)"; \
+	else \
+		echo "$(RED)✗ $(ITALIC)glfw not found$(RESET)$(RED) ✗"; \
+		read -p "Do you want to install glfw? y/n: " glfwchoice; \
+		printf "$(RESET)"; \
+		if [ "$$glfwchoice" = "y" ]; then \
+			brew install glfw; \
+			echo "$(GREEN)✔︎ $(ITALIC)glfw successfully installed$(RESET)$(GREEN) ✔︎$(RESET)"; \
+		else \
+			echo "Exit"; \
+			exit 2; \
+		fi \
+	fi
+	@if [ -d "$$HOME/homebrew/opt/cmake/bin" ] || [ -d "$$HOME/.brew/opt/cmake/bin" ]; then \
+		echo "$(GREEN)✔︎ $(ITALIC)cmake is already installed$(RESET)$(GREEN) ✔︎$(RESET)"; \
+	else \
+		echo "$(RED)✗ $(ITALIC)cmake not found$(RESET)$(RED) ✗"; \
+		read -p "Do you want to install cmake? y/n: " cmakechoice; \
+		printf "$(RESET)"; \
+		if [ "$$cmakechoice" = "y" ]; then \
+			brew install cmake; \
+			echo "$(GREEN)✔︎ $(ITALIC)cmake successfully installed$(RESET)$(GREEN) ✔︎$(RESET)"; \
+		else \
+			echo "Exit"; \
+			exit 2; \
+		fi \
+	fi
 
 # Removes objects
 clean:

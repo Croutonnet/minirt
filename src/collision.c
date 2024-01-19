@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:34:49 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/18 15:26:21 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/19 08:40:36 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ bool	ray_collision(t_vector touch, t_data *data, t_shape *shape)
 	bool	ret;
 
 	ret = false;
-	r = create_ray(touch, data->light.origin);
+	r = create_ray(touch, normalize(minus_vec(data->light.origin, touch)));
 	if (shape->type == SPHERE)
 		ret = sphere_touchage(&r, shape->geom.sphere,
 			tistance(touch, data->light.origin));

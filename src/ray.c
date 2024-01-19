@@ -6,24 +6,30 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:04 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/18 13:04:41 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/19 09:23:23 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ray.h"
 #include "../include/image.h"
 #include <stdio.h>
+#include <math.h>
 
-static int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
+static int32_t ft_pixel(float r, float g, float b)
 {
-    return (r << 24 | g << 16 | b << 8 | a);
+	r = fmin(255, r * 255);
+	g = fmin(255, g * 255);
+	b = fmin(255, b * 255);
+	
+	return ((int)r << 24 | (int)g << 16 | (int)b << 8 | 255);
 }
 
 static void	clear_img(mlx_image_t *image)
 {
-	int	x;
-	int	y;
-	int	py;
+	int		x;
+	int		y;
+	int		py;
+	t_color	oui;
 
 	x = 0;
 	y = 0;
@@ -33,7 +39,8 @@ static void	clear_img(mlx_image_t *image)
 		while (x < IMAGE_WIDTH)
 		{
 			py = (y / IMAGE_HEIGHT) * 160;
-			mlx_put_pixel(image, x, y, ft_pixel(75 + py, 75 + py, 255, 255));
+			oui = normalize(create_vector(75 + py, 75 + py, 255));
+			mlx_put_pixel(image, x, y, ft_pixel(oui.x, oui.y, oui.z));
 			x++;
 		}
 		y++;
@@ -80,7 +87,7 @@ void create_rays(t_data *data)
 				id++;
 			}
 			if (close_ray.hit == true)
-				mlx_put_pixel(data->image, x, y, ft_pixel(r.color.x * 255, r.color.y * 255, r.color.z * 255, 255));
+				mlx_put_pixel(data->image, x, y, ft_pixel(close_ray.color.x, close_ray.color.y, close_ray.color.z));
 			x++;
 		}
 		y++;
@@ -94,10 +101,10 @@ t_ray	create_ray(t_vector origin, t_vector dir)
 	temp_ray.hit = false;
 	temp_ray.origin_point = origin;
 	temp_ray.direction = dir;
+	temp_ray.t2 = INFINITY;
 	return (temp_ray);
 }
 
-// renvoi le point p (x,y,z) dintersection du rayon a la distance t
 t_vector	get_ray_point(t_ray r, float t)
 {
 	t_vector	intersec;
