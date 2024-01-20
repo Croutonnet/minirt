@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:13:54 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/16 12:38:11 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/19 11:27:32 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,28 +30,6 @@ int	check_rgb(char *line, int i, int k)
 		k++;
 		if (k == 3 && line[i] != '\0' && line[i] != '\n')
 			return (print_error(BADRGB, BADRGB, false));
-	}
-	return (CORRECT);
-}
-
-int	check_vector(char *line, int i, int k)
-{
-	if (check_coma_point(line, 1) == false)
-		return (print_error(BADVECTOR, BADVECTOR, false));
-	while (k < 3)
-	{
-		while (line[i] && line[i] != ',')
-		{
-			if (ft_isdigit(line[i]) == false && line[i] != ','
-				&& line[i] != '-' && line[i] != '.')
-				return (print_error(BADVECTOR, BADVECTOR, false));
-			i++;
-		}
-		if (line[i] == ',')
-			i++;
-		k++;
-		if (k == 3 && line[i] != '\0' && line[i] != '\n')
-			return (print_error(BADVECTOR, BADVECTOR, false));
 	}
 	return (CORRECT);
 }
@@ -94,6 +72,28 @@ int	check_fov(char *line)
 	return (CORRECT);
 }
 
+int	check_vector(char *line, int i, int k)
+{
+	if (check_coma_point(line, 1) == false)
+		return (print_error(BADVECTOR, BADVECTOR, false));
+	while (k < 3)
+	{
+		while (line[i] && line[i] != ',')
+		{
+			if (ft_isdigit(line[i]) == false && line[i] != ','
+				&& line[i] != '-' && line[i] != '.')
+				return (print_error(BADVECTOR, BADVECTOR, false));
+			i++;
+		}
+		if (line[i] == ',')
+			i++;
+		k++;
+		if (k == 3 && line[i] != '\0' && line[i] != '\n')
+			return (print_error(BADVECTOR, BADVECTOR, false));
+	}
+	return (CORRECT);
+}
+
 int	check_vector_orientation(char *line, int i, int k)
 {
 	double	nb;
@@ -116,6 +116,8 @@ int	check_vector_orientation(char *line, int i, int k)
 			i++;
 		k++;
 		if (k == 3 && line[i] != '\0' && line[i] != '\n')
+			return (print_error(BADORI, BADORI, false));
+		if (k != 3 && (line[i] == '\0' || line[i] == '\n'))
 			return (print_error(BADORI, BADORI, false));
 	}
 	return (CORRECT);

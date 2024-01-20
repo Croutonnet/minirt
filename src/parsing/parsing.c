@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 14:02:12 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/16 15:17:15 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/19 13:44:59 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	parsing(char *file, t_count *count)
 		return (-1);
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
-		return (print_error(OPENWRONG, OPENWRONG, false));
+		return (print_error(OPENWRONG, -1, false));
 	line = ft_strdup("coucou");
 	while (line)
 	{

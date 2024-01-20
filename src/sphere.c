@@ -6,7 +6,7 @@
 /*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:45 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/18 18:21:06 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/20 15:36:08 by bbouchar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,19 +27,19 @@ static void	ambient_light(t_ray *r, t_sphere s, t_data *data, t_vector normal)
 	r->hit = true;
 }
 
-static bool	toucher_light(t_vector touche_point, t_data *data, int id)
+static bool	toucher_light(t_vector touche_point, t_data *data)
 {
-	int		temp_id;
+	int		id;
 	bool	ret;
 
-	temp_id = 0;
+	id = 0;
 	ret = false;
-	while (temp_id < data->shapes.count)
+	while (id < data->shapes.count)
 	{
 		ret = ray_collision(touche_point, data, &data->shapes.shapes[id]);
 		if (ret == true)
 			return (false);
-		temp_id++;
+		id++;
 	}
 	return (true);
 }
@@ -55,7 +55,7 @@ static void	light(t_sphere s, t_ray *r, t_data *data, t_vector normal)
 			data->alight.intensity);
 	lightdir = normalize(minus_vec(data->light.origin, r->touch_point));
 	intensity = dot_vec(normal, lightdir) * data->light.intensity;
-	r->color = mul_vec(s.base_color, intensity);
+	r->color = add_vec(mul_vec(s.base_color, intensity), ambient);
 	r->hit = true;
 }
 
@@ -85,9 +85,8 @@ void	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data, int id)
 		normal = normalize(minus_vec(r->touch_point, s.origin));
 		if (dot_vec(r->direction, normal) > 0)
 			normal = mul_vec(normal, -1);
-		r->touch_point = get_ray_point(create_ray(r->touch_point,
-					normal), 0.001);
-		if (toucher_light(r->touch_point, data, id) == true)
+		r->touch_point = get_ray_point(create_ray(r->touch_point, normal), 0.001);
+		if (toucher_light(r->touch_point, data) == true)
 			light(s, r, data, normal);
 		else
 			ambient_light(r, s, data, normal);

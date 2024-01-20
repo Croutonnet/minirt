@@ -24,9 +24,23 @@ typedef struct s_mouv
 	t_ray		ray;
 }			t_mouv;
 
+enum e_mess_mouv
+{
+	CAMSELECT,
+	CAMDESLECT,
+	LIGHTSELECT,
+	LIGHTDESELECT,
+	SMTHELSE,
+	OBJSELECT,
+	OBJDESELECT
+};
+
 float	sphere_intersect_mouv(t_sphere sphere, t_ray *ray);
 
 // more_obj_mouvement.c
 void	rotate_cyl(t_shape *cyl, keys_t key);
+
+// cam_mouvement.c
+int		return_and_message(int ret, int message, int set, bool *getset);
 
 #endif
