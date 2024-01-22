@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:04 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/22 13:18:14 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/22 14:17:24 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ void create_rays(t_data *data)
 					sphere_intersect_ray(shape->geom.sphere, &r, data, id);
 				else if (shape->type == CYLINDER)
 					cylinder_intersect_ray(shape->geom.cylinder, &r, data);
-				// else if (shape->type == PLANE)
-				// 	pixel = plane_intersect_ray(shape->geom.plane, &r, data);
+				else if (shape->type == PLANE)
+					plane_intersect_ray(shape->geom.plane, &r, data);
 				if (r.hit == true && r.t < close_ray.t)
 					close_ray = r;
 				id++;

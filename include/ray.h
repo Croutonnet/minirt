@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:39:29 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/22 11:23:59 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/22 14:19:07 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,9 +117,12 @@ t_plane		create_plane(t_vector p_position, t_vector p_axis, t_color p_Color);
 bool		toucher_light(t_vector touche_point, t_data *data);
 bool		ray_collision(t_vector touch, t_data *data, t_shape *shape);
 
-// collision functions
-t_vector	plane_intersect_ray(t_plane p, t_ray *r, t_data *data);
+// plane.c
+void		plane_intersect_ray(t_plane p, t_ray *r, t_data *data);
+
+// cylinder.c
 void		cylinder_intersect_ray(t_cylinder c, t_ray *r, t_data *data);
+
 // sphere.c
 void		sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data, int id);
 
