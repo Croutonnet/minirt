@@ -184,7 +184,7 @@ fclean_run:
 run : fclean_run all
 	@printf "$(ERASE_LINE)$(GREEN)✔️ $(RED)$(ITALIC)$(NAME) LAUNCHING🚀!!!!!!$(RESET)\
 	$(GREEN) ✔️$(RESET)\n"
-	@./minirt map/test_castshadow.rt
+	@./minirt map/test_cy.rt
 
 
 # Permet de rediriger l'affichage graphique vers Xserver sous wsl

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:04 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/20 16:23:45 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/22 13:18:14 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void create_rays(t_data *data)
 		while (x < IMAGE_WIDTH)
 		{
 			close_ray.hit = false;
-			close_ray.t2 = INFINITY;
+			close_ray.t = INFINITY;
 			delta = add_vec(mul_vec(data->final_viewport.pixel_delta_v, x), mul_vec(data->final_viewport.pixel_delta_u, y));
 			point = add_vec(data->final_viewport.pixel00_loc, delta);
 			dir = normalize(minus_vec(point, data->final_viewport.camera_center));
@@ -79,10 +79,10 @@ void create_rays(t_data *data)
 				if (shape->type == SPHERE)
 					sphere_intersect_ray(shape->geom.sphere, &r, data, id);
 				else if (shape->type == CYLINDER)
-					cylinder_intersect_ray(shape->geom.cylinder, &r);
+					cylinder_intersect_ray(shape->geom.cylinder, &r, data);
 				// else if (shape->type == PLANE)
 				// 	pixel = plane_intersect_ray(shape->geom.plane, &r, data);
-				if (r.hit == true && r.t2 < close_ray.t2)
+				if (r.hit == true && r.t < close_ray.t)
 					close_ray = r;
 				id++;
 			}
@@ -101,7 +101,8 @@ t_ray	create_ray(t_vector origin, t_vector dir)
 	temp_ray.hit = false;
 	temp_ray.origin_point = origin;
 	temp_ray.direction = dir;
-	temp_ray.t2 = INFINITY;
+	temp_ray.color = create_vector(0, 0, 1);
+	temp_ray.t = INFINITY;
 	return (temp_ray);
 }
 

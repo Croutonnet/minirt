@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ray.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:39:29 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/18 16:50:59 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/22 11:23:59 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,11 +77,9 @@ typedef struct s_ray
 	t_vector	origin_point;
 	t_vector	direction;
 	t_color		color;
-	t_vector	oc;
 	float		b;
-	float		c;
 	float		dis;
-	float		t2;
+	float		t;
 	t_vector	touch_point;
 }t_ray;
 
@@ -116,12 +114,14 @@ t_cylinder	create_cylinder(t_vector p, t_vector r, float d, float h, t_vector c)
 t_plane		create_plane(t_vector p_position, t_vector p_axis, t_color p_Color);
 
 //collision.c
+bool		toucher_light(t_vector touche_point, t_data *data);
 bool		ray_collision(t_vector touch, t_data *data, t_shape *shape);
 
 // collision functions
-void		sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data, int id);
-t_vector	cylinder_intersect_ray(t_cylinder c, t_ray *r);
 t_vector	plane_intersect_ray(t_plane p, t_ray *r, t_data *data);
+void		cylinder_intersect_ray(t_cylinder c, t_ray *r, t_data *data);
+// sphere.c
+void		sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data, int id);
 
 // cam_mouvement.c
 void		change_camera(t_data *data, keys_t key);

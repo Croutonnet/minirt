@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sphere.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:45 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/20 15:36:08 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/22 11:23:15 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,6 @@ static void	ambient_light(t_ray *r, t_sphere s, t_data *data, t_vector normal)
 	r->hit = true;
 }
 
-static bool	toucher_light(t_vector touche_point, t_data *data)
-{
-	int		id;
-	bool	ret;
-
-	id = 0;
-	ret = false;
-	while (id < data->shapes.count)
-	{
-		ret = ray_collision(touche_point, data, &data->shapes.shapes[id]);
-		if (ret == true)
-			return (false);
-		id++;
-	}
-	return (true);
-}
-
 // r->color = add_vec(mul_vec(s.base_color, intensity), ambient);
 static void	light(t_sphere s, t_ray *r, t_data *data, t_vector normal)
 {
@@ -61,10 +44,13 @@ static void	light(t_sphere s, t_ray *r, t_data *data, t_vector normal)
 
 static void	compute_quadratic(t_ray *r, t_sphere s)
 {
-	r->oc = minus_vec(r->origin_point, s.origin);
-	r->b = 2.0 * dot_vec(r->direction, r->oc);
-	r->c = pow(length_vec(r->oc), 2) - pow(s.radius, 2);
-	r->dis = pow(r->b, 2) - (4 * r->c);
+	t_vector	oc;
+	float		c;
+
+	oc = minus_vec(r->origin_point, s.origin);
+	r->b = 2.0 * dot_vec(r->direction, oc);
+	c = pow(length_vec(oc), 2) - pow(s.radius, 2);
+	r->dis = pow(r->b, 2) - (4 * c);
 }
 
 void	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data, int id)
@@ -74,14 +60,14 @@ void	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data, int id)
 	compute_quadratic(r, s);
 	if (r->dis >= 0)
 	{
-		r->t2 = (-r->b - sqrt(r->dis)) / (2.0f);
-		if (r->t2 <= 0 || INT_MAX <= r->t2)
+		r->t = (-r->b - sqrt(r->dis)) / (2.0f);
+		if (r->t <= 0 || INT_MAX <= r->t)
 		{
-			r->t2 = (-r->b + sqrt(r->dis)) / (2.0f);
-			if (r->t2 <= 0 || INT_MAX <= r->t2)
+			r->t = (-r->b + sqrt(r->dis)) / (2.0f);
+			if (r->t <= 0 || INT_MAX <= r->t)
 				return ;
 		}
-		r->touch_point = get_ray_point(*r, r->t2);
+		r->touch_point = get_ray_point(*r, r->t);
 		normal = normalize(minus_vec(r->touch_point, s.origin));
 		if (dot_vec(r->direction, normal) > 0)
 			normal = mul_vec(normal, -1);
