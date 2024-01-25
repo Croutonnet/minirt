@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 09:01:06 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/25 14:52:05 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 15:24:41 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	move_sphere(t_shape *sphere, keys_t key)
 		sphere->geom.sphere.origin.y--;
 	else if (key == MLX_KEY_B)
 		sphere->geom.sphere.radius += 0.5;
-	else if (key == MLX_KEY_V && sphere->geom.sphere.radius > 0.5)
+	else if (key == MLX_KEY_V && sphere->geom.sphere.radius > 1)
 		sphere->geom.sphere.radius -= 0.5;
 	ft_printf_fd(1, "Coord Sphere Sélectionner: ");
 	print_vec(sphere->geom.sphere.origin);

@@ -6,11 +6,12 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:30:01 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/25 08:46:39 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 16:35:40 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/vector.h"
+#include <stdio.h>
 
 t_vector	normalize(t_vector vec)
 {

@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:52 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/25 14:53:47 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 16:29:53 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ t_vector	div_vec(t_vector vec, double div)
 {
 	t_vector	res;
 
+	if (div <= 0)
+		div = 1;
 	res.x = vec.x / div;
 	res.y = vec.y / div;
 	res.z = vec.z / div;
