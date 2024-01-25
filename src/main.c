@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:10 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/25 13:21:07 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:26:56 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	initialisation(t_data *data, char *input)
 	calculate_upper_left(data);
 	calculate_p00_loc(data);
 	read_rotation(data);
-	data->mlx = mlx_init(IMAGE_WIDTH, IMAGE_HEIGHT, "coucou", true);
+	data->mlx = mlx_init(IMAGE_WIDTH, IMAGE_HEIGHT, "MiniRT", true);
 	data->image = mlx_new_image(data->mlx, IMAGE_WIDTH, IMAGE_HEIGHT);
 }
 
