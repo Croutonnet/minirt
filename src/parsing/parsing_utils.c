@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:13:54 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/25 08:46:39 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:26:30 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,9 @@ int	check_vector(char *line, int i, int k)
 			i++;
 		k++;
 		if (k == 3 && line[i] != '\0' && line[i] != '\n')
-			return (print_error(BADVECTOR, BADVECTOR, false));
+			return (print_error(BADORI, BADORI, false));
+		if (k != 3 && (line[i] == '\0' || line[i] == '\n'))
+			return (print_error(BADORI, BADORI, false));
 	}
 	return (CORRECT);
 }
