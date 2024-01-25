@@ -1,0 +1,17 @@
+WASD pour bouger n'importe quoi
+UP			rotationner autour de l'axe y + 5deg
+DOWN		rotationner autour de l'axe y - 5deg
+LEFT		rotationner autour de l'axe x + 5deg
+RIGHT		rotationner autour de l'axe x - 5deg
+keypad +	rotationner autour de l'axe z + 5deg
+keypad -	rotationner autour de l'axe z - 5deg
+
+C pour Sélectionner/Déselectionner la camera
+
+L pour Sélectionner/Déselectionner la lumière
+
+Clique gauche pour sélectionner un objet et clique droit pour le Déselectionner
+
+B pour grossir le diametre d'une sphère/cylindre et V pour la rappetisser
+
+M pour grossir la hauteur d'un cylindre et N pour la repetisser

@@ -1,63 +1,114 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ray.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/10 13:25:04 by bbouchar          #+#    #+#             */
+/*   Updated: 2024/01/25 13:21:31 by rapelcha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/ray.h"
 #include "../include/image.h"
 #include <stdio.h>
+#include <math.h>
 
-static int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
+static int32_t	ft_pixel(double r, double g, double b)
 {
-    return (r << 24 | g << 16 | b << 8 | a);
+	r = fmin(255, r * 255);
+	g = fmin(255, g * 255);
+	b = fmin(255, b * 255);
+	return ((int)r << 24 | (int)g << 16 | (int)b << 8 | 255);
 }
 
-void create_rays(t_viewport *view, t_sphere sphere, mlx_image_t *image)
+static void	clear_img(mlx_image_t *image)
 {
-    int         x;
-    int         y;
-    t_ray       r;
-    t_vector    dir;
-    t_vector    center;
-    t_vector    temp;
+	int		x;
+	int		y;
+	int		py;
+	t_color	oui;
 
-    x = 0;
-    y = 0;
-    center = view->pixel00_loc;
-    dir = minus_vec(view->camera_center, center);
-    while (y < IMAGE_HEIGHT)
-    {
-        x = 0;
-        while (x < IMAGE_WIDTH)
-        {
-            r = create_ray(r, view->camera_center, dir); //creer le ray du centre de la camera vers le point choisi
-            sphere_intersect_ray(sphere, &r); //envoie le Ray dans la direction, si r.hit est true, c'est qu'il a toucher quelque chose
-            if (r.hit == true)
-                mlx_put_pixel(image, x, y, ft_pixel(255, 0, 0, 255));
-            else
-                mlx_put_pixel(image, x, y, ft_pixel(0, 0, 0, 255));
-            temp = add_vec(mul_vec(view->pixel_delta_v, x), mul_vec(view->pixel_delta_u, y)); //calcul la direction vers le prochain pixel
-            center = add_vec(view->pixel00_loc, temp); // recentre le centre au centre du prochain pixel a droite
-            dir = normalize(minus_vec(center, view->camera_center)); // normalise la direction de la camera vers le pixel
-            x++;
-        }
-        y++;
-    }
+	x = 0;
+	y = 0;
+	while (y < IMAGE_HEIGHT)
+	{
+		x = 0;
+		while (x < IMAGE_WIDTH)
+		{
+			py = (y / IMAGE_HEIGHT) * 160;
+			oui = normalize(create_vector(75 + py, 75 + py, 255));
+			mlx_put_pixel(image, x, y, ft_pixel(oui.x, oui.y, oui.z));
+			x++;
+		}
+		y++;
+	}
 }
 
-t_ray create_ray(t_ray r, t_vector origin, t_vector plane_point)
+static void	ray_utils(t_data *data)
 {
-    r.hit = false;
-    r.t = 0;
-    r.origin_point = origin;
-    r.plane_point = plane_point;
+	t_shape	*shape;
+	t_ray	r;
+	int		id;
 
-    return (r);
+	data->close_ray.hit = false;
+	data->close_ray.t = INFINITY;
+	data->point = \
+	add_vec(data->final_viewport.pixel00_loc, data->delta);
+	data->dir = normalize(minus_vec(data->point, \
+	data->final_viewport.camera_center));
+	id = 0;
+	while (id < data->shapes.count)
+	{
+		shape = &data->shapes.shapes[id];
+		r = create_ray(data->final_viewport.camera_center, data->dir);
+		if (shape->type == SPHERE)
+			sphere_intersect_ray(shape->geom.sphere, &r, data);
+		else if (shape->type == CYLINDER)
+			cylinder_intersect_ray(shape->geom.cylinder, &r, data);
+		else if (shape->type == PLANE)
+			plane_intersect_ray(shape->geom.plane, &r, data);
+		if (r.hit == true && r.t < data->close_ray.t)
+			data->close_ray = r;
+		id++;
+	}
 }
 
-// renvoi le point p (x,y,z) dintersection du rayon a la distance t
-t_vector get_ray_point(t_ray r)
+void	create_rays(t_data *data)
 {
-    t_vector intersec;
+	int		x;
+	int		y;
 
-    intersec.x = r.origin_point.x + (r.plane_point.x * r.t);
-    intersec.y = r.origin_point.y + (r.plane_point.y * r.t);
-    intersec.z = r.origin_point.z + (r.plane_point.z * r.t);
+	y = 0;
+	clear_img(data->image);
+	while (y < IMAGE_HEIGHT)
+	{
+		x = 0;
+		while (x < IMAGE_WIDTH)
+		{
+			data->delta = \
+			add_vec(mul_vec(data->final_viewport.pixel_delta_v, x), \
+			mul_vec(data->final_viewport.pixel_delta_u, y));
+			ray_utils(data);
+			if (data->close_ray.hit == true)
+				mlx_put_pixel(data->image, x, y, \
+				ft_pixel(data->close_ray.color.x, data->close_ray.color.y, \
+				data->close_ray.color.z));
+			x++;
+		}
+		y++;
+	}
+}
 
-    return (intersec);
+t_ray	create_ray(t_vector origin, t_vector dir)
+{
+	t_ray	temp_ray;
+
+	temp_ray.hit = false;
+	temp_ray.origin_point = origin;
+	temp_ray.direction = dir;
+	temp_ray.color = create_vector(1, 1, 1);
+	temp_ray.t = INFINITY;
+	return (temp_ray);
 }

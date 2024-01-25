@@ -1,54 +1,80 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   sphere.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/10 13:24:45 by bbouchar          #+#    #+#             */
+/*   Updated: 2024/01/25 13:21:43 by rapelcha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/ray.h"
 #include <stdio.h>
+#include "../include/light.h"
+#include <limits.h>
 
-t_sphere create_sphere(float x, float y, float z, float radius)
+static void	ambient_light(t_ray *r, t_sphere s, t_data *data)
 {
-    t_sphere s;
-    s.origin.x = x;
-    s.origin.y = y;
-    s.origin.z = z;
-    s.radius = radius;
+	t_color		ambient;
 
-    return (s);
+	ambient = mul_vec(add_vec(data->alight.color, s.base_color),
+			data->alight.intensity);
+	r->color = ambient;
+	r->hit = true;
 }
 
-// static float find_a(t_ray r)
-// {
-//     float a;
-//     a = pow(r.plane_point.x,2) + pow(r.plane_point.y,2) + pow(r.plane_point.z,2);
-//     return a;
-// }
-
-// static float find_b(t_sphere s, t_ray r)
-// {
-//     float b;
-//     b = (2*(r.origin_point.x + r.plane_point.x)) + 
-//     (2*(r.origin_point.y + r.plane_point.y)) + 
-//     (2*(r.origin_point.z + r.plane_point.z));
-//     return b;
-// }
-
-// static float find_c(t_sphere s, t_ray r)
-// {
-//     float c;
-//     c = pow(r.origin_point.x,2) + pow(r.origin_point.y,2) + 
-//     pow(r.origin_point.z,2) - pow(s.radius,2);
-//     return c;
-// }
-
-void sphere_intersect_ray(t_sphere s, t_ray *r)
+static void	light(t_sphere s, t_ray *r, t_data *data, t_vector normal)
 {
-    // float a = find_a(r);
-    // float b = find_b(s, r);
-    // float c = find_c(s, r);
-    // je fais les calculs de la fonction quadratique pour aller chercher le discriminant et ensuite le point le plus proche touché (si touché)
-    t_vector    oc = minus_vec(r->origin_point, s.origin); //Direction vers le centre de la sphere
-    float       b = dot_vec(oc, minus_vec(r->origin_point, r->plane_point)); //
-    float       c = pow(length_vec(oc), 2) - pow(s.radius, 2); //
-    float       dis = pow(b, 2) - c; //Discriminant < 0 si rien toucher, 0 toucher une fois, 1 toucher deux fois
+	t_vector	lightdir;
+	double		intensity;
+	t_color		ambient;
 
-    if (dis >= 0)
-        r->hit = true;
-    else
-        r->hit = false;
+	ambient = mul_vec(add_vec(data->alight.color, s.base_color),
+			data->alight.intensity);
+	lightdir = normalize(minus_vec(data->light.origin, r->touch_point));
+	intensity = dot_vec(normal, lightdir) * data->light.intensity;
+	r->color = add_vec(mul_vec(s.base_color, intensity), ambient);
+	r->hit = true;
+}
+
+static void	compute_quadratic(t_ray *r, t_sphere s)
+{
+	t_vector	oc;
+	double		c;
+
+	oc = minus_vec(r->origin_point, s.origin);
+	r->b = 2.0 * dot_vec(r->direction, oc);
+	c = pow(length_vec(oc), 2) - pow(s.radius, 2);
+	r->dis = pow(r->b, 2) - (4 * c);
+}
+
+void	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
+{
+	t_vector	normal;
+
+	compute_quadratic(r, s);
+	if (r->dis >= 0)
+	{
+		r->t = (-r->b - sqrt(r->dis)) / (2.0f);
+		if (r->t <= 0 || INT_MAX <= r->t)
+		{
+			r->t = (-r->b + sqrt(r->dis)) / (2.0f);
+			if (r->t <= 0 || INT_MAX <= r->t)
+				return ;
+		}
+		r->touch_point = get_ray_point(*r, r->t);
+		normal = normalize(minus_vec(r->touch_point, s.origin));
+		if (dot_vec(r->direction, normal) > 0)
+			normal = mul_vec(normal, -1);
+		r->touch_point = get_ray_point(create_ray(r->touch_point, normal), \
+		0.001);
+		if (toucher_light(r->touch_point, data) == true)
+			light(s, r, data, normal);
+		else
+			ambient_light(r, s, data);
+	}
+	else
+		r->hit = false;
 }
