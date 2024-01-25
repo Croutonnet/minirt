@@ -83,18 +83,11 @@ endif
 
 all: dependdown libft mlx $(OBJS_DIR) $(NAME)
 
-# Generates output file
 $(NAME): $(OBJS)
 	@$(CC) $(CFLAGS) -I include -lglfw -L "$(shell brew --prefix glfw)/lib/" $(OBJS) -o $(NAME) $(MLXLIBA) $(LIBFTA) $(LIBS)
 	@echo "$(ERASE_LINE)$(GREEN)✔️ $(ITALIC)$(NAME) successfully compile.$(RESET)\
 	$(GREEN) ✔️$(RESET)"
 
-# $(NAME): $(OBJS)
-# 	@$(CC) $(CFLAGS) -I include -lglfw -L "/opt/homebrew/Cellar/glfw/3.3.9/lib" $(OBJS) -o $(NAME) $(MLXLIBA) $(LIBFTA) $(LIBS)
-# 	@echo "$(ERASE_LINE)$(GREEN)✔️ $(ITALIC)$(NAME) successfully compile.$(RESET)\
-# 	$(GREEN) ✔️$(RESET)"
-
-# create objects directory
 $(OBJS_DIR):
 	@mkdir -p $(OBJS_DIR)
 
@@ -143,20 +136,17 @@ dependdown:
 		fi \
 	fi
 
-# Removes objects
 clean:
 	@printf "💣 $(RED)Removing $(NAME) objects and MLX42... $(RESET) 💥\n"
 	@cd include/Libft/ && make clean && cd ..
 	@$(RM) $(OBJS_DIR)
 	@$(RM) include/MLX42/build
 
-# Removes objects and executables
 fclean: clean
 	@printf "💣 $(RED)Removing $(NAME) executable$(RESET) 💥\n"
 	@$(RM) $(NAME)
 	@cd include/Libft/ && $(RM) libft.a && cd ..
 
-# Removes objects and executables and remakes
 re: fclean all
 	@echo "$(ERASE_LINE)$(GREEN)✔️ $(ITALIC)Remake complete$(RESET)\
 	$(GREEN) ✔️$(RESET)"
@@ -185,8 +175,3 @@ run : fclean_run all
 	@printf "$(ERASE_LINE)$(GREEN)✔️ $(RED)$(ITALIC)$(NAME) LAUNCHING🚀!!!!!!$(RESET)\
 	$(GREEN) ✔️$(RESET)\n"
 	@./minirt map/test_cy.rt
-
-
-# Permet de rediriger l'affichage graphique vers Xserver sous wsl
-#export DISPLAY=$(ip route list default | awk '{print $3}'):0
-#export LIBGL_ALWAYS_INDIRECT=0

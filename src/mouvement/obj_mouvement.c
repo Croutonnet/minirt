@@ -6,37 +6,34 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 09:01:06 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/25 13:13:04 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:20:56 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ray.h"
 #include "../../include/mouvement.h"
+#include <stdio.h>
 
 static void	move_sphere(t_shape *sphere, keys_t key)
 {
-	if (key == MLX_KEY_W || key == MLX_KEY_S || key == MLX_KEY_D || \
-		key == MLX_KEY_A || key == MLX_KEY_E || key == MLX_KEY_Q)
-	{
-		if (key == MLX_KEY_W)
-			sphere->geom.sphere.origin.z++;
-		else if (key == MLX_KEY_S)
-			sphere->geom.sphere.origin.z--;
-		else if (key == MLX_KEY_A)
-			sphere->geom.sphere.origin.x++;
-		else if (key == MLX_KEY_D)
-			sphere->geom.sphere.origin.x--;
-		else if (key == MLX_KEY_Q)
-			sphere->geom.sphere.origin.y++;
-		else if (key == MLX_KEY_E)
-			sphere->geom.sphere.origin.y--;
-		else if (key == MLX_KEY_B)
-			sphere->geom.sphere.radius += 0.5;
-		else if (key == MLX_KEY_V && sphere->geom.sphere.radius > 0.5)
-			sphere->geom.sphere.radius -= 0.5;
-		ft_printf_fd(1, "Coord Sphere Sélectionner: ");
-		print_vec(sphere->geom.sphere.origin);
-	}
+	if (key == MLX_KEY_W)
+		sphere->geom.sphere.origin.z++;
+	else if (key == MLX_KEY_S)
+		sphere->geom.sphere.origin.z--;
+	else if (key == MLX_KEY_A)
+		sphere->geom.sphere.origin.x++;
+	else if (key == MLX_KEY_D)
+		sphere->geom.sphere.origin.x--;
+	else if (key == MLX_KEY_Q)
+		sphere->geom.sphere.origin.y++;
+	else if (key == MLX_KEY_E)
+		sphere->geom.sphere.origin.y--;
+	else if (key == MLX_KEY_B)
+		sphere->geom.sphere.radius += 0.5;
+	else if (key == MLX_KEY_V && sphere->geom.sphere.radius > 0.5)
+		sphere->geom.sphere.radius -= 0.5;
+	ft_printf_fd(1, "Coord Sphere Sélectionner: ");
+	print_vec(sphere->geom.sphere.origin);
 }
 
 static void	move_cyl(t_shape *cyl, keys_t key)

@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 13:00:58 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/25 12:41:57 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:01:54 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,10 @@ int	special_key(t_data *data, keys_t key)
 		if (data->cam_selected == true || data->obj_selected == true)
 			return (return_and_message(false, SMTHELSE, -1, NULL));
 		if (data->light_selected == true)
-			return (return_and_message(true, CAMDESLECT, false,
+			return (return_and_message(true, LIGHTDESELECT, false,
 					&data->light_selected));
 		else
-			return (return_and_message(true, CAMSELECT, true,
+			return (return_and_message(true, LIGHTSELECT, true,
 					&data->light_selected));
 	}
 	return (false);
@@ -71,7 +71,6 @@ void	rotate_camera(t_data *data, keys_t key)
 		data->final_viewport.cam_yaw += 5;
 	else if (key == MLX_KEY_RIGHT)
 		data->final_viewport.cam_yaw -= 5;
-	return ;
 }
 
 void	move_light(t_data *data, keys_t key)
@@ -88,7 +87,8 @@ void	move_light(t_data *data, keys_t key)
 		data->light.origin.y += 1;
 	else if (key == MLX_KEY_E)
 		data->light.origin.y -= 1;
-	return ;
+	ft_printf_fd(1, "Coordonnée de la lumière\n");
+	print_vec(data->light.origin);
 }
 
 void	change_camera(t_data *data, keys_t key)

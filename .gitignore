@@ -46,6 +46,7 @@
 *.mod*
 *.cmd
 .tmp_versions/
+.minirt
 include/MLX42
 modules.order
 Module.symvers

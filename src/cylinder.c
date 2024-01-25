@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:15 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/25 13:16:06 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:16:02 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ static void	light(t_cylinder cy, t_ray *r, t_data *data, t_vector normal)
 			data->alight.intensity);
 	lightdir = normalize(minus_vec(data->light.origin, r->touch_point));
 	intensity = dot_vec(normal, lightdir) * data->light.intensity;
-	r->color = add_vec(mul_vec(cy.base_color, intensity), ambient);
+	if (intensity < 0)
+		r->color = ambient;
+	else
+		r->color = add_vec(mul_vec(cy.base_color, intensity), ambient);
 	r->hit = true;
 }
 
