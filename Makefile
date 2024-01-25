@@ -177,4 +177,4 @@ run : fclean_run all
 	@./minirt map/test_cy.rt
 
 norm :
-	norminette src include/Libft include/color.h include/image.h include/light.h include/mouvement.h include/parsing.h include/ray.h include/vector.h
+	norminette src include/*.h include/libft/

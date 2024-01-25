@@ -1,4 +1,4 @@
-WASD pour bouger n'importe quoi
+WASDQE pour bouger n'importe quoi
 UP			rotationner autour de l'axe y + 5deg
 DOWN		rotationner autour de l'axe y - 5deg
 LEFT		rotationner autour de l'axe x + 5deg
