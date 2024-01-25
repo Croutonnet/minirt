@@ -25,7 +25,7 @@ ERASE_LINE	=	\033[2K\r
 
 # Compiler and flags
 CC				=	gcc
-CFLAGS			=	-g #-Wall -Werror -Wextra
+CFLAGS			=	-g -Wall -Werror -Wextra
 RM				=	rm -rf
 MLXLIBA			=	include/MLX42/build/libmlx42.a
 LIBFTA			=	include/Libft/libft.a
@@ -36,7 +36,7 @@ SRC_DIR		=	src/
 SRCS		=	main.c\
 				ray.c\
 				sphere.c\
-				sphere2.c\
+				utils.c\
 				vector_math.c\
 				vector.c\
 				vector2.c\

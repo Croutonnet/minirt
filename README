@@ -1,6 +1,10 @@
 WASD pour bouger n'importe quoi
-UP/DOWN/LEFT/RIGHT pour rotationner n'importe quoi
-keypad + / keypad - pour rotationner en z pour le cylindre
+UP			rotationner autour de l'axe y + 5deg
+DOWN		rotationner autour de l'axe y - 5deg
+LEFT		rotationner autour de l'axe x + 5deg
+RIGHT		rotationner autour de l'axe x - 5deg
+keypad +	rotationner autour de l'axe z + 5deg
+keypad -	rotationner autour de l'axe z - 5deg
 
 C pour Sélectionner/Déselectionner la camera
 

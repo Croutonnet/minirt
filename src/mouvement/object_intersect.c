@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 11:02:24 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/25 08:57:18 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:13:31 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@ double	cylinder_intersect_mouv(t_cylinder cy, t_ray *r)
 	double		c;
 	double		m;
 
-	a = dot_vec(r->direction, r->direction) - pow(dot_vec(r->direction, cy.rotation), 2);
+	a = dot_vec(r->direction, r->direction) - \
+	pow(dot_vec(r->direction, cy.rotation), 2);
 	x = minus_vec(r->origin_point, cy.origin);
-	r->b = dot_vec(r->direction, x) - dot_vec(r->direction, cy.rotation) * dot_vec(x, cy.rotation);
+	r->b = dot_vec(r->direction, x) - dot_vec(r->direction, cy.rotation) * \
+	dot_vec(x, cy.rotation);
 	c = dot_vec(x, x) - pow(dot_vec(x, cy.rotation), 2) - pow(cy.radius, 2);
 	r->dis = pow(r->b, 2) - a * c;
 	if (r->dis < 0)
@@ -71,7 +73,8 @@ double	sphere_intersect_mouv(t_sphere sphere, t_ray *ray)
 	if (dis >= 0)
 	{
 		t = (-b - sqrtf(dis));
-		if (t <= 0 || INFINITY <= t){
+		if (t <= 0 || INFINITY <= t)
+		{
 			t = (-b + sqrt(dis));
 			if (t <= 0 || INFINITY <= t)
 				return (-1);

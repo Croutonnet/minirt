@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:39:29 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/25 10:14:27 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:18:03 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 # include "light.h"
 # include "Libft/libft.h"
 
-// types de geometries possibles
 typedef enum enum_shape_type
 {
 	SPHERE,
@@ -31,10 +30,10 @@ typedef enum enum_shape_type
 
 typedef struct s_plane
 {
-	t_vector origin;
-	t_vector axis;
-	t_color base_color;
-} t_plane;
+	t_vector	origin;
+	t_vector	axis;
+	t_color		base_color;
+}	t_plane;
 
 typedef struct s_sphere
 {
@@ -52,25 +51,19 @@ typedef struct s_cylinder
 	double		height;
 }	t_cylinder;
 
-// type Shape Generique
-// pouvant etre nimporte quel type de forme 3D
 typedef union t_ugeometry
 {
 	t_sphere	sphere;
 	t_cylinder	cylinder;
 	t_plane		plane;
-} t_ugeom;
+}	t_ugeom;
 
-// represente une forme 3D quelquonque
 typedef struct s_shape
 {
 	t_eshape_type	type;
 	t_ugeom			geom;
 }	t_shape;
 
-//t_color color; // couleur de retour
-//t_shape* obj; // retour de lobjet
-//int t; // distance t du point dintersection
 typedef struct s_ray
 {
 	bool		hit;
@@ -81,9 +74,8 @@ typedef struct s_ray
 	double		dis;
 	double		t;
 	t_vector	touch_point;
-}t_ray;
+}	t_ray;
 
-// tableau de shapes 3D
 typedef struct s_shapes_arr
 {
 	t_shape	shapes[100];
@@ -106,11 +98,14 @@ typedef struct s_data
 	t_vector		droite;
 	t_vector		bas;
 	int				id_touch;
+	t_vector		dir;
+	t_vector		delta;
+	t_vector		point;
+	t_ray			close_ray;
 }				t_data;
 
 // shapes creation functions
 t_sphere	create_sphere(t_vector p_position, double radius, t_color pColor);
-t_cylinder	create_cylinder(t_vector p, t_vector r, double d, double h, t_vector c);
 t_plane		create_plane(t_vector p_position, t_vector p_axis, t_color p_Color);
 
 //collision.c
@@ -124,7 +119,7 @@ void		plane_intersect_ray(t_plane p, t_ray *r, t_data *data);
 void		cylinder_intersect_ray(t_cylinder c, t_ray *r, t_data *data);
 
 // sphere.c
-void		sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data, int id);
+void		sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data);
 
 // cam_mouvement.c
 void		change_camera(t_data *data, keys_t key);
@@ -134,7 +129,8 @@ int			special_key(t_data *data, keys_t key);
 
 // obj_mouvement.c
 void		move_object(t_data *data, keys_t key);
-void		touch_object(mouse_key_t button, action_t action, modifier_key_t mods, void *param);
+void		touch_object(mouse_key_t button, action_t action, \
+modifier_key_t mods, void *param);
 
 // rotation.c
 t_vector	rotation_x(t_vector vec, double deg);

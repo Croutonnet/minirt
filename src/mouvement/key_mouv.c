@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 16:00:58 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/25 08:58:21 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 12:28:48 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,16 +64,11 @@ void	touch_object(mouse_key_t button, action_t action,
 
 	(void)mods;
 	data = param;
-	// SÉLECTIONNER UN OBJET ET APRES LE VIDE FAIS DE LA MARDE A ARRANGER
-	if (action == MLX_PRESS && button == MLX_MOUSE_BUTTON_LEFT)
+	if (action == MLX_PRESS && button == MLX_MOUSE_BUTTON_LEFT
+		&& data->obj_selected == false)
 	{
 		init_data(data);
-		if (data->id_touch > -1 && data->obj_selected == true)
-		{
-			return_and_message(1, SMTHELSE, -1, NULL);
-			return ;
-		}
-		else if (data->id_touch > -1 && data->cam_selected == false
+		if (data->id_touch > -1 && data->cam_selected == false
 			&& data->light_selected == false)
 			return_and_message(1, OBJSELECT, true, &data->obj_selected);
 	}
@@ -82,4 +77,7 @@ void	touch_object(mouse_key_t button, action_t action,
 		data->id_touch = -1;
 		return_and_message(1, OBJDESELECT, false, &data->obj_selected);
 	}
+	else if (action == MLX_PRESS && button == MLX_MOUSE_BUTTON_LEFT
+		&& data->obj_selected == true)
+		return_and_message(1, SMTHELSE, -1, NULL);
 }

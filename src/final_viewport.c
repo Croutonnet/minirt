@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   final_viewport.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:50:25 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/20 15:33:26 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:12:51 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,15 @@ void	final_viewport(t_data *data)
 {
 	pitch(data);
 	yaw(data);
-	data->final_viewport.pixel00_loc = add_vec(data->final_viewport.camera_center, data->final_viewport.pixel00_loc);
-	data->final_viewport.viewport_center = add_vec(data->final_viewport.camera_center, data->final_viewport.viewport_center);
-	data->avant = normalize(mul_vec(minus_vec(data->final_viewport.viewport_center, data->final_viewport.camera_center), -1));
+	data->final_viewport.pixel00_loc = \
+	add_vec(data->final_viewport.camera_center, \
+	data->final_viewport.pixel00_loc);
+	data->final_viewport.viewport_center = \
+	add_vec(data->final_viewport.camera_center, \
+	data->final_viewport.viewport_center);
+	data->avant = \
+	normalize(mul_vec(minus_vec(data->final_viewport.viewport_center, \
+	data->final_viewport.camera_center), -1));
 	data->droite = normalize(data->final_viewport.pixel_delta_v);
 	data->bas = normalize(data->final_viewport.pixel_delta_u);
 }

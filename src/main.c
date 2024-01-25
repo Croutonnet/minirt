@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:10 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/22 12:14:41 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:03:03 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,28 +44,28 @@ void	key_func(mlx_key_data_t keydata, void *param)
 	t_data	*data;
 
 	data = param;
-	if (keydata.action == MLX_PRESS){
-		if (keydata.key == MLX_KEY_ESCAPE)
-		{
-			mlx_terminate(data->mlx);
-			exit(0);
-		}
-		if (special_key(data, keydata.key) == true || keydata.action != MLX_PRESS)
-			return ;
-		if (data->cam_selected == true)
-		{
-			change_camera(data, keydata.key);
-			rotate_camera(data, keydata.key);
-			final_viewport(data);
-		}
-		else if (data->light_selected == true)
-			move_light(data, keydata.key);
-		else if (data->obj_selected == true)
-			move_object(data, keydata.key);
-		else
-			return ;
-		create_rays(data);
+	if (keydata.action != MLX_PRESS)
+		return ;
+	if (keydata.key == MLX_KEY_ESCAPE)
+	{
+		mlx_terminate(data->mlx);
+		exit(0);
 	}
+	if (special_key(data, keydata.key) == true)
+		return ;
+	if (data->cam_selected == true)
+	{
+		change_camera(data, keydata.key);
+		rotate_camera(data, keydata.key);
+		final_viewport(data);
+	}
+	else if (data->light_selected == true)
+		move_light(data, keydata.key);
+	else if (data->obj_selected == true)
+		move_object(data, keydata.key);
+	else
+		return ;
+	create_rays(data);
 }
 
 void	initialisation(t_data *data, char *input)

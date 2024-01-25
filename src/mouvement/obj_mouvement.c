@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   obj_mouvement.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 09:01:06 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/20 15:34:33 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:13:04 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 static void	move_sphere(t_shape *sphere, keys_t key)
 {
-	if (key == MLX_KEY_W || key == MLX_KEY_S || key == MLX_KEY_D ||
+	if (key == MLX_KEY_W || key == MLX_KEY_S || key == MLX_KEY_D || \
 		key == MLX_KEY_A || key == MLX_KEY_E || key == MLX_KEY_Q)
 	{
 		if (key == MLX_KEY_W)
@@ -59,7 +59,7 @@ static void	move_cyl(t_shape *cyl, keys_t key)
 		cyl->geom.cylinder.radius -= 0.5;
 	else if (key == MLX_KEY_M)
 		cyl->geom.cylinder.height += 1;
-	else if (key == MLX_KEY_N && cyl->geom.cylinder.radius > 1)
+	else if (key == MLX_KEY_N && cyl->geom.cylinder.height > 1)
 		cyl->geom.cylinder.height -= 1;
 	else
 		rotate_cyl(cyl, key);
@@ -75,4 +75,6 @@ void	move_object(t_data *data, keys_t key)
 		move_sphere(&data->shapes.shapes[data->id_touch], key);
 	else if (data->shapes.shapes[data->id_touch].type == CYLINDER)
 		move_cyl(&data->shapes.shapes[data->id_touch], key);
+	else if (data->shapes.shapes[data->id_touch].type == PLANE)
+		move_plane(&data->shapes.shapes[data->id_touch], key);
 }

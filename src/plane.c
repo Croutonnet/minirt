@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:36 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/25 10:39:57 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 12:59:45 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,30 +26,8 @@ t_plane	create_plane(t_vector pPosition, t_vector p_axis, t_color p_Color)
 	return (p);
 }
 
-static t_color	calculate_light(t_data *data, t_plane p)
+static void	ambient_light(t_ray *r, t_plane p, t_data *data)
 {
-	t_vector	lightdir;
-	double		intensity;
-	t_color		color;
-
-	lightdir = normalize(minus_vec(data->light.origin, p.origin));
-	intensity = dot_vec(p.axis, lightdir) / 2;
-	if (intensity < 0)
-		intensity = 0;
-	color.x = (data->alight.intensity * data->alight.color.x)
-		+ (intensity * p.base_color.x);
-	color.y = (data->alight.intensity * data->alight.color.y)
-		+ (intensity * p.base_color.y);
-	color.z = (data->alight.intensity * data->alight.color.z)
-		+ (intensity * p.base_color.z);
-
-	return (color);
-}
-
-static void	ambient_light(t_ray *r, t_plane p, t_data *data, t_vector normal)
-{
-	t_vector	lightdir;
-	double		intensity;
 	t_color		ambient;
 
 	ambient = mul_vec(add_vec(data->alight.color, p.base_color),
@@ -92,9 +70,10 @@ void	plane_intersect_ray(t_plane p, t_ray *r, t_data *data)
 		normal = p.axis;
 	else
 		normal = mul_vec(p.axis, -1);
-	r->touch_point = get_ray_point(create_ray(r->touch_point, normal), 0.00000000001);
+	r->touch_point = get_ray_point(create_ray(r->touch_point, normal), \
+	0.00000000001);
 	if (toucher_light(r->touch_point, data) == true)
 		light(p, r, data, normal);
 	else
-		ambient_light(r, p, data, normal);
+		ambient_light(r, p, data);
 }

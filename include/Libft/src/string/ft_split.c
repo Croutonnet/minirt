@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 16:34:52 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 14:48:19 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:19:38 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static	size_t	ft_wordcount(char const *s, char c)
 	if (!s[0])
 		return (0);
 	while (s[i] && s[i] == c)
-			i++;
+		i++;
 	while (s[i])
 	{
 		if (s[i] == c)

@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 19:52:16 by rapelcha          #+#    #+#             */
-/*   Updated: 2023/12/19 14:48:19 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:19:06 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*ft_memmove(void *str1, const void *str2, size_t n)
 			last1 = pstr1 + (n - 1);
 			last2 = pstr2 + (n - 1);
 			while (n--)
-					*last1-- = *last2--;
+				*last1-- = *last2--;
 		}
 	}
 	return (str1);

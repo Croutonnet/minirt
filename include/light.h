@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:49:34 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/25 08:46:39 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:20:02 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ typedef struct s_light_ambient
 
 typedef struct s_light
 {
-	t_vector origin;
-	double intensity;
-} t_light;
+	t_vector	origin;
+	double		intensity;
+}	t_light;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:45 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/25 10:29:48 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 13:12:00 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 #include "../include/light.h"
 #include <limits.h>
 
-static void	ambient_light(t_ray *r, t_sphere s, t_data *data, t_vector normal)
+static void	ambient_light(t_ray *r, t_sphere s, t_data *data)
 {
-	t_vector	lightdir;
-	double		intensity;
 	t_color		ambient;
 
 	ambient = mul_vec(add_vec(data->alight.color, s.base_color),
@@ -27,7 +25,6 @@ static void	ambient_light(t_ray *r, t_sphere s, t_data *data, t_vector normal)
 	r->hit = true;
 }
 
-// r->color = add_vec(mul_vec(s.base_color, intensity), ambient);
 static void	light(t_sphere s, t_ray *r, t_data *data, t_vector normal)
 {
 	t_vector	lightdir;
@@ -53,7 +50,7 @@ static void	compute_quadratic(t_ray *r, t_sphere s)
 	r->dis = pow(r->b, 2) - (4 * c);
 }
 
-void	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data, int id)
+void	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data)
 {
 	t_vector	normal;
 
@@ -71,11 +68,12 @@ void	sphere_intersect_ray(t_sphere s, t_ray *r, t_data *data, int id)
 		normal = normalize(minus_vec(r->touch_point, s.origin));
 		if (dot_vec(r->direction, normal) > 0)
 			normal = mul_vec(normal, -1);
-		r->touch_point = get_ray_point(create_ray(r->touch_point, normal), 0.0001);
+		r->touch_point = get_ray_point(create_ray(r->touch_point, normal), \
+		0.001);
 		if (toucher_light(r->touch_point, data) == true)
 			light(s, r, data, normal);
 		else
-			ambient_light(r, s, data, normal);
+			ambient_light(r, s, data);
 	}
 	else
 		r->hit = false;

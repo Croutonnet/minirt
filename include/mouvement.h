@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:49:01 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/25 08:57:30 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 11:13:06 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ double	sphere_intersect_mouv(t_sphere sphere, t_ray *ray);
 double	cylinder_intersect_mouv(t_cylinder cy, t_ray *r);
 double	plane_intersect_mouv(t_plane p, t_ray *r);
 
-
 // more_obj_mouvement.c
 void	rotate_cyl(t_shape *cyl, keys_t key);
+void	move_plane(t_shape *p, keys_t key);
 
 // cam_mouvement.c
 int		return_and_message(int ret, int message, int set, bool *getset);
