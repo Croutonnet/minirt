@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   sphere2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 18:21:38 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/18 18:22:19 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/25 08:46:39 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ray.h"
 #include "../include/light.h"
 
-t_sphere	create_sphere(t_vector pPosition, float radius, t_color pColor)
+t_sphere	create_sphere(t_vector pPosition, double radius, t_color pColor)
 {
 	t_sphere	s;
 

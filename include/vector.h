@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:39:10 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/17 14:39:21 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/25 08:46:39 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ typedef struct s_vector
 t_vector	create_vector(double x, double y, double z);
 t_vector	mul_2vec(t_vector vec1, t_vector vec2);
 t_vector	div_2vec(t_vector vec1, t_vector vec2);
-float		length_vec(t_vector vec);
-float		dot_vec(t_vector vec1, t_vector vec2);
+double		length_vec(t_vector vec);
+double		dot_vec(t_vector vec1, t_vector vec2);
 t_vector	normalize(t_vector vec);
-float		length_sqr(t_vector vec);
+double		length_sqr(t_vector vec);
 
 //vector_math.c
 t_vector	add_vec(t_vector vec1, t_vector vec2);

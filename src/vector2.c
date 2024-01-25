@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vector2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:30:01 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/18 18:10:44 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/25 08:46:39 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 t_vector	normalize(t_vector vec)
 {
-	float	vec_length;
+	double	vec_length;
 
 	vec_length = length_vec(vec);
 	return (div_vec(vec, vec_length));

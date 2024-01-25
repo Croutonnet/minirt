@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:36 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/22 14:38:59 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 10:39:57 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_plane	create_plane(t_vector pPosition, t_vector p_axis, t_color p_Color)
 static t_color	calculate_light(t_data *data, t_plane p)
 {
 	t_vector	lightdir;
-	float		intensity;
+	double		intensity;
 	t_color		color;
 
 	lightdir = normalize(minus_vec(data->light.origin, p.origin));
@@ -49,7 +49,7 @@ static t_color	calculate_light(t_data *data, t_plane p)
 static void	ambient_light(t_ray *r, t_plane p, t_data *data, t_vector normal)
 {
 	t_vector	lightdir;
-	float		intensity;
+	double		intensity;
 	t_color		ambient;
 
 	ambient = mul_vec(add_vec(data->alight.color, p.base_color),
@@ -61,7 +61,7 @@ static void	ambient_light(t_ray *r, t_plane p, t_data *data, t_vector normal)
 static void	light(t_plane p, t_ray *r, t_data *data, t_vector normal)
 {
 	t_vector	lightdir;
-	float		intensity;
+	double		intensity;
 	t_color		ambient;
 
 	ambient = mul_vec(add_vec(data->alight.color, p.base_color),
@@ -74,10 +74,9 @@ static void	light(t_plane p, t_ray *r, t_data *data, t_vector normal)
 
 void	plane_intersect_ray(t_plane p, t_ray *r, t_data *data)
 {
-
 	t_vector	x;
-	float		a;
-	float		b;
+	double		a;
+	double		b;
 	t_vector	normal;
 
 	x = mul_vec(minus_vec(r->origin_point, p.origin), -1);
@@ -88,27 +87,14 @@ void	plane_intersect_ray(t_plane p, t_ray *r, t_data *data)
 	r->t = a / b;
 	if (r->t <= 0 || r->t >= INT_MAX)
 		return ;
-	r->hit = true;
 	r->touch_point = get_ray_point(*r, r->t);
 	if (b < 0)
 		normal = p.axis;
 	else
 		normal = mul_vec(p.axis, -1);
-	r->touch_point = get_ray_point(create_ray(r->touch_point, normal), 0.001);
+	r->touch_point = get_ray_point(create_ray(r->touch_point, normal), 0.00000000001);
 	if (toucher_light(r->touch_point, data) == true)
 		light(p, r, data, normal);
 	else
 		ambient_light(r, p, data, normal);
 }
-
-	// float	num;
-	// float	denom;
-	// float	t;
-
-	// num = dot_vec(minus_vec(r->origin_point, p.origin), p.axis);
-	// denom = dot_vec(r->direction, p.axis);
-	// if (denom < 0.001)
-	// 	return ; 
-	// r->t = num / denom;
-	// r->color = calculate_light(data, p);
-	// r->hit = true;

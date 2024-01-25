@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:50:59 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/17 14:51:38 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/25 08:46:39 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@
 
 typedef struct s_viewport
 {
-	float		width;
-	float		height;
-	float		ratio;
-	float		focal_lenght;
+	double		width;
+	double		height;
+	double		ratio;
+	double		focal_lenght;
 	t_vector	viewport_center;
 	t_vector	camera_center;
 	t_vector	v;
@@ -33,7 +33,7 @@ typedef struct s_viewport
 	t_vector	upper_left;
 	t_vector	pixel00_loc;
 	t_vector	cam_rot;
-	float		cam_pitch;
-	float		cam_yaw;
+	double		cam_pitch;
+	double		cam_yaw;
 }			t_viewport;
 #endif

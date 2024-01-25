@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:15 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/22 14:15:10 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 10:28:50 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 static void	ambient_light(t_ray *r, t_cylinder cy, t_data *data, t_vector normal)
 {
 	t_vector	lightdir;
-	float		intensity;
+	double		intensity;
 	t_color		ambient;
 
 	ambient = mul_vec(add_vec(data->alight.color, cy.base_color),
@@ -28,7 +28,7 @@ static void	ambient_light(t_ray *r, t_cylinder cy, t_data *data, t_vector normal
 static void	light(t_cylinder cy, t_ray *r, t_data *data, t_vector normal)
 {
 	t_vector	lightdir;
-	float		intensity;
+	double		intensity;
 	t_color		ambient;
 
 	ambient = mul_vec(add_vec(data->alight.color, cy.base_color),
@@ -39,7 +39,7 @@ static void	light(t_cylinder cy, t_ray *r, t_data *data, t_vector normal)
 	r->hit = true;
 }
 
-t_cylinder create_cylinder(t_vector p, t_vector r, float d, float h, t_vector c)
+t_cylinder create_cylinder(t_vector p, t_vector r, double d, double h, t_vector c)
 {
 	t_cylinder cylinder;
 
@@ -53,19 +53,18 @@ t_cylinder create_cylinder(t_vector p, t_vector r, float d, float h, t_vector c)
 
 void	cylinder_intersect_ray(t_cylinder cy, t_ray *r, t_data *data)
 {
-	float		a;
+	double		a;
 	t_vector	x;
-	float		b;
-	float		c;
-	float		m;
-	float		t;
+	double		c;
+	double		m;
+	double		t;
 	t_vector	normal;
 
 	a = dot_vec(r->direction, r->direction) - pow(dot_vec(r->direction, cy.rotation), 2);
 	x = minus_vec(r->origin_point, cy.origin);
-	b = dot_vec(r->direction, x) - dot_vec(r->direction, cy.rotation) * dot_vec(x, cy.rotation);
+	r->b = dot_vec(r->direction, x) - dot_vec(r->direction, cy.rotation) * dot_vec(x, cy.rotation);
 	c = dot_vec(x, x) - pow(dot_vec(x, cy.rotation), 2) - pow(cy.radius, 2);
-	r->dis = pow(b, 2) - a * c;
+	r->dis = pow(r->b, 2) - a * c;
 	if (r->dis < 0)
 		return ;
 	r->t = (-r->b - sqrt(r->dis)) / a;
@@ -77,12 +76,11 @@ void	cylinder_intersect_ray(t_cylinder cy, t_ray *r, t_data *data)
 		if ((r->t <= 0 || r->t >= INT_MAX) || (m < 0 || m > cy.height))
 			return ;
 	}
-	r->hit = true;
 	r->touch_point = get_ray_point(*r, r->t);
 	normal = normalize(minus_vec(minus_vec(r->touch_point, cy.origin), mul_vec(cy.rotation, m)));
 	if (dot_vec(normal, r->direction) > 0)
 			normal = mul_vec(normal, -1);
-	r->touch_point = get_ray_point(create_ray(r->touch_point, normal), 0.001);
+	r->touch_point = get_ray_point(create_ray(r->touch_point, normal), 0.00000000001);
 	if (toucher_light(r->touch_point, data) == true)
 		light(cy, r, data, normal);
 	else

@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:39:29 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/22 14:19:07 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 10:14:27 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ typedef struct s_plane
 typedef struct s_sphere
 {
 	t_vector	origin;
-	float		radius;
+	double		radius;
 	t_color		base_color;
 }	t_sphere;
 
@@ -48,8 +48,8 @@ typedef struct s_cylinder
 	t_vector	origin;
 	t_vector	rotation;
 	t_vector	base_color;
-	float		radius;
-	float		height;
+	double		radius;
+	double		height;
 }	t_cylinder;
 
 // type Shape Generique
@@ -77,9 +77,9 @@ typedef struct s_ray
 	t_vector	origin_point;
 	t_vector	direction;
 	t_color		color;
-	float		b;
-	float		dis;
-	float		t;
+	double		b;
+	double		dis;
+	double		t;
 	t_vector	touch_point;
 }t_ray;
 
@@ -109,8 +109,8 @@ typedef struct s_data
 }				t_data;
 
 // shapes creation functions
-t_sphere	create_sphere(t_vector p_position, float radius, t_color pColor);
-t_cylinder	create_cylinder(t_vector p, t_vector r, float d, float h, t_vector c);
+t_sphere	create_sphere(t_vector p_position, double radius, t_color pColor);
+t_cylinder	create_cylinder(t_vector p, t_vector r, double d, double h, t_vector c);
 t_plane		create_plane(t_vector p_position, t_vector p_axis, t_color p_Color);
 
 //collision.c
@@ -137,16 +137,16 @@ void		move_object(t_data *data, keys_t key);
 void		touch_object(mouse_key_t button, action_t action, modifier_key_t mods, void *param);
 
 // rotation.c
-t_vector	rotation_x(t_vector vec, float deg);
-t_vector	rotation_y(t_vector vec, float deg);
-t_vector	rotation_z(t_vector vec, float deg);
+t_vector	rotation_x(t_vector vec, double deg);
+t_vector	rotation_y(t_vector vec, double deg);
+t_vector	rotation_z(t_vector vec, double deg);
 
 // final_viewport.c
 void		read_rotation(t_data *data);
 void		final_viewport(t_data *data);
 
 void		create_rays(t_data *data);
-t_vector	get_ray_point(t_ray r, float t);
+t_vector	get_ray_point(t_ray r, double t);
 t_ray		create_ray(t_vector origin, t_vector dir);
 
 #endif

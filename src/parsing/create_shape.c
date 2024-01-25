@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   create_shape.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 12:37:13 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/17 14:44:20 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/25 08:46:39 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	pcreate_plane(char **line, t_data *data)
 void	pcreate_sphere(char **line, t_data *data)
 {
 	t_vector	coord;
-	float		dia;
+	double		dia;
 	t_color		color;
 
 	coord = create_vector_str(line[1]);
@@ -72,8 +72,8 @@ void	pcreate_cylindre(char **line, t_data *data)
 {
 	t_vector	coord;
 	t_vector	ori;
-	float		dia;
-	float		height;
+	double		dia;
+	double		height;
 	t_color		color;
 
 	coord = create_vector_str(line[1]);

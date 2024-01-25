@@ -6,13 +6,13 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:22:04 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/11 14:34:08 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 08:46:39 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ray.h"
 
-t_vector	rotation_z(t_vector vec, float deg)
+t_vector	rotation_z(t_vector vec, double deg)
 {
 	t_vector	result;
 
@@ -23,7 +23,7 @@ t_vector	rotation_z(t_vector vec, float deg)
 	return (result);
 }
 
-t_vector	rotation_x(t_vector vec, float deg)
+t_vector	rotation_x(t_vector vec, double deg)
 {
 	t_vector	result;
 
@@ -34,7 +34,7 @@ t_vector	rotation_x(t_vector vec, float deg)
 	return (result);
 }
 
-t_vector	rotation_y(t_vector vec, float deg)
+t_vector	rotation_y(t_vector vec, double deg)
 {
 	t_vector	result;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   light.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bbouchar <bbouchar@student.42.fr>          +#+  +:+       +#+        */
+/*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:49:34 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/18 16:41:44 by bbouchar         ###   ########.fr       */
+/*   Updated: 2024/01/25 08:46:39 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,14 +19,14 @@
 
 typedef struct s_light_ambient
 {
-	float	intensity;
+	double	intensity;
 	t_color	color;
 }	t_light_ambient;
 
 typedef struct s_light
 {
 	t_vector origin;
-	float intensity;
+	double intensity;
 } t_light;
 
 #endif

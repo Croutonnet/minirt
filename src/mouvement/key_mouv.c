@@ -6,17 +6,17 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 16:00:58 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/19 16:09:07 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 08:58:21 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/ray.h"
 #include "../../include/mouvement.h"
 
-static int	search_object(t_ray *ray, t_data *data, float touch, int id)
+static int	search_object(t_ray *ray, t_data *data, double touch, int id)
 {
 	t_shape	*shape;
-	float	temp_touch;
+	double	temp_touch;
 	int		id_of_touch;
 
 	temp_touch = -1;
@@ -26,6 +26,10 @@ static int	search_object(t_ray *ray, t_data *data, float touch, int id)
 		shape = &data->shapes.shapes[id];
 		if (shape->type == SPHERE)
 			temp_touch = sphere_intersect_mouv(shape->geom.sphere, ray);
+		else if (shape->type == CYLINDER)
+			temp_touch = cylinder_intersect_mouv(shape->geom.cylinder, ray);
+		else if (shape->type == PLANE)
+			temp_touch = plane_intersect_mouv(shape->geom.plane, ray);
 		if ((temp_touch < touch && temp_touch != -1)
 			|| (temp_touch != -1 && touch == -2))
 		{

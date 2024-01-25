@@ -6,34 +6,33 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:34:49 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/22 14:13:44 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 08:47:28 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ray.h"
 #include <stdio.h>
 
-static float tistance(t_vector v1, t_vector v2)
+static double tistance(t_vector v1, t_vector v2)
 {
-	float t;
+	double t;
 
 	t = sqrt(pow(v2.x - v1.x, 2) + pow(v2.y - v1.y, 2) + pow(v2.z - v1.z, 2));
 	return (t);
 }
 
-static bool	cylinder_touchage(t_cylinder cy, t_ray *r, float t_max)
+static bool	cylinder_touchage(t_cylinder cy, t_ray *r, double t_max)
 {
-	float		a;
+	double		a;
 	t_vector	x;
-	float		b;
-	float		c;
-	float		m;
+	double		c;
+	double		m;
 
 	a = dot_vec(r->direction, r->direction) - pow(dot_vec(r->direction, cy.rotation), 2);
 	x = minus_vec(r->origin_point, cy.origin);
-	b = dot_vec(r->direction, x) - dot_vec(r->direction, cy.rotation) * dot_vec(x, cy.rotation);
+	r->b = dot_vec(r->direction, x) - dot_vec(r->direction, cy.rotation) * dot_vec(x, cy.rotation);
 	c = dot_vec(x, x) - pow(dot_vec(x, cy.rotation), 2) - pow(cy.radius, 2);
-	r->dis = pow(b, 2) - a * c;
+	r->dis = pow(r->b, 2) - a * c;
 	if (r->dis < 0)
 		return (false);
 	r->t = (-r->b - sqrt(r->dis)) / a;
@@ -49,10 +48,10 @@ static bool	cylinder_touchage(t_cylinder cy, t_ray *r, float t_max)
 }
 
 
-static bool sphere_touchage(t_ray *r, t_sphere s, float t_max)
+static bool sphere_touchage(t_ray *r, t_sphere s, double t_max)
 {
 	t_vector oc;
-	float c;
+	double c;
 
 	oc = minus_vec(r->origin_point, s.origin);
 	r->b = dot_vec(r->direction, oc);

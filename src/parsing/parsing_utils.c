@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:13:54 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/19 11:27:32 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 08:46:39 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	check_rgb(char *line, int i, int k)
 {
-	float	nb;
+	double	nb;
 
 	if (check_coma_point(line, 1) == false)
 		return (print_error(BADRGB, BADRGB, false));

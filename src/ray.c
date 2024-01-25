@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:04 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/22 14:17:24 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 10:38:56 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <stdio.h>
 #include <math.h>
 
-static int32_t ft_pixel(float r, float g, float b)
+static int32_t ft_pixel(double r, double g, double b)
 {
 	r = fmin(255, r * 255);
 	g = fmin(255, g * 255);
@@ -70,12 +70,12 @@ void create_rays(t_data *data)
 			delta = add_vec(mul_vec(data->final_viewport.pixel_delta_v, x), mul_vec(data->final_viewport.pixel_delta_u, y));
 			point = add_vec(data->final_viewport.pixel00_loc, delta);
 			dir = normalize(minus_vec(point, data->final_viewport.camera_center));
-			r = create_ray(data->final_viewport.camera_center, dir);
 			id = 0;
 			while (id < data->shapes.count) 
 			{
 				t_shape	*shape;
 				shape = &data->shapes.shapes[id];
+				r = create_ray(data->final_viewport.camera_center, dir);
 				if (shape->type == SPHERE)
 					sphere_intersect_ray(shape->geom.sphere, &r, data, id);
 				else if (shape->type == CYLINDER)
@@ -101,12 +101,12 @@ t_ray	create_ray(t_vector origin, t_vector dir)
 	temp_ray.hit = false;
 	temp_ray.origin_point = origin;
 	temp_ray.direction = dir;
-	temp_ray.color = create_vector(0, 0, 1);
+	temp_ray.color = create_vector(1, 1, 1);
 	temp_ray.t = INFINITY;
 	return (temp_ray);
 }
 
-t_vector	get_ray_point(t_ray r, float t)
+t_vector	get_ray_point(t_ray r, double t)
 {
 	t_vector	intersec;
 
