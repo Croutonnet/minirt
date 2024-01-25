@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/28 13:00:58 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/25 14:01:54 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:32:22 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ int	return_and_message(int ret, int message, int set, bool *getset)
 		ft_printf_fd(1, "Objet sélectionner!\n");
 	else if (message == OBJDESELECT)
 		ft_printf_fd(1, "Objet désélectionner!\n");
+	else if (message == NOSELECT)
+		ft_printf_fd(1, "Il n'y a rien de sélectionner\n");
 	return (ret);
 }
 

@@ -175,3 +175,6 @@ run : fclean_run all
 	@printf "$(ERASE_LINE)$(GREEN)✔️ $(RED)$(ITALIC)$(NAME) LAUNCHING🚀!!!!!!$(RESET)\
 	$(GREEN) ✔️$(RESET)\n"
 	@./minirt map/test_cy.rt
+
+norm :
+	norminette src include/Libft include/color.h include/image.h include/light.h include/mouvement.h include/parsing.h include/ray.h include/vector.h

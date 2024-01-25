@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/11 09:01:06 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/25 14:20:56 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:39:11 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 
 static void	move_sphere(t_shape *sphere, keys_t key)
 {
+	if (key == MLX_KEY_UP || key == MLX_KEY_DOWN || key == MLX_KEY_LEFT || \
+	key == MLX_KEY_RIGHT || key == MLX_KEY_KP_ADD || key == MLX_KEY_KP_SUBTRACT)
+		return ;
 	if (key == MLX_KEY_W)
 		sphere->geom.sphere.origin.z++;
 	else if (key == MLX_KEY_S)

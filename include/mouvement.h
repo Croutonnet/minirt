@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/17 14:49:01 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/25 11:13:06 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:31:53 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ enum e_mess_mouv
 	LIGHTDESELECT,
 	SMTHELSE,
 	OBJSELECT,
-	OBJDESELECT
+	OBJDESELECT,
+	NOSELECT
 };
 
 // object_intersect.c

@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 16:00:58 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/25 12:28:48 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:33:05 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ void	touch_object(mouse_key_t button, action_t action,
 	else if (action == MLX_PRESS && button == MLX_MOUSE_BUTTON_RIGHT)
 	{
 		data->id_touch = -1;
-		return_and_message(1, OBJDESELECT, false, &data->obj_selected);
+		if (data->obj_selected == false)
+			return_and_message(1, NOSELECT, -1, NULL);
+		else
+			return_and_message(1, OBJDESELECT, false, &data->obj_selected);
 	}
 	else if (action == MLX_PRESS && button == MLX_MOUSE_BUTTON_LEFT
 		&& data->obj_selected == true)
