@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/20 12:37:13 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/25 13:16:00 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 15:04:04 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	pcreate_plane(char **line, t_data *data)
 	axis = create_vector_str(line[2]);
 	color = (t_color)normalize(create_vector_str(line[3]));
 	add_shape(&data->shapes, PLANE, (t_ugeom)create_plane(coord, axis, color));
+	ft_xxfree((void **)line);
 }
 
 void	pcreate_sphere(char **line, t_data *data)
@@ -66,6 +67,7 @@ void	pcreate_sphere(char **line, t_data *data)
 	dia = ft_atof(line[2]) / 2;
 	color = (t_color)normalize(create_vector_str(line[3]));
 	add_shape(&data->shapes, SPHERE, (t_ugeom)create_sphere(coord, dia, color));
+	ft_xxfree((void **)line);
 }
 
 void	pcreate_cylindre(char **line, t_data *data)
@@ -78,4 +80,5 @@ void	pcreate_cylindre(char **line, t_data *data)
 	cyl.height = ft_atof(line[4]);
 	cyl.base_color = (t_color)normalize(create_vector_str(line[5]));
 	add_shape(&data->shapes, CYLINDER, (t_ugeom)cyl);
+	ft_xxfree((void **)line);
 }

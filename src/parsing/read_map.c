@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 16:20:29 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/16 15:17:36 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 15:05:05 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,5 +63,6 @@ void	read_map(char *file_path, t_data *data)
 		line = get_next_line(fd);
 		if (line)
 			create_line(line, data);
+		free(line);
 	}
 }
