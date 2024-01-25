@@ -6,12 +6,11 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:15 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/25 14:16:02 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:52:32 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ray.h"
-#include <stdio.h>
 
 static void	ambient_light(t_ray *r, t_cylinder cy, t_data *data)
 {

@@ -6,12 +6,11 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 12:50:25 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/25 13:12:51 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:52:35 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ray.h"
-#include <stdio.h>
 
 void	read_rotation(t_data *data)
 {

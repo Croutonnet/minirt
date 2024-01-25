@@ -6,14 +6,12 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:04 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/25 13:51:00 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:53:10 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ray.h"
 #include "../include/image.h"
-#include <stdio.h>
-#include <math.h>
 
 static int32_t	ft_pixel(double r, double g, double b)
 {

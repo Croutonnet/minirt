@@ -6,12 +6,11 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:36 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/25 14:16:17 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:53:05 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ray.h"
-#include <stdio.h>
 #include "../include/light.h"
 
 t_plane	create_plane(t_vector pPosition, t_vector p_axis, t_color p_Color)

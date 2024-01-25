@@ -6,13 +6,11 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:58 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/25 13:21:57 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:53:22 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/vector.h"
-#include <stdlib.h>
-#include <stdio.h>
 
 t_vector	create_vector(double x, double y, double z)
 {

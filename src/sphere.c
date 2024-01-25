@@ -6,14 +6,12 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:24:45 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/25 14:11:42 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:53:14 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ray.h"
-#include <stdio.h>
 #include "../include/light.h"
-#include <limits.h>
 
 static void	ambient_light(t_ray *r, t_sphere s, t_data *data)
 {

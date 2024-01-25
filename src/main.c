@@ -6,7 +6,7 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/10 13:25:10 by bbouchar          #+#    #+#             */
-/*   Updated: 2024/01/25 14:26:56 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:52:59 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@
 #include "../include/MLX42/include/MLX42/MLX42.h"
 #include "../include/image.h"
 #include "../include/ray.h"
-#include <stdio.h>
-#include <stdbool.h>
 
 static void	calculate_upper_left(t_data *data)
 {

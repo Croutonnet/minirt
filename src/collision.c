@@ -6,12 +6,11 @@
 /*   By: rapelcha <rapelcha@student.42quebec.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/18 09:34:49 by rapelcha          #+#    #+#             */
-/*   Updated: 2024/01/25 12:59:59 by rapelcha         ###   ########.fr       */
+/*   Updated: 2024/01/25 14:52:27 by rapelcha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/ray.h"
-#include <stdio.h>
 
 static double	tistance(t_vector v1, t_vector v2)
 {
